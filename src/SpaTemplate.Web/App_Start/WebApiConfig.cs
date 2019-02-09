@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using System.Web.Http.Cors;
 using Newtonsoft.Json.Serialization;
 
 namespace SpaTemplate
@@ -7,6 +8,14 @@ namespace SpaTemplate
     {
         public static void Register(HttpConfiguration config)
         {
+#if DEBUG
+            var cors = new EnableCorsAttribute("localhost:4200", "*", "*")
+            {
+                SupportsCredentials = true
+            };
+            config.EnableCors(cors);
+#endif
+
             config.Formatters.JsonFormatter.SerializerSettings.ContractResolver =
                 new CamelCasePropertyNamesContractResolver();
 
