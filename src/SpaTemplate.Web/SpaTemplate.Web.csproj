@@ -192,19 +192,20 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>npm install
-
-if $ConfigurationName) == Release {
+    <PreBuildEvent>if $(ConfigurationName) == Release (
+npm install
 npm run prod
-}
+)
 
-if $ConfigurationName) == Azure {
+if $(ConfigurationName) == Azure (
+npm install
 npm run prod
-}
+)
 
-if $ConfigurationName) == Debug {
+if $(ConfigurationName) == Debug (
+npm install
 npm run dev
-}</PreBuildEvent>
+)</PreBuildEvent>
   </PropertyGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
