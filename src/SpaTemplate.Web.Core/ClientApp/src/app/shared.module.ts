@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { FoundationModule } from 'angular-foundation';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-	declarations: [],
-	imports: [FoundationModule],
-	exports: [FoundationModule]
+	imports: [FoundationModule, NgbModule],
+	exports: [FoundationModule, NgbModule]
 })
 export class SharedModule {}
