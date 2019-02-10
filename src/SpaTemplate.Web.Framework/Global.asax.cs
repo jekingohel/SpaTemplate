@@ -5,7 +5,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using SpaTemplate.Infrastructure.Framework;
 
-namespace SpaTemplate
+namespace SpaTemplate.Web.Framework
 {
     public class MvcApplication : HttpApplication
     {

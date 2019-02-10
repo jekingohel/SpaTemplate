@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace SpaTemplate.Controllers
+namespace SpaTemplate.Web.Framework.Controllers
 {
     public class HomeController : Controller
     {

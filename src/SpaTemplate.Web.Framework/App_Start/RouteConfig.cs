@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace SpaTemplate
+namespace SpaTemplate.Web.Framework
 {
     public class RouteConfig
     {

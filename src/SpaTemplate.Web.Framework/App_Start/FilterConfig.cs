@@ -1,6 +1,6 @@
 ﻿using System.Web.Mvc;
 
-namespace SpaTemplate
+namespace SpaTemplate.Web.Framework
 {
     public class FilterConfig
     {

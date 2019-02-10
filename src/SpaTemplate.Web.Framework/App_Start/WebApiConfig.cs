@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using Newtonsoft.Json.Serialization;
 
-namespace SpaTemplate
+namespace SpaTemplate.Web.Framework
 {
     public static class WebApiConfig
     {
