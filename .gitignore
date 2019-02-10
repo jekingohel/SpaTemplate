@@ -301,3 +301,5 @@ Thumbs.db
 # Custom
 **/content
 **/package-lock.json
+**/dist
+**/*.DotSettings
