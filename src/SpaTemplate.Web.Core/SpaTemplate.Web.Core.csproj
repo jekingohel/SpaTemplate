@@ -25,16 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="ClientApp\dist\3rdpartylicenses.txt" />
-    <None Remove="ClientApp\dist\index.html" />
-    <None Remove="ClientApp\dist\main.0fc304adfcdb23110664.js" />
-    <None Remove="ClientApp\dist\polyfills.7a0e6866a34e280f48e7.js" />
-    <None Remove="ClientApp\dist\runtime.a66f828dca56eeb90e02.js" />
-    <None Remove="ClientApp\dist\styles.7a2a42aec9fdd4c8c846.css" />
+    <ProjectReference Include="..\SpaTemplate.Infrastructure.Core\SpaTemplate.Infrastructure.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SpaTemplate.Infrastructure.Core\SpaTemplate.Infrastructure.Core.csproj" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
