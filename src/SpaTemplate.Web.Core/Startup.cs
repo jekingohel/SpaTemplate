@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using SpaTemplate.Core;
+using SpaTemplate.Core.FacultyContext;
 using SpaTemplate.Infrastructure.Core;
 
 namespace SpaTemplate.Web.Core
@@ -24,7 +24,6 @@ namespace SpaTemplate.Web.Core
         {
             services.SetupDbContext();
             services.AddCustomMvc();
-            services.SetupCustomDi();
             services.AddSwagger();
             services.AddCustomHttpCacheHeaders();
             services.AddMemoryCache();
@@ -56,10 +55,10 @@ namespace SpaTemplate.Web.Core
             //TODO: Find fix for tests(downgraded to 6.1.0)
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Person, PersonDto>();
-                cfg.CreateMap<PersonForCreationDto, Person>();
-                cfg.CreateMap<PersonForUpdateDto, Person>();
-                cfg.CreateMap<Person, PersonForUpdateDto>();
+                cfg.CreateMap<Student, StudentDto>();
+                cfg.CreateMap<StudentForCreationDto, Student>();
+                cfg.CreateMap<StudentForUpdateDto, Student>();
+                cfg.CreateMap<Student, StudentForUpdateDto>();
                 cfg.CreateMap<Course, CourseDto>();
                 cfg.CreateMap<CourseDto, Course>();
                 cfg.CreateMap<CourseForCreationDto, Course>();

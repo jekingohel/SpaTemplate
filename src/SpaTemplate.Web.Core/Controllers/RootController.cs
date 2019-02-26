@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using SpaTemplate.Core;
+using SpaTemplate.Core.Hateoas;
 
 namespace SpaTemplate.Web.Core
 {
@@ -24,8 +24,8 @@ namespace SpaTemplate.Web.Core
 				.AddRelAndMethod(Rel.Self, Method.Get),
 			CreateHref(RouteName.GetPeople)
 				.AddRelAndMethod(Rel.People, Method.Get),
-			CreateHref(RouteName.CreatePerson)
-				.AddRelAndMethod(Rel.CreatePerson, Method.Post)
+			CreateHref(RouteName.CreateStudent)
+				.AddRelAndMethod(Rel.CreateStudent, Method.Post)
 		};
 
 		private string CreateHref(string routeName) => _urlHelper.Link(routeName, new { });

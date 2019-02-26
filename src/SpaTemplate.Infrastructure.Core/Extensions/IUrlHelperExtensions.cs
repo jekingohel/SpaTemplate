@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using SpaTemplate.Core;
+using SpaTemplate.Core.Hateoas;
+using SpaTemplate.Core.SharedKernel;
 
 namespace SpaTemplate.Infrastructure.Core
 {
-	public static class IUrlHelperExtensions
+	public static class UrlHelperExtensions
 	{
 		private static string CreatePage(this IUrlHelper urlHelper, string routeName,
 			IParameters resourceParameters,

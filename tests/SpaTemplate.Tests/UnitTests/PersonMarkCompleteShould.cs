@@ -1,29 +1,28 @@
 ﻿using System.Linq;
-using SpaTemplate.Core;
-using SpaTemplate.Tests.Helpers;
+using SpaTemplate.Core.FacultyContext;
 using Xunit;
 
 namespace SpaTemplate.Tests.UnitTests
 {
 	public class PersonMarkCompleteShould
 	{
-		[Theory]
-		[AutoMoqData]
-		public void ReturnsTrue_SetIsDone(Person item)
+		[Fact]
+		public void ReturnsTrue_SetIsDone()
 		{
-			item.MarkComplete();
+            var sut = new Student();
+            sut.MarkComplete();
 
-			Assert.True(item.IsDone);
+			Assert.True(sut.IsDone);
 		}
 
 		[Fact]
 		public void RaiseCompletedEvent()
 		{
-			var item = new Person();
+			var item = new Student();
 			item.MarkComplete();
 
 			Assert.Single(item.Events);
-			Assert.IsType<PersonCompletedEvent>(item.Events.First());
+			Assert.IsType<StudentCompletedEvent>(item.Events.First());
 		}
 	}
 }

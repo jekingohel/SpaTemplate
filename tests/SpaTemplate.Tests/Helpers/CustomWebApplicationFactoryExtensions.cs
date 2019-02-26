@@ -1,5 +1,5 @@
 ﻿using System.Net.Http;
-using SpaTemplate.Core;
+using SpaTemplate.Core.Hateoas;
 using SpaTemplate.Web.Core;
 
 namespace SpaTemplate.Tests.Helpers
@@ -12,7 +12,8 @@ namespace SpaTemplate.Tests.Helpers
 			this CustomWebApplicationFactory<Startup> factory)
 		{
 			_client = factory.CreateClient();
-			_client.DefaultRequestHeaders.Add(Header.XRealIp, Constants.LocalhostIp);
+            _client.DefaultRequestHeaders.TryAddWithoutValidation(Header.XRealIp, Constants.LocalhostIp);
+
 			return _client;
 		}
 	}

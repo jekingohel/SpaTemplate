@@ -1,4 +1,4 @@
-﻿using SpaTemplate.Core;
+﻿using SpaTemplate.Core.SharedKernel;
 
 namespace SpaTemplate.Tests.Helpers
 {

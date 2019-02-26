@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using SpaTemplate.Core;
+using SpaTemplate.Core.FacultyContext;
 
 namespace SpaTemplate.Infrastructure.Core
 {
@@ -9,7 +9,7 @@ namespace SpaTemplate.Infrastructure.Core
 		{
             dbContext.People.RemoveRange(dbContext.People);
 			dbContext.SaveChanges();
-			for (var i = 0; i < 20; i++) AddPerson(dbContext, $"Name{i}", $"Surname{i}", i);
+			for (var i = 0; i < 20; i++) AddStudent(dbContext, $"Name{i}", $"Surname{i}", i);
 			dbContext.SaveChanges();
 		}
 
@@ -26,9 +26,9 @@ namespace SpaTemplate.Infrastructure.Core
 			return list;
 		}
 
-		private static void AddPerson(AppDbContext dbContext, string name, string surname, int age)
+		private static void AddStudent(AppDbContext dbContext, string name, string surname, int age)
 		{
-			dbContext.People.Add(new Person
+			dbContext.People.Add(new Student
 			{
 				Name = name,
 				Surname = surname,

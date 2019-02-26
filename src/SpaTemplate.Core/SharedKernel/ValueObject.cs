@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace SpaTemplate.Core
+namespace SpaTemplate.Core.SharedKernel
 {
 	// source: https://github.com/jhewlett/ValueObject
 	public abstract class ValueObject : IEquatable<ValueObject>

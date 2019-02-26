@@ -1,4 +1,5 @@
-﻿using SpaTemplate.Core;
+﻿using SpaTemplate.Core.Hateoas;
+using SpaTemplate.Core.SharedKernel;
 using SpaTemplate.Tests.Helpers;
 using Xunit;
 
@@ -13,11 +14,10 @@ namespace SpaTemplate.Tests.UnitTests
 			Assert.True(property.ValidMappingExistsFor<DummyEntityDto, DummyEntity>(field));
 		}
 
-		[Theory]
-		[AutoMoqData]
-		public void BeAssignableFromInterface(PropertyMappingService sut)
+		[Fact]
+		public void BeAssignableFromInterface()
 		{
-			Assert.IsAssignableFrom<IPropertyMappingService>(sut);
+			Assert.IsAssignableFrom<IPropertyMappingService>(new PropertyMappingService());
 		}
 
 		private class DummyEntity : BaseEntity

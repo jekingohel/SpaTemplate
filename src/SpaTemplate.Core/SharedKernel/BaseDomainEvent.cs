@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SpaTemplate.Core
+namespace SpaTemplate.Core.SharedKernel
 {
 	public abstract class BaseDomainEvent
 	{

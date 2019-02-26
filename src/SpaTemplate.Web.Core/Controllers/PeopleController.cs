@@ -4,150 +4,134 @@ using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SpaTemplate.Core;
+using SpaTemplate.Core.FacultyContext;
+using SpaTemplate.Core.Hateoas;
 using SpaTemplate.Infrastructure;
 using SpaTemplate.Infrastructure.Core;
 
 namespace SpaTemplate.Web.Core
 {
-	[Route(Route.PeopleApi)]
-	[ValidateModel]
-	public partial class PeopleController : Controller
-	{
-		private readonly IPropertyMappingService _propertyMappingService;
-		private readonly IRepositoryPerson<Person> _repository;
-		private readonly ITypeHelperService _typeHelperService;
-		private readonly IUrlHelper _urlHelper;
+    [Route(Route.PeopleApi)]
+    [ValidateModel]
+    public partial class PeopleController : Controller
+    {
+        private readonly IStudentService _studentService;
+        private readonly IUrlHelper _urlHelper;
 
-		public PeopleController(IPropertyMappingService propertyMappingService,
-			IRepositoryPerson<Person> repository,
-			ITypeHelperService typeHelperService, IUrlHelper urlHelper)
-		{
-			_propertyMappingService = propertyMappingService;
-			_repository = repository;
-			_typeHelperService = typeHelperService;
-			_urlHelper = urlHelper;
-		}
+        public PeopleController(
+            IStudentService studentService, IUrlHelper urlHelper)
+        {
+            _studentService = studentService;
+            _urlHelper = urlHelper;
+        }
 
-		[HttpGet(Name = RouteName.GetPeople)]
-		public IActionResult GetPeople(PersonParameters parameters,
-			[FromHeader(Name = Header.Accept)] string mediaType)
-		{
-			if (!_propertyMappingService.ValidMappingExistsFor<PersonDto, Person>(parameters.OrderBy))
-				return BadRequest();
+        [HttpGet(Name = RouteName.GetPeople)]
+        public IActionResult GetPeople(StudentParameters parameters,
+            [FromHeader(Name = Header.Accept)] string mediaType)
+        {
+            if (!_studentService.StudentMappingExists(parameters)) 
+                return BadRequest();
+            if (!_studentService.StudentPropertiesExists(parameters)) 
+                return BadRequest();
 
-			if (!_typeHelperService.TypeHasProperties<PersonDto>(parameters.Fields)) return BadRequest();
+            var people = _studentService.GetPagedList(parameters);
+            var studentDtos = Mapper.Map<List<StudentDto>>(people);
 
-			var people = _repository.GetPagedList<PersonDto>(parameters);
+            if (mediaType == MediaType.OutputFormatterJson)
+            {
+                Response.Headers.Add(Header.XPagination, JsonConvert.SerializeObject(people.CreateBasePagination()));
+                var values = studentDtos.ShapeDataCollectionWithHateoasLinks(parameters.Fields, CreateLinksStudent);
+                var links = _urlHelper.CreateLinks(RouteName.GetPeople, parameters, people);
+                return Ok(HateoasDto.CreateHateoasDto(values, links));
+            }
 
-			var personDtos = Mapper.Map<IEnumerable<PersonDto>>(people);
+            Response.Headers.Add(Header.XPagination, JsonConvert.SerializeObject(
+                _urlHelper.CreateHateoasPagination(RouteName.GetPeople, people, parameters)));
 
-			if (mediaType == MediaType.OutputFormatterJson)
-			{
-				Response.Headers.Add(Header.XPagination, JsonConvert.SerializeObject(people.CreateBasePagination()));
-				var values = personDtos.GetShapedDtoWithLinks(parameters, CreateLinksPerson);
-				var links = _urlHelper.CreateLinks(RouteName.GetPeople, parameters, people);
-				return Ok(HateoasDto.CreateHateoasDto(values, links));
-			}
+            return Ok(studentDtos.ShapeDataCollection(parameters.Fields));
+        }
 
-			Response.Headers.Add(Header.XPagination, JsonConvert.SerializeObject(
-				_urlHelper.CreateHateoasPagination(RouteName.GetPeople, people, parameters)));
+        [HttpGet("{id}", Name = RouteName.GetStudent)]
+        public IActionResult GetStudent(Guid id, StudentParameters parameters,
+            [FromHeader(Name = Header.Accept)] string mediaType)
+        {
+            if (!_studentService.StudentPropertiesExists(parameters)) return BadRequest();
 
-			return Ok(personDtos.ShapeData(parameters.Fields));
-		}
+            var student = _studentService.GetStudent(id);
+            if (student == null) return NotFound();
 
-		[HttpGet("{id}", Name = RouteName.GetPerson)]
-		public IActionResult GetPerson(Guid id,
-			[FromHeader(Name = Header.Accept)] string mediaType,
-			[FromQuery] string fields)
-		{
-			if (!_typeHelperService.TypeHasProperties<PersonDto>(fields)) return BadRequest();
+            return mediaType == MediaType.OutputFormatterJson
+                ? Ok(student.ShapeDataWithoutParameters<StudentDto, Student>(CreateLinksStudent))
+                : Ok(Mapper.Map<StudentDto>(student));
+        }
 
-			var person = _repository.GetById<Person>(id);
+        [HttpPost(Name = RouteName.CreateStudent)]
+        [RequestHeaderMatchesMediaType(Header.ContentType, new[] {MediaType.InputFormatterJson})]
+        public IActionResult CreateStudent([FromBody] StudentForCreationDto studentForCreationDto)
+        {
+            if (studentForCreationDto == null) return BadRequest();
 
-			if (person == null) return NotFound();
+            var student = Mapper.Map<Student>(studentForCreationDto);
+            if (!_studentService.AddStudent(student)) throw new Exception("Creating an Student failed on save.");
+            return CreatedAtRoute(RouteName.GetStudent, new {id = student.Id},
+                student.ShapeDataWithoutParameters<StudentDto, Student>(CreateLinksStudent));
+        }
 
-			return mediaType == MediaType.OutputFormatterJson
-				? Ok(person.ShapeDataWithoutParameters<PersonDto, Person>(CreateLinksPerson))
-				: Ok(Mapper.Map<PersonDto>(person));
-		}
+        [HttpPatch("{id}", Name = RouteName.PartiallyUpdateStudent)]
+        public IActionResult PartiallyUpdateStudent(Guid id,
+            [FromBody] JsonPatchDocument<StudentForUpdateDto> patchDoc)
+        {
+            if (patchDoc == null) return BadRequest();
+            if (!_studentService.StudentExists(id)) return NotFound();
+            var student = _studentService.GetStudent(id);
 
-		[HttpPost(Name = RouteName.CreatePerson)]
-		[RequestHeaderMatchesMediaType(Header.ContentType, new[] {MediaType.InputFormatterJson})]
-		public IActionResult CreatePerson([FromBody] PersonForCreationDto personForCreationDto)
-		{
-			if (personForCreationDto == null) return BadRequest();
+            var studentForUpdateDto = Mapper.Map<StudentForUpdateDto>(student);
 
-			var person = Mapper.Map<Person>(personForCreationDto);
-			_repository.Add(person);
+            patchDoc.ApplyTo(studentForUpdateDto, ModelState);
 
-			if (!_repository.Commit()) throw new Exception("Creating an Person failed on save.");
+            if (studentForUpdateDto.Name == studentForUpdateDto.Surname)
+                ModelState.AddModelError(nameof(StudentForUpdateDto),
+                    "The provided surname should be different from the name.");
 
-			return CreatedAtRoute(RouteName.GetPerson, new {id = person.Id},
-				person.ShapeDataWithoutParameters<PersonDto, Person>(CreateLinksPerson));
-		}
+            TryValidateModel(studentForUpdateDto);
+            if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
 
-		[HttpPatch("{id}", Name = RouteName.PartiallyUpdatePerson)]
-		public IActionResult PartiallyUpdatePerson(Guid id,
-			[FromBody] JsonPatchDocument<PersonForUpdateDto> patchDoc)
-		{
-			if (patchDoc == null) return BadRequest();
-			if (!_repository.EntityExists<Person>(id)) return NotFound();
+            Mapper.Map(studentForUpdateDto, student);
+            if (!_studentService.UpdateStudent(student)) throw new Exception($"Patching student {id} failed on save.");
 
-			var person = _repository.GetById<Person>(id);
-			var personForUpdateDto = Mapper.Map<PersonForUpdateDto>(person);
-
-			patchDoc.ApplyTo(personForUpdateDto, ModelState);
-
-			if (personForUpdateDto.Name == personForUpdateDto.Surname)
-				ModelState.AddModelError(nameof(PersonForUpdateDto),
-					"The provided surname should be different from the name.");
-
-			TryValidateModel(personForUpdateDto);
-
-			if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
-
-			Mapper.Map(personForUpdateDto, person);
-			_repository.UpdateEntity(person);
-
-			if (!_repository.Commit()) throw new Exception($"Patching person {id} failed on save.");
-
-			return NoContent();
-		}
+            return NoContent();
+        }
 
 
-		[HttpDelete("{id}", Name = RouteName.DeletePerson)]
-		public IActionResult DeletePerson(Guid id)
-		{
-			var person = _repository.GetById<Person>(id);
-			if (person == null) return NotFound();
+        [HttpDelete("{id}", Name = RouteName.DeleteStudent)]
+        public IActionResult DeleteStudent(Guid id)
+        {
+            var student = _studentService.GetStudent(id);
+            if (student == null) return NotFound();
 
-			_repository.Delete(person);
+            if (!_studentService.DeleteStudent(student)) throw new Exception($"Deleting Student {id} failed on save.");
+            return NoContent();
+        }
+    }
 
-			if (!_repository.Commit()) throw new Exception($"Deleting Person {id} failed on save.");
+    public partial class PeopleController
+    {
+        private string CreateHref(Guid id, string routeName, string fields = "") =>
+            _urlHelper.Link(routeName, new {id, fields});
 
-			return NoContent();
-		}
-	}
-
-	public partial class PeopleController
-	{
-		private string CreateHref(Guid id, string routeName, string fields = null) =>
-			_urlHelper.Link(routeName, new {id, fields});
-
-		private IEnumerable<ILinkDto> CreateLinksPerson(Guid id, string fields = null) => new List<ILinkDto>
-		{
-			string.IsNullOrWhiteSpace(fields)
-				? CreateHref(id, RouteName.GetPerson)
-					.AddRelAndMethod(Rel.Self, Method.Get)
-				: CreateHref(id, RouteName.GetPerson, fields)
-					.AddRelAndMethod(Rel.Self, Method.Get),
-			CreateHref(id, RouteName.CreatePerson)
-				.AddRelAndMethod(Rel.CreatePerson, Method.Post),
-			CreateHref(id, RouteName.PartiallyUpdatePerson)
-				.AddRelAndMethod(Rel.PatchPerson, Method.Patch),
-			CreateHref(id, RouteName.DeletePerson)
-				.AddRelAndMethod(Rel.DeletePerson, Method.Delete)
-		};
-	}
+        private IEnumerable<ILinkDto> CreateLinksStudent(Guid id, string fields = null) => new List<ILinkDto>
+        {
+            string.IsNullOrWhiteSpace(fields)
+                ? CreateHref(id, RouteName.GetStudent)
+                    .AddRelAndMethod(Rel.Self, Method.Get)
+                : CreateHref(id, RouteName.GetStudent, fields)
+                    .AddRelAndMethod(Rel.Self, Method.Get),
+            CreateHref(id, RouteName.CreateStudent)
+                .AddRelAndMethod(Rel.CreateStudent, Method.Post),
+            CreateHref(id, RouteName.PartiallyUpdateStudent)
+                .AddRelAndMethod(Rel.PatchStudent, Method.Patch),
+            CreateHref(id, RouteName.DeleteStudent)
+                .AddRelAndMethod(Rel.DeleteStudent, Method.Delete)
+        };
+    }
 }

@@ -1,5 +1,5 @@
-﻿using SpaTemplate.Core;
-using SpaTemplate.Tests.Helpers;
+﻿using AutoFixture.Xunit2;
+using SpaTemplate.Core.Hateoas;
 using Xunit;
 
 namespace SpaTemplate.Tests.UnitTests
@@ -7,28 +7,29 @@ namespace SpaTemplate.Tests.UnitTests
 	public class TypeHelperServiceShould
 	{
 		[Theory]
-		[InlineAutoMoqData(null)]
-		[InlineAutoMoqData("id")]
-		[InlineAutoMoqData("Fizz")]
-		[InlineAutoMoqData("id,Fizz, buzz")]
-		[InlineAutoMoqData("buzz     ")]
-		public void ReturnsTrue_NullOrCorrectFields(string fields, TypeHelperService sut)
+		[InlineAutoData(null)]
+		[InlineAutoData("id")]
+		[InlineAutoData("Fizz")]
+		[InlineAutoData("id,Fizz, buzz")]
+		[InlineAutoData("buzz     ")]
+		public void ReturnsTrue_NullOrCorrectFields(string fields)
 		{
+            var sut = new TypeHelperService();
 			Assert.True(sut.TypeHasProperties<DummyEntity>(fields));
 		}
 
 		[Theory]
-		[InlineAutoMoqData("FizzBuzz!")]
-		public void ReturnsFalse_FieldNotExist(string fields, TypeHelperService sut)
-		{
+		[InlineAutoData("FizzBuzz!")]
+		public void ReturnsFalse_FieldNotExist(string fields)
+        {
+            var sut = new TypeHelperService();
 			Assert.False(sut.TypeHasProperties<DummyEntity>(fields));
 		}
 
-		[Theory]
-		[AutoMoqData]
-		public void BeAssignableFromInterface(TypeHelperService sut)
+		[Fact]
+		public void BeAssignableFromInterface()
 		{
-			Assert.IsAssignableFrom<ITypeHelperService>(sut);
+			Assert.IsAssignableFrom<ITypeHelperService>(new TypeHelperService());
 		}
 
 		private class DummyEntity : IDto

@@ -4,7 +4,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using SpaTemplate.Core;
+using SpaTemplate.Core.FacultyContext;
+using SpaTemplate.Core.Hateoas;
 using SpaTemplate.Infrastructure;
 using SpaTemplate.Infrastructure.Core;
 
@@ -14,57 +15,49 @@ namespace SpaTemplate.Web.Core
 	[ValidateModel]
 	public class CoursesController : Controller
 	{
-		private readonly IPropertyMappingService _propertyMappingService;
-		private readonly IRepositoryCourse<Course> _repository;
-		private readonly ITypeHelperService _typeHelperService;
+		private readonly ICourseService _courseService;
 		private readonly IUrlHelper _urlHelper;
 
 		public CoursesController(IUrlHelper urlHelper,
-			IRepositoryCourse<Course> repository, ITypeHelperService typeHelperService,
-			IPropertyMappingService propertyMappingService)
+			ICourseService courseService)
 		{
 			_urlHelper = urlHelper;
-			_repository = repository;
-			_typeHelperService = typeHelperService;
-			_propertyMappingService = propertyMappingService;
+			_courseService = courseService;
 		}
 
-		[HttpGet(Name = RouteName.GetCoursesForPerson)]
-		public IActionResult GetCoursesForPerson(CourseParameters parameters,
+		[HttpGet(Name = RouteName.GetCoursesForStudent)]
+		public IActionResult GetCoursesForStudent(CourseParameters parameters,
 			[FromHeader(Name = Header.Accept)] string mediaType,
-			Guid personId)
+			Guid studentId)
 		{
-			if (!_repository.PersonExists(personId)) return NotFound();
-
-			if (!_propertyMappingService.ValidMappingExistsFor<CourseDto, Course>(
-				parameters.OrderBy)) return BadRequest();
-
-			if (!_typeHelperService.TypeHasProperties<CourseDto>(parameters.Fields)) return BadRequest();
-
-			var courses = _repository.GetPagedList<CourseDto>(personId, parameters);
-
+			if (!_courseService.StudentExists(studentId)) return NotFound();
+			if (!_courseService.CourseMappingExists(parameters)) return BadRequest();
+			if (!_courseService.CoursePropertiesExists(parameters)) return BadRequest();
+			
+            var courses = _courseService.GetPagedList(studentId, parameters);
 			var courseDtos = Mapper.Map<IEnumerable<CourseDto>>(courses);
+
 			if (mediaType == MediaType.OutputFormatterJson)
 			{
 				Response.Headers.Add(Header.XPagination, JsonConvert.SerializeObject(courses.CreateBasePagination()));
-				var values = courseDtos.GetShapedDtoWithLinks(parameters, CreateLinksForCourse);
-				var links = _urlHelper.CreateLinks(RouteName.GetCoursesForPerson, parameters, courses);
+				var values = courseDtos.ShapeDataCollectionWithHateoasLinks(parameters.Fields, CreateLinksForCourse);
+				var links = _urlHelper.CreateLinks(RouteName.GetCoursesForStudent, parameters, courses);
 				return Ok(HateoasDto.CreateHateoasDto(values, links));
 			}
 
 			Response.Headers.Add(Header.XPagination, JsonConvert.SerializeObject(
-				_urlHelper.CreateHateoasPagination(RouteName.GetCoursesForPerson, courses, parameters)));
+				_urlHelper.CreateHateoasPagination(RouteName.GetCoursesForStudent, courses, parameters)));
 
-			return Ok(courseDtos.ShapeData(parameters.Fields));
+			return Ok(courseDtos.ShapeDataCollection(parameters.Fields));
 		}
 
-		[HttpGet("{id}", Name = RouteName.GetCourseForPerson)]
-		public IActionResult GetCourseForPerson(Guid personId, Guid id,
+		[HttpGet("{id}", Name = RouteName.GetCourseForStudent)]
+		public IActionResult GetCourseForStudent(Guid studentId, Guid id,
 			[FromHeader(Name = Header.Accept)] string mediaType)
 		{
-			if (!_repository.PersonExists(personId)) return NotFound();
+			if (!_courseService.StudentExists(studentId)) return NotFound();
 
-			var course = _repository.GetCourse(personId, id);
+			var course = _courseService.GetCourse(studentId, id);
 			if (course == null) return NotFound();
 
 			return mediaType != MediaType.OutputFormatterJson
@@ -72,9 +65,9 @@ namespace SpaTemplate.Web.Core
 				: Ok(course.ShapeDataWithoutParameters<CourseDto, Course>(CreateLinksForCourse));
 		}
 
-		[HttpPost(Name = RouteName.CreateCourseForPerson)]
+		[HttpPost(Name = RouteName.CreateCourseForStudent)]
 		[RequestHeaderMatchesMediaType(Header.ContentType, new[] {MediaType.InputFormatterJson})]
-		public IActionResult CreateCourseForPerson(Guid personId,
+		public IActionResult CreateCourseForStudent(Guid studentId,
 			[FromBody] CourseForCreationDto courseForCreationDto)
 		{
 			if (courseForCreationDto == null) return BadRequest();
@@ -84,39 +77,34 @@ namespace SpaTemplate.Web.Core
 					"The provided description should be different from the title.");
 
 			if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
-
-			if (!_repository.PersonExists(personId)) return NotFound();
+			if (!_courseService.StudentExists(studentId)) return NotFound();
 
 			var course = Mapper.Map<Course>(courseForCreationDto);
 
-			_repository.AddCourse(personId, course);
+			if (!_courseService.AddCourse(studentId, course)) throw new Exception($"Creating a course for student {studentId} failed on save.");
 
-			if (!_repository.Commit()) throw new Exception($"Creating a course for person {personId} failed on save.");
-
-			return CreatedAtRoute(RouteName.GetCourseForPerson,
-				new {personId, course.Id},
+			return CreatedAtRoute(RouteName.GetCourseForStudent,
+				new { studentId, course.Id},
 				course.ShapeDataWithoutParameters<CourseDto, Course>(CreateLinksForCourse));
 		}
 
-		[HttpDelete("{id}", Name = RouteName.DeleteCourseForPerson)]
-		public IActionResult DeleteCourseForPerson(Guid personId, Guid id)
+		[HttpDelete("{id}", Name = RouteName.DeleteCourseForStudent)]
+		public IActionResult DeleteCourseForStudent(Guid studentId, Guid id)
 		{
-			if (!_repository.PersonExists(personId)) return NotFound();
+			if (!_courseService.StudentExists(studentId)) return NotFound();
 
-			var course = _repository.GetCourse(personId, id);
+			var course = _courseService.GetCourse(studentId, id);
 			if (course == null) return NotFound();
 
-			_repository.Delete(course);
-
-			if (!_repository.Commit())
-				throw new Exception($"Deleting course {id} for person {personId} failed on save.");
+			if (!_courseService.DeleteCourse(course))
+				throw new Exception($"Deleting course {id} for student {studentId} failed on save.");
 
 			return NoContent();
 		}
 
-		[HttpPut("{id}", Name = RouteName.UpdateCourseForPerson)]
+		[HttpPut("{id}", Name = RouteName.UpdateCourseForStudent)]
 		[RequestHeaderMatchesMediaType(Header.ContentType, new[] {MediaType.InputFormatterJson})]
-		public IActionResult UpdateCourseForPerson(Guid personId, Guid id,
+		public IActionResult UpdateCourseForStudent(Guid studentId, Guid id,
 			[FromBody] CourseForUpdateDto courseForUpdateDto)
 		{
 			if (courseForUpdateDto == null) return BadRequest();
@@ -126,47 +114,38 @@ namespace SpaTemplate.Web.Core
 					"The provided description should be different from the title.");
 
 			if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
+			if (!_courseService.StudentExists(studentId)) return NotFound();
 
-			if (!_repository.PersonExists(personId))
-				return NotFound();
-
-			var course = _repository.GetCourse(personId, id);
+			var course = _courseService.GetCourse(studentId, id);
 			if (course == null)
 			{
 				var mapCourse = Mapper.Map<Course>(courseForUpdateDto);
 				mapCourse.Id = id;
 
-				_repository.AddCourse(personId, mapCourse);
-
-				if (!_repository.Commit())
-					throw new Exception($"Upserting course {id} for person {personId} failed on save.");
+				if (!_courseService.AddCourse(studentId, mapCourse))
+					throw new Exception($"Upserting course {id} for student {studentId} failed on save.");
 
 				var courseDto = Mapper.Map<CourseDto>(mapCourse);
 
-				return CreatedAtRoute(RouteName.GetCourseForPerson,
-					new {personId, courseDto.Id},
+				return CreatedAtRoute(RouteName.GetCourseForStudent,
+					new {studentId, courseDto.Id},
 					courseDto);
 			}
-
 			Mapper.Map(courseForUpdateDto, course);
-
-			_repository.UpdateEntity(course);
-
-			if (!_repository.Commit())
-				throw new Exception($"Updating course {id} for person {personId} failed on save.");
+			if (!_courseService.UpdateCourse(course))
+				throw new Exception($"Updating course {id} for student {studentId} failed on save.");
 
 			return NoContent();
 		}
 
-		[HttpPatch("{id}", Name = RouteName.PartiallyUpdateCourseForPerson)]
-		public IActionResult PartiallyUpdateCourseForPerson(Guid personId, Guid id,
+		[HttpPatch("{id}", Name = RouteName.PartiallyUpdateCourseForStudent)]
+		public IActionResult PartiallyUpdateCourseForStudent(Guid studentId, Guid id,
 			[FromBody] JsonPatchDocument<CourseForUpdateDto> patchDoc)
 		{
 			if (patchDoc == null) return BadRequest();
+			if (!_courseService.StudentExists(studentId)) return NotFound();
 
-			if (!_repository.PersonExists(personId)) return NotFound();
-
-			var course = _repository.GetCourse(personId, id);
+			var course = _courseService.GetCourse(studentId, id);
 
 			if (course == null)
 			{
@@ -184,14 +163,12 @@ namespace SpaTemplate.Web.Core
 				var mapCourse = Mapper.Map<Course>(courseForUpdateDto);
 				mapCourse.Id = id;
 
-				_repository.AddCourse(personId, mapCourse);
-
-				if (!_repository.Commit())
-					throw new Exception($"Upserting course {id} for person {personId} failed on save.");
+				if (!_courseService.AddCourse(studentId, mapCourse))
+					throw new Exception($"Upserting course {id} for student {studentId} failed on save.");
 
 				var courseDto = Mapper.Map<CourseDto>(mapCourse);
-				return CreatedAtRoute(RouteName.GetCourseForPerson,
-					new {personId, courseDto.Id},
+				return CreatedAtRoute(RouteName.GetCourseForStudent,
+					new {studentId, courseDto.Id},
 					courseDto);
 			}
 
@@ -204,15 +181,12 @@ namespace SpaTemplate.Web.Core
 					"The provided description should be different from the title.");
 
 			TryValidateModel(courseToPatch);
-
 			if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
 
 			Mapper.Map(courseToPatch, course);
 
-			_repository.UpdateEntity(course);
-
-			if (!_repository.Commit())
-				throw new Exception($"Patching course {id} for person {personId} failed on save.");
+			if (!_courseService.UpdateCourse(course))
+				throw new Exception($"Patching course {id} for student {studentId} failed on save.");
 
 			return NoContent();
 		}
@@ -223,17 +197,17 @@ namespace SpaTemplate.Web.Core
 		private IEnumerable<ILinkDto> CreateLinksForCourse(Guid id, string fields = null) => new List<ILinkDto>
 		{
 			string.IsNullOrWhiteSpace(fields)
-				? CreateHref(id, RouteName.GetCoursesForPerson)
+				? CreateHref(id, RouteName.GetCoursesForStudent)
 					.AddRelAndMethod(Rel.Self, Method.Get)
-				: CreateHref(id, RouteName.GetCoursesForPerson, fields)
+				: CreateHref(id, RouteName.GetCoursesForStudent, fields)
 					.AddRelAndMethod(Rel.Self, Method.Get),
-			CreateHref(id, RouteName.CreateCourseForPerson)
-				.AddRelAndMethod(Rel.CreateCourseForPerson, Method.Post),
-			CreateHref(id, RouteName.PartiallyUpdateCourseForPerson)
+			CreateHref(id, RouteName.CreateCourseForStudent)
+				.AddRelAndMethod(Rel.CreateCourseForStudent, Method.Post),
+			CreateHref(id, RouteName.PartiallyUpdateCourseForStudent)
 				.AddRelAndMethod(Rel.PartiallyUpdateCourse, Method.Patch),
-			CreateHref(id, RouteName.UpdateCourseForPerson)
+			CreateHref(id, RouteName.UpdateCourseForStudent)
 				.AddRelAndMethod(Rel.UpdateCourse, Method.Put),
-			CreateHref(id, RouteName.DeleteCourseForPerson)
+			CreateHref(id, RouteName.DeleteCourseForStudent)
 				.AddRelAndMethod(Rel.DeleteCourse, Method.Delete)
 		};
 	}

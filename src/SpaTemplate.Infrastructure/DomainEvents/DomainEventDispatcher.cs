@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
-using SpaTemplate.Core;
+using SpaTemplate.Core.SharedKernel;
 
 namespace SpaTemplate.Infrastructure
 {

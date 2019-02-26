@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using SpaTemplate.Core;
+using SpaTemplate.Core.Hateoas;
+using SpaTemplate.Core.SharedKernel;
 using SpaTemplate.Tests.Helpers;
 using Xunit;
 
@@ -18,8 +18,7 @@ namespace SpaTemplate.Tests.UnitTests
 		public void ReturnsPagedList_CorrectPagination(int pageNumber, int pageSize, int totalCount, bool hasNext,
 			bool hasPrevious, int totalPages)
 		{
-			var queryable = DummyList().AsQueryable();
-			var pagedList = PagedList<DummyEntity>.Create(queryable, pageNumber, pageSize);
+			var pagedList = PagedList<DummyEntity>.Create(DummyList(), pageNumber, pageSize);
 
 			Assert.Equal(pageSize, pagedList.PageSize);
 			Assert.Equal(pageNumber, pagedList.CurrentPage);
@@ -27,7 +26,7 @@ namespace SpaTemplate.Tests.UnitTests
 			Assert.Equal(hasNext, pagedList.HasNext);
 			Assert.Equal(hasPrevious, pagedList.HasPrevious);
 			Assert.Equal(totalPages, pagedList.TotalPages);
-		}
+        }
 
 		[Theory]
 		[AutoMoqData]
@@ -36,7 +35,7 @@ namespace SpaTemplate.Tests.UnitTests
 			Assert.IsAssignableFrom<IPagedList<DummyEntity>>(sut);
 		}
 
-		private static IEnumerable<DummyEntity> DummyList() => new List<DummyEntity>
+		private static List<DummyEntity> DummyList() => new List<DummyEntity>
 		{
 			new DummyEntity(),
 			new DummyEntity(),

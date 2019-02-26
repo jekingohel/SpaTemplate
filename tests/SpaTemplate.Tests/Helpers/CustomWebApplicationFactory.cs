@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SpaTemplate.Core;
+using SpaTemplate.Core.SharedKernel;
 using SpaTemplate.Infrastructure;
 using SpaTemplate.Infrastructure.Core;
 using SpaTemplate.Web.Core;
@@ -18,26 +18,20 @@ namespace SpaTemplate.Tests.Helpers
             builder.UseContentRoot(".");
 			builder.ConfigureServices(services =>
 			{
-				// Create a new service provider.
 				var serviceProvider = new ServiceCollection()
 					.AddEntityFrameworkInMemoryDatabase()
 					.BuildServiceProvider();
 
-				// AddEntity a database context (AppDbContext) using an in-memory
-				// database for testing.
 				services.AddDbContext<AppDbContext>(options =>
 				{
-					options.UseInMemoryDatabase("InMemoryDbForTesting");
+					options.UseInMemoryDatabase("tests-factory");
 					options.UseInternalServiceProvider(serviceProvider);
 				});
 
 				services.AddScoped<IDomainEventDispatcher, NoOpDomainEventDispatcher>();
 
-				// Build the service provider.
 				var sp = services.BuildServiceProvider();
 
-				// Create a scope to obtain a reference to the database
-				// context (AppDbContext).
 				using (var scope = sp.CreateScope())
 				{
 					var scopedServices = scope.ServiceProvider;
@@ -46,12 +40,10 @@ namespace SpaTemplate.Tests.Helpers
 					var logger = scopedServices
 						.GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
 
-					// Ensure the database is created.
 					db.Database.EnsureCreated();
 
 					try
 					{
-						// Seed the database with test data.
 						SeedData.PopulateTestData(db);
 					}
 					catch (Exception ex)
