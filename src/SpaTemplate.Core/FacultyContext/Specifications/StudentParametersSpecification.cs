@@ -4,24 +4,26 @@ using SpaTemplate.Core.SharedKernel;
 
 namespace SpaTemplate.Core.FacultyContext
 {
-    public class StudentParametersSpecification : ISpecification<Student>
+    public sealed class StudentParametersSpecification : BaseSpecification<Student>
     {
-        private readonly IParameters _parameters;
-
-        public StudentParametersSpecification(IParameters parameters) => _parameters = parameters;
-
-        public Func<Student, bool> CriteriaExpression
+        public StudentParametersSpecification(Guid studentId) : base(student => student.Id == studentId)
         {
-            get
-            {
-                if (_parameters.SearchQuery == null) return student => true;
-                return student => student.Name.ToLowerInvariant()
-                                      .Contains(_parameters.SearchQuery.Trim().ToLowerInvariant())
-                                  || student.Surname.ToLowerInvariant()
-                                      .Contains(_parameters.SearchQuery.Trim().ToLowerInvariant());
-            }
+            AddInclude(student => student.Courses);
         }
 
-        public bool IsSatisfiedBy(Student target) => false;
+        public StudentParametersSpecification(IParameters parameters) : base(student =>
+            CriteriaExpression(student, parameters))
+        {
+            AddInclude(student => student.Courses);
+        }
+
+        private static bool CriteriaExpression(Student student, IParameters parameters)
+        {
+            if (parameters.SearchQuery == null) return true;
+            return student.Name.ToLowerInvariant()
+                       .Contains(parameters.SearchQuery.Trim().ToLowerInvariant())
+                   || student.Surname.ToLowerInvariant()
+                       .Contains(parameters.SearchQuery.Trim().ToLowerInvariant());
+        }
     }
 }

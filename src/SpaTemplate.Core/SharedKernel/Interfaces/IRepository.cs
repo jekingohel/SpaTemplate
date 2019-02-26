@@ -12,14 +12,14 @@ namespace SpaTemplate.Core.SharedKernel
         bool ExistsEntity<TEntity>(Guid entity) where TEntity : BaseEntity;
         bool UpdateEntity<TEntity>(TEntity entity) where TEntity : BaseEntity;
 
-        List<TEntity> GetCollection<TEntity>(ISpecification<TEntity> specification = null, SpecificationQueryMode mode = SpecificationQueryMode.None)
+        List<TEntity> GetCollection<TEntity>(ISpecification<TEntity> specification = null)
             where TEntity : BaseEntity;
 
         PagedList<TEntity> GetCollection<TEntity, TDto>(IParameters parameters,
-            ISpecification<TEntity> specification = null, SpecificationQueryMode mode = SpecificationQueryMode.None)
+            ISpecification<TEntity> specification = null)
             where TDto : IDto where TEntity : BaseEntity;
 
-        TEntity GetFirstOrDefault<TEntity>(ISpecification<TEntity> specification = null, SpecificationQueryMode mode = SpecificationQueryMode.None)
+        TEntity GetFirstOrDefault<TEntity>(ISpecification<TEntity> specification = null)
             where TEntity : BaseEntity;
     }
 }

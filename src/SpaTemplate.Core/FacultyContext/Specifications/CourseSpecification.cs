@@ -3,28 +3,25 @@ using SpaTemplate.Core.SharedKernel;
 
 namespace SpaTemplate.Core.FacultyContext
 {
-    public class CourseSpecification : ISpecification<Course>
+    public sealed class CourseSpecification : BaseSpecification<Course>
     {
-        private readonly (Guid studentId, Guid courseId) _parameter;
-
-        public CourseSpecification((Guid studentId, Guid courseId) parameter)
+        public CourseSpecification(Guid studentId) : base(course => course.StudentId == studentId)
         {
-            _parameter = parameter;
+            AddInclude(b => b.Student);
         }
 
-        public Func<Course, bool> CriteriaExpression =>
-            course =>
-            {
-                if (course == null) return false;
-                if (_parameter.studentId != Guid.Empty && _parameter.courseId != Guid.Empty)
-                    return course.StudentId == _parameter.studentId && course.Id == _parameter.courseId;
-                if (_parameter.studentId != Guid.Empty)
-                    return course.StudentId == _parameter.studentId;
-                return false;
-            };
-
-        public bool IsSatisfiedBy(Course target)
+        public CourseSpecification(Guid studentId, Guid courseId) : base(course =>
+            CourseCriteria(course, studentId, courseId))
         {
+            AddInclude(b => b.Student);
+        }
+
+        private static bool CourseCriteria(Course course, Guid studentId, Guid courseId)
+        {
+            if (course == null) return false;
+            if (studentId != Guid.Empty && courseId != Guid.Empty)
+                return course.StudentId == studentId && course.Id == courseId;
+            if (studentId != Guid.Empty) return course.StudentId == studentId;
             return false;
         }
     }

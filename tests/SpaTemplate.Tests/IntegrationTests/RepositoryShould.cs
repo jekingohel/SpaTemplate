@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using SpaTemplate.Core.FacultyContext;
+﻿using SpaTemplate.Core.FacultyContext;
 using SpaTemplate.Tests.Helpers;
 using Xunit;
 
@@ -14,7 +13,7 @@ namespace SpaTemplate.Tests.IntegrationTests
             var sut = new Student();
 
 			Assert.True(repository.AddEntity(sut));
-			var newItem = repository.GetCollection<Student>().First();
+			var newItem = repository.GetFirstOrDefault(new StudentSpecification(sut.Id));
 
 			Assert.Equal(sut.Id, newItem.Id);
 		}

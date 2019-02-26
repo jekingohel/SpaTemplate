@@ -40,7 +40,7 @@ namespace SpaTemplate.Core.FacultyContext
 
         public PagedList<Student> GetPagedList<TParameters>(TParameters parameters)
             where TParameters : IParameters => _repository.GetCollection<Student, StudentDto>(parameters,
-            new StudentParametersSpecification(parameters), SpecificationQueryMode.CriteriaExpression);
+            new StudentParametersSpecification(parameters));
 
 		public void Handle(StudentCompletedEvent domainEvent)
 		{

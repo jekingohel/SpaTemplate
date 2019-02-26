@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace SpaTemplate.Core.SharedKernel
 {
-    public interface ISpecification<in T>
+    public interface ISpecification<T>
     {
-        Func<T, bool> CriteriaExpression { get; }
-        bool IsSatisfiedBy(T target);
+        Expression<Func<T, bool>> Criteria { get; }
+        List<Expression<Func<T, object>>> Includes { get; }
+        List<string> IncludeStrings { get; }
     }
 }

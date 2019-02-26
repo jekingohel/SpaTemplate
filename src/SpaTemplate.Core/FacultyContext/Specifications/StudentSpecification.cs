@@ -3,17 +3,11 @@ using SpaTemplate.Core.SharedKernel;
 
 namespace SpaTemplate.Core.FacultyContext
 {
-    public class StudentSpecification : ISpecification<Student>
+    public sealed class StudentSpecification : BaseSpecification<Student>
     {
-        private readonly Guid _studentId;
-
-        public StudentSpecification(Guid studentId)
+        public StudentSpecification(Guid studentId) : base(student => student.Id == studentId)
         {
-            _studentId = studentId;
+            AddInclude(student => student.Courses);
         }
-
-        public bool IsSatisfiedBy(Student target) => target.Id == _studentId;
-
-        Func<Student, bool> ISpecification<Student>.CriteriaExpression => student => false;
     }
 }

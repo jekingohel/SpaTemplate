@@ -20,8 +20,7 @@ namespace SpaTemplate.Core.FacultyContext
 
         public bool AddCourse(Guid studentId, Course course)
         {
-            var people = _repository.GetFirstOrDefault(new StudentSpecification(studentId),
-                SpecificationQueryMode.IsSatisfiedBy);
+            var people = _repository.GetFirstOrDefault(new StudentSpecification(studentId));
             if (people == null) return false;
             if (course.Id == Guid.Empty) course.Id = Guid.NewGuid();
             return _repository.AddEntity(course);
@@ -34,12 +33,10 @@ namespace SpaTemplate.Core.FacultyContext
         public PagedList<Course> GetPagedList<TParameters>(Guid studentId, TParameters parameters)
             where TParameters : IParameters =>
             _repository.GetCollection<Course, CourseDto>(parameters,
-                new CourseParametersSpecification(parameters, studentId),
-                SpecificationQueryMode.CriteriaExpression);
+                new CourseParametersSpecification(parameters, studentId));
 
         public Course GetCourse(Guid studentId, Guid courseId) =>
-            _repository.GetFirstOrDefault(new CourseSpecification((studentId, courseId)),
-                SpecificationQueryMode.CriteriaExpression);
+            _repository.GetFirstOrDefault(new CourseSpecification(studentId, courseId));
 
         public bool CourseMappingExists<TParameters>(TParameters parameters) where TParameters : IParameters =>
             _propertyMappingService.ValidMappingExistsFor<CourseDto, Course>(

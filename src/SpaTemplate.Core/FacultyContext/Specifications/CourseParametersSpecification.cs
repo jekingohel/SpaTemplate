@@ -4,30 +4,22 @@ using SpaTemplate.Core.SharedKernel;
 
 namespace SpaTemplate.Core.FacultyContext
 {
-    public class CourseParametersSpecification : ISpecification<Course>
+    public sealed class CourseParametersSpecification : BaseSpecification<Course>
     {
-        private readonly IParameters _parameters;
-        private readonly Guid _studentId;
-
-        public CourseParametersSpecification(IParameters parameters, Guid studentId)
+        public CourseParametersSpecification(IParameters parameters, Guid studentId) : base(course =>
+            CriteriaExpression(course, parameters, studentId))
         {
-            _parameters = parameters;
-            _studentId = studentId;
+            AddInclude(course => course.Student);
         }
 
-        public Func<Course, bool> CriteriaExpression
+        private static bool CriteriaExpression(Course course, IParameters parameters, Guid studentId)
         {
-            get
-            {
-                if (_parameters.SearchQuery == null) return course => true;
-                return course => course.Student.Id == _studentId &&
-                                 (course.Title.ToLowerInvariant()
-                                      .Contains(_parameters.SearchQuery.Trim().ToLowerInvariant())
-                                  || course.Description.ToLowerInvariant()
-                                      .Contains(_parameters.SearchQuery.Trim().ToLowerInvariant()));
-            }
+            if (parameters.SearchQuery == null) return true;
+            return course.Student.Id == studentId &&
+                   (course.Title.ToLowerInvariant()
+                        .Contains(parameters.SearchQuery.Trim().ToLowerInvariant())
+                    || course.Description.ToLowerInvariant()
+                        .Contains(parameters.SearchQuery.Trim().ToLowerInvariant()));
         }
-
-        public bool IsSatisfiedBy(Course target) => false;
     }
 }
