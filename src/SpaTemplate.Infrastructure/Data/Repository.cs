@@ -38,17 +38,6 @@ namespace SpaTemplate.Infrastructure
                 .Where(specification.Criteria).ToList();
         }
 
-        public PagedList<TEntity> GetCollection<TEntity, TDto>(IParameters parameters,
-            ISpecification<TEntity> specification)
-            where TEntity : BaseEntity where TDto : IDto
-        {
-            var entities = GetCollection(specification)
-                .ApplySort(parameters.OrderBy,
-                    _propertyMappingService.GetPropertyMapping<TDto, TEntity>()).ToList();
-
-            return PagedList<TEntity>.Create(entities, parameters.PageNumber, parameters.PageSize);
-        }
-
         public TEntity GetFirstOrDefault<TEntity>(ISpecification<TEntity> specification = null)
             where TEntity : BaseEntity =>
             specification == null
@@ -74,6 +63,17 @@ namespace SpaTemplate.Infrastructure
         {
             _dbContext.Entry(entity).State = EntityState.Modified;
             return _dbContext.SaveChanges() > 0;
+        }
+
+        public PagedList<TEntity> GetCollection<TEntity, TDto>(ISpecification<TEntity> specification,
+            IParameters parameters)
+            where TEntity : BaseEntity where TDto : IDto
+        {
+            var entities = GetCollection(specification)
+                .ApplySort(parameters.OrderBy,
+                    _propertyMappingService.GetPropertyMapping<TDto, TEntity>()).ToList();
+
+            return PagedList<TEntity>.Create(entities, parameters.PageNumber, parameters.PageSize);
         }
     }
 }

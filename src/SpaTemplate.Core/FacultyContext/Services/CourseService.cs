@@ -32,8 +32,8 @@ namespace SpaTemplate.Core.FacultyContext
 
         public PagedList<Course> GetPagedList<TParameters>(Guid studentId, TParameters parameters)
             where TParameters : IParameters =>
-            _repository.GetCollection<Course, CourseDto>(parameters,
-                new CourseParametersSpecification(parameters, studentId));
+            _repository.GetCollection<Course, CourseDto>(
+                new CourseParametersSpecification(parameters, studentId), parameters);
 
         public Course GetCourse(Guid studentId, Guid courseId) =>
             _repository.GetFirstOrDefault(new CourseSpecification(studentId, courseId));

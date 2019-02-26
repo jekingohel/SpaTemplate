@@ -15,8 +15,7 @@ namespace SpaTemplate.Core.SharedKernel
         List<TEntity> GetCollection<TEntity>(ISpecification<TEntity> specification = null)
             where TEntity : BaseEntity;
 
-        PagedList<TEntity> GetCollection<TEntity, TDto>(IParameters parameters,
-            ISpecification<TEntity> specification = null)
+        PagedList<TEntity> GetCollection<TEntity, TDto>(ISpecification<TEntity> specification, IParameters parameters)
             where TDto : IDto where TEntity : BaseEntity;
 
         TEntity GetFirstOrDefault<TEntity>(ISpecification<TEntity> specification = null)

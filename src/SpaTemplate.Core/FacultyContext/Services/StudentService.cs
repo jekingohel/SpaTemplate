@@ -39,8 +39,8 @@ namespace SpaTemplate.Core.FacultyContext
             _typeHelperService.TypeHasProperties<StudentDto>(parameters.Fields);
 
         public PagedList<Student> GetPagedList<TParameters>(TParameters parameters)
-            where TParameters : IParameters => _repository.GetCollection<Student, StudentDto>(parameters,
-            new StudentParametersSpecification(parameters));
+            where TParameters : IParameters => _repository.GetCollection<Student, StudentDto>(
+            new StudentParametersSpecification(parameters), parameters);
 
 		public void Handle(StudentCompletedEvent domainEvent)
 		{
