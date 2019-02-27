@@ -30,9 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\SpaTemplate.Infrastructure.Framework\SpaTemplate.Infrastructure.Framework.csproj" />
     <ProjectReference Include="..\..\src\SpaTemplate.Web.Core\SpaTemplate.Web.Core.csproj" />
-    <ProjectReference Include="..\..\src\SpaTemplate.Web.Framework\SpaTemplate.Web.Framework.csproj" />
   </ItemGroup>
 
   <ItemGroup>
