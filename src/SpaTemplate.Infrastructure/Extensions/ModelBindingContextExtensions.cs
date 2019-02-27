@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace SpaTemplate.Infrastructure.Core
+namespace SpaTemplate.Infrastructure
 {
 	public static class ModelBindingContextExtensions
 	{

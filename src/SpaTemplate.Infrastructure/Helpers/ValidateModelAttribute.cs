@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace SpaTemplate.Infrastructure.Core
+namespace SpaTemplate.Infrastructure
 {
 	public class ValidateModelAttribute : ActionFilterAttribute
 	{

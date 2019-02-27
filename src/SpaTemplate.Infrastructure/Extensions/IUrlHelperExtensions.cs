@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using SpaTemplate.Core.SharedKernel;
 
-namespace SpaTemplate.Infrastructure.Core
+namespace SpaTemplate.Infrastructure
 {
 	public static class UrlHelperExtensions
 	{

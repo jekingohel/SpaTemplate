@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SpaTemplate.Core.SharedKernel;
 
-namespace SpaTemplate.Web.Core
+namespace SpaTemplate.Infrastructure.Api
 {
 	[Route(Route.RootApi)]
 	public class RootController : Controller

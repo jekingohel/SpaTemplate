@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Newtonsoft.Json;
 using SpaTemplate.Tests.Helpers;
-using SpaTemplate.Web.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +9,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using SpaTemplate.Core.FacultyContext;
 using SpaTemplate.Core.SharedKernel;
+using SpaTemplate.Infrastructure.Api;
 using Xunit;
 
 namespace SpaTemplate.Tests.FunctionalTests

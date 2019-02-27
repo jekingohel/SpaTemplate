@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
 
-namespace SpaTemplate.Infrastructure.Core
+namespace SpaTemplate.Infrastructure
 {
 	[AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
 	public class RequestHeaderMatchesMediaTypeAttribute : Attribute, IActionConstraint

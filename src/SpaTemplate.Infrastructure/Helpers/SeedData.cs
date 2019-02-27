@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using SpaTemplate.Core.FacultyContext;
 
-namespace SpaTemplate.Infrastructure.Core
+namespace SpaTemplate.Infrastructure
 {
 	public static class SeedData
 	{

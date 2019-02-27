@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.JsonPatch;
 using SpaTemplate.Core.FacultyContext;
 using SpaTemplate.Core.SharedKernel;
+using SpaTemplate.Infrastructure.Api;
 using SpaTemplate.Tests.Helpers;
-using SpaTemplate.Web.Core;
 using Xunit;
 using static Newtonsoft.Json.JsonConvert;
 

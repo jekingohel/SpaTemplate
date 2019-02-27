@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SpaTemplate.Core.FacultyContext;
 using SpaTemplate.Core.SharedKernel;
+using SpaTemplate.Infrastructure.Api;
 using SpaTemplate.Tests.Helpers;
-using SpaTemplate.Web.Core;
 using Xunit;
 
 namespace SpaTemplate.Tests.FunctionalTests

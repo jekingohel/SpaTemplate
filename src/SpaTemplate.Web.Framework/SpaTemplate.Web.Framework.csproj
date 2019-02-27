@@ -141,14 +141,6 @@
       <Project>{19207855-da4e-4032-830f-689d9651eedc}</Project>
       <Name>SpaTemplate.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SpaTemplate.Infrastructure.Framework\SpaTemplate.Infrastructure.Framework.csproj">
-      <Project>{A512A614-57A6-4B36-9D91-EF3090AD71BF}</Project>
-      <Name>SpaTemplate.Infrastructure.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SpaTemplate.Infrastructure\SpaTemplate.Infrastructure.csproj">
-      <Project>{80bdfbfb-175b-4263-adea-53364f9c6ab1}</Project>
-      <Name>SpaTemplate.Infrastructure</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientApp\angular.json" />

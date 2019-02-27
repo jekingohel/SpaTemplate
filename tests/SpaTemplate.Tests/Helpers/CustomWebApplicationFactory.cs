@@ -6,8 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using SpaTemplate.Core.SharedKernel;
 using SpaTemplate.Infrastructure;
-using SpaTemplate.Infrastructure.Core;
-using SpaTemplate.Web.Core;
+using SpaTemplate.Infrastructure.Api;
 
 namespace SpaTemplate.Tests.Helpers
 {

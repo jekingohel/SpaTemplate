@@ -1,6 +1,6 @@
 ﻿using System.Net.Http;
 using SpaTemplate.Core.SharedKernel;
-using SpaTemplate.Web.Core;
+using SpaTemplate.Infrastructure.Api;
 
 namespace SpaTemplate.Tests.Helpers
 {

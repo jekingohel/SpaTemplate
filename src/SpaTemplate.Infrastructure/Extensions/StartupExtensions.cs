@@ -19,7 +19,7 @@ using SpaTemplate.Core.SharedKernel;
 using Swashbuckle.AspNetCore.Swagger;
 using MediaType = SpaTemplate.Core.SharedKernel.MediaType;
 
-namespace SpaTemplate.Infrastructure.Core
+namespace SpaTemplate.Infrastructure
 {
     public static class StartupExtensions
     {

@@ -5,9 +5,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using SpaTemplate.Core.FacultyContext;
 using SpaTemplate.Core.SharedKernel;
-using SpaTemplate.Infrastructure.Core;
 
-namespace SpaTemplate.Web.Core
+namespace SpaTemplate.Infrastructure.Api
 {
     [Route(Route.StudentCollectionsApi)]
     public class PeopleCollectionsController : Controller
