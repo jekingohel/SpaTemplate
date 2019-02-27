@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using SpaTemplate.Core.Hateoas;
 using SpaTemplate.Core.SharedKernel;
 
 namespace SpaTemplate.Infrastructure.Core

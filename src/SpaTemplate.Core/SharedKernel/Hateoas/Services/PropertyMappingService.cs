@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SpaTemplate.Core.SharedKernel;
 
-namespace SpaTemplate.Core.Hateoas
+namespace SpaTemplate.Core.SharedKernel
 {
 	public class PropertyMappingService : IPropertyMappingService
 	{

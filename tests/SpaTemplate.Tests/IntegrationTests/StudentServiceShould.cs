@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using SpaTemplate.Core.FacultyContext;
-using SpaTemplate.Core.Hateoas;
+using SpaTemplate.Core.SharedKernel;
 using SpaTemplate.Tests.Helpers;
 using Xunit;
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace SpaTemplate.Core.Hateoas
+namespace SpaTemplate.Core.SharedKernel
 {
 	public class PropertyMapping : IPropertyMapping
 	{

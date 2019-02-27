@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
-using SpaTemplate.Core.SharedKernel;
 
-namespace SpaTemplate.Core.Hateoas
+namespace SpaTemplate.Core.SharedKernel
 {
     public static class HateoasExtensions
     {

@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Reflection;
 
-namespace SpaTemplate.Core.Hateoas
+namespace SpaTemplate.Core.SharedKernel
 {
 	public class TypeHelperService : ITypeHelperService
 	{

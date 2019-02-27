@@ -1,5 +1,4 @@
-﻿using SpaTemplate.Core.Hateoas;
-using SpaTemplate.Core.SharedKernel;
+﻿using SpaTemplate.Core.SharedKernel;
 using SpaTemplate.Tests.Helpers;
 using Xunit;
 

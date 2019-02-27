@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using SpaTemplate.Core.Hateoas;
 
 namespace SpaTemplate.Core.SharedKernel
 {

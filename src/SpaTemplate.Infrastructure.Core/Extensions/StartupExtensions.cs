@@ -15,10 +15,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Serialization;
-using SpaTemplate.Core.Hateoas;
 using SpaTemplate.Core.SharedKernel;
 using Swashbuckle.AspNetCore.Swagger;
-using MediaType = SpaTemplate.Core.Hateoas.MediaType;
+using MediaType = SpaTemplate.Core.SharedKernel.MediaType;
 
 namespace SpaTemplate.Infrastructure.Core
 {

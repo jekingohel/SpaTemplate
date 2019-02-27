@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using SpaTemplate.Core.Hateoas;
 using SpaTemplate.Core.SharedKernel;
 using Xunit;
 

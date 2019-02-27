@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SpaTemplate.Core.FacultyContext;
-using SpaTemplate.Core.Hateoas;
+using SpaTemplate.Core.SharedKernel;
 using SpaTemplate.Infrastructure;
 using SpaTemplate.Infrastructure.Core;
 

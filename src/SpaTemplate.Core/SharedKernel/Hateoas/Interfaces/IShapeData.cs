@@ -1,4 +1,4 @@
-﻿namespace SpaTemplate.Core.Hateoas
+﻿namespace SpaTemplate.Core.SharedKernel
 {
     public interface IShapeData
     {

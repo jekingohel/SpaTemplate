@@ -1,5 +1,5 @@
 ﻿using AutoFixture.Xunit2;
-using SpaTemplate.Core.Hateoas;
+using SpaTemplate.Core.SharedKernel;
 using Xunit;
 
 namespace SpaTemplate.Tests.UnitTests

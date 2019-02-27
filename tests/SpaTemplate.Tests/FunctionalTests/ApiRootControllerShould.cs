@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using SpaTemplate.Core.Hateoas;
+using SpaTemplate.Core.SharedKernel;
 using SpaTemplate.Tests.Helpers;
 using SpaTemplate.Web.Core;
 using Xunit;

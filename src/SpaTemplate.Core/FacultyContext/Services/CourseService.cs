@@ -1,5 +1,4 @@
 ﻿using System;
-using SpaTemplate.Core.Hateoas;
 using SpaTemplate.Core.SharedKernel;
 
 namespace SpaTemplate.Core.FacultyContext

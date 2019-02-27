@@ -1,5 +1,5 @@
 ﻿using System.Net.Http;
-using SpaTemplate.Core.Hateoas;
+using SpaTemplate.Core.SharedKernel;
 using SpaTemplate.Web.Core;
 
 namespace SpaTemplate.Tests.Helpers
