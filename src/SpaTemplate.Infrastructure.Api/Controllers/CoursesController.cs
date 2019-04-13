@@ -1,212 +1,228 @@
-﻿using System;
-using System.Collections.Generic;
-using AutoMapper;
-using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using SpaTemplate.Core.FacultyContext;
-using SpaTemplate.Core.SharedKernel;
+﻿// -----------------------------------------------------------------------
+// <copyright file="CoursesController.cs" company="Piotr Xeinaemm Czech">
+// Copyright (c) Piotr Xeinaemm Czech. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace SpaTemplate.Infrastructure.Api
 {
+	using System;
+	using System.Collections.Generic;
+	using AutoMapper;
+	using Microsoft.AspNetCore.JsonPatch;
+	using Microsoft.AspNetCore.Mvc;
+	using Newtonsoft.Json;
+	using SpaTemplate.Core.FacultyContext;
+	using SpaTemplate.Core.SharedKernel;
+
 	[Route(Route.CoursesApi)]
 	[ValidateModel]
 	public class CoursesController : Controller
 	{
-		private readonly ICourseService _courseService;
-		private readonly IUrlHelper _urlHelper;
+		private readonly ICourseService courseService;
+		private readonly IUrlHelper urlHelper;
 
-		public CoursesController(IUrlHelper urlHelper,
+		public CoursesController(
+			IUrlHelper urlHelper,
 			ICourseService courseService)
 		{
-			_urlHelper = urlHelper;
-			_courseService = courseService;
-		}
-
-		[HttpGet(Name = RouteName.GetCoursesForStudent)]
-		public IActionResult GetCoursesForStudent(CourseParameters parameters,
-			[FromHeader(Name = Header.Accept)] string mediaType,
-			Guid studentId)
-		{
-			if (!_courseService.StudentExists(studentId)) return NotFound();
-			if (!_courseService.CourseMappingExists(parameters)) return BadRequest();
-			if (!_courseService.CoursePropertiesExists(parameters)) return BadRequest();
-			
-            var courses = _courseService.GetPagedList(studentId, parameters);
-			var courseDtos = Mapper.Map<IEnumerable<CourseDto>>(courses);
-
-			if (mediaType == MediaType.OutputFormatterJson)
-			{
-				Response.Headers.Add(Header.XPagination, JsonConvert.SerializeObject(courses.CreateBasePagination()));
-				var values = courseDtos.ShapeDataCollectionWithHateoasLinks(parameters.Fields, CreateLinksForCourse);
-				var links = _urlHelper.CreateLinks(RouteName.GetCoursesForStudent, parameters, courses);
-				return Ok(HateoasDto.CreateHateoasDto(values, links));
-			}
-
-			Response.Headers.Add(Header.XPagination, JsonConvert.SerializeObject(
-				_urlHelper.CreateHateoasPagination(RouteName.GetCoursesForStudent, courses, parameters)));
-
-			return Ok(courseDtos.ShapeDataCollection(parameters.Fields));
-		}
-
-		[HttpGet("{id}", Name = RouteName.GetCourseForStudent)]
-		public IActionResult GetCourseForStudent(Guid studentId, Guid id,
-			[FromHeader(Name = Header.Accept)] string mediaType)
-		{
-			if (!_courseService.StudentExists(studentId)) return NotFound();
-
-			var course = _courseService.GetCourse(studentId, id);
-			if (course == null) return NotFound();
-
-			return mediaType != MediaType.OutputFormatterJson
-				? Ok(course)
-				: Ok(course.ShapeDataWithoutParameters<CourseDto, Course>(CreateLinksForCourse));
+			this.urlHelper = urlHelper;
+			this.courseService = courseService;
 		}
 
 		[HttpPost(Name = RouteName.CreateCourseForStudent)]
-		[RequestHeaderMatchesMediaType(Header.ContentType, new[] {MediaType.InputFormatterJson})]
-		public IActionResult CreateCourseForStudent(Guid studentId,
+		[RequestHeaderMatchesMediaType(Header.ContentType, new[] { MediaType.InputFormatterJson })]
+		public IActionResult CreateCourseForStudent(
+			Guid studentId,
 			[FromBody] CourseForCreationDto courseForCreationDto)
 		{
-			if (courseForCreationDto == null) return BadRequest();
+			if (courseForCreationDto == null) return this.BadRequest();
 
 			if (courseForCreationDto.Description == courseForCreationDto.Title)
-				ModelState.AddModelError(nameof(CourseForCreationDto),
-					"The provided description should be different from the title.");
+				this.ModelState.AddModelError(nameof(CourseForCreationDto), "The provided description should be different from the title.");
 
-			if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
-			if (!_courseService.StudentExists(studentId)) return NotFound();
+			if (!this.ModelState.IsValid) return new UnprocessableEntityObjectResult(this.ModelState);
+			if (!this.courseService.StudentExists(studentId)) return this.NotFound();
 
 			var course = Mapper.Map<Course>(courseForCreationDto);
 
-			if (!_courseService.AddCourse(studentId, course)) throw new Exception($"Creating a course for student {studentId} failed on save.");
+			if (!this.courseService.AddCourse(studentId, course)) throw new Exception($"Creating a course for student {studentId} failed on save.");
 
-			return CreatedAtRoute(RouteName.GetCourseForStudent,
-				new { studentId, course.Id},
-				course.ShapeDataWithoutParameters<CourseDto, Course>(CreateLinksForCourse));
+			return this.CreatedAtRoute(
+				RouteName.GetCourseForStudent,
+				new { studentId, course.Id },
+				course.ShapeDataWithoutParameters<CourseDto, Course>(this.CreateLinksForCourse));
 		}
 
 		[HttpDelete("{id}", Name = RouteName.DeleteCourseForStudent)]
 		public IActionResult DeleteCourseForStudent(Guid studentId, Guid id)
 		{
-			if (!_courseService.StudentExists(studentId)) return NotFound();
+			if (!this.courseService.StudentExists(studentId)) return this.NotFound();
 
-			var course = _courseService.GetCourse(studentId, id);
-			if (course == null) return NotFound();
+			var course = this.courseService.GetCourse(studentId, id);
+			if (course == null) return this.NotFound();
 
-			if (!_courseService.DeleteCourse(course))
+			if (!this.courseService.DeleteCourse(course))
 				throw new Exception($"Deleting course {id} for student {studentId} failed on save.");
 
-			return NoContent();
+			return this.NoContent();
 		}
 
-		[HttpPut("{id}", Name = RouteName.UpdateCourseForStudent)]
-		[RequestHeaderMatchesMediaType(Header.ContentType, new[] {MediaType.InputFormatterJson})]
-		public IActionResult UpdateCourseForStudent(Guid studentId, Guid id,
-			[FromBody] CourseForUpdateDto courseForUpdateDto)
+		[HttpGet("{id}", Name = RouteName.GetCourseForStudent)]
+		public IActionResult GetCourseForStudent(
+			Guid studentId,
+			Guid id,
+			[FromHeader(Name = Header.Accept)] string mediaType)
 		{
-			if (courseForUpdateDto == null) return BadRequest();
+			if (!this.courseService.StudentExists(studentId)) return this.NotFound();
 
-			if (courseForUpdateDto.Description == courseForUpdateDto.Title)
-				ModelState.AddModelError(nameof(CourseForUpdateDto),
-					"The provided description should be different from the title.");
+			var course = this.courseService.GetCourse(studentId, id);
+			if (course == null) return this.NotFound();
 
-			if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
-			if (!_courseService.StudentExists(studentId)) return NotFound();
+			return mediaType != MediaType.OutputFormatterJson
+				? this.Ok(course)
+				: this.Ok(course.ShapeDataWithoutParameters<CourseDto, Course>(this.CreateLinksForCourse));
+		}
 
-			var course = _courseService.GetCourse(studentId, id);
-			if (course == null)
+		[HttpGet(Name = RouteName.GetCoursesForStudent)]
+		public IActionResult GetCoursesForStudent(
+			CourseParameters parameters,
+			[FromHeader(Name = Header.Accept)] string mediaType,
+			Guid studentId)
+		{
+			if (!this.courseService.StudentExists(studentId)) return this.NotFound();
+			if (!this.courseService.CourseMappingExists(parameters)) return this.BadRequest();
+			if (!this.courseService.CoursePropertiesExists(parameters)) return this.BadRequest();
+
+			var courses = this.courseService.GetPagedList(studentId, parameters);
+			var courseDtos = Mapper.Map<IEnumerable<CourseDto>>(courses);
+
+			if (mediaType == MediaType.OutputFormatterJson)
 			{
-				var mapCourse = Mapper.Map<Course>(courseForUpdateDto);
-				mapCourse.Id = id;
-
-				if (!_courseService.AddCourse(studentId, mapCourse))
-					throw new Exception($"Upserting course {id} for student {studentId} failed on save.");
-
-				var courseDto = Mapper.Map<CourseDto>(mapCourse);
-
-				return CreatedAtRoute(RouteName.GetCourseForStudent,
-					new {studentId, courseDto.Id},
-					courseDto);
+				this.Response.Headers.Add(Header.XPagination, JsonConvert.SerializeObject(courses.CreateBasePagination()));
+				var values = courseDtos.ShapeDataCollectionWithHateoasLinks(parameters.Fields, this.CreateLinksForCourse);
+				var links = this.urlHelper.CreateLinks(RouteName.GetCoursesForStudent, parameters, courses);
+				return this.Ok(HateoasDto.CreateHateoasDto(values, links));
 			}
-			Mapper.Map(courseForUpdateDto, course);
-			if (!_courseService.UpdateCourse(course))
-				throw new Exception($"Updating course {id} for student {studentId} failed on save.");
 
-			return NoContent();
+			this.Response.Headers.Add(Header.XPagination, JsonConvert.SerializeObject(
+				this.urlHelper.CreateHateoasPagination(RouteName.GetCoursesForStudent, courses, parameters)));
+
+			return this.Ok(courseDtos.ShapeDataCollection(parameters.Fields));
 		}
 
 		[HttpPatch("{id}", Name = RouteName.PartiallyUpdateCourseForStudent)]
-		public IActionResult PartiallyUpdateCourseForStudent(Guid studentId, Guid id,
+		public IActionResult PartiallyUpdateCourseForStudent(
+			Guid studentId,
+			Guid id,
 			[FromBody] JsonPatchDocument<CourseForUpdateDto> patchDoc)
 		{
-			if (patchDoc == null) return BadRequest();
-			if (!_courseService.StudentExists(studentId)) return NotFound();
+			if (patchDoc == null) return this.BadRequest();
+			if (!this.courseService.StudentExists(studentId)) return this.NotFound();
 
-			var course = _courseService.GetCourse(studentId, id);
+			var course = this.courseService.GetCourse(studentId, id);
 
 			if (course == null)
 			{
 				var courseForUpdateDto = new CourseForUpdateDto();
-				patchDoc.ApplyTo(courseForUpdateDto, ModelState);
+				patchDoc.ApplyTo(courseForUpdateDto, this.ModelState);
 
 				if (courseForUpdateDto.Description == courseForUpdateDto.Title)
-					ModelState.AddModelError(nameof(CourseForUpdateDto),
-						"The provided description should be different from the title.");
+					this.ModelState.AddModelError(nameof(CourseForUpdateDto), "The provided description should be different from the title.");
 
-				TryValidateModel(courseForUpdateDto);
+				this.TryValidateModel(courseForUpdateDto);
 
-				if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
+				if (!this.ModelState.IsValid) return new UnprocessableEntityObjectResult(this.ModelState);
 
 				var mapCourse = Mapper.Map<Course>(courseForUpdateDto);
 				mapCourse.Id = id;
 
-				if (!_courseService.AddCourse(studentId, mapCourse))
+				if (!this.courseService.AddCourse(studentId, mapCourse))
 					throw new Exception($"Upserting course {id} for student {studentId} failed on save.");
 
 				var courseDto = Mapper.Map<CourseDto>(mapCourse);
-				return CreatedAtRoute(RouteName.GetCourseForStudent,
-					new {studentId, courseDto.Id},
+				return this.CreatedAtRoute(
+					RouteName.GetCourseForStudent,
+					new { studentId, courseDto.Id },
 					courseDto);
 			}
 
 			var courseToPatch = Mapper.Map<CourseForUpdateDto>(course);
 
-			patchDoc.ApplyTo(courseToPatch, ModelState);
+			patchDoc.ApplyTo(courseToPatch, this.ModelState);
 
 			if (courseToPatch.Description == courseToPatch.Title)
-				ModelState.AddModelError(nameof(CourseForUpdateDto),
-					"The provided description should be different from the title.");
+				this.ModelState.AddModelError(nameof(CourseForUpdateDto), "The provided description should be different from the title.");
 
-			TryValidateModel(courseToPatch);
-			if (!ModelState.IsValid) return new UnprocessableEntityObjectResult(ModelState);
+			this.TryValidateModel(courseToPatch);
+			if (!this.ModelState.IsValid) return new UnprocessableEntityObjectResult(this.ModelState);
 
 			Mapper.Map(courseToPatch, course);
 
-			if (!_courseService.UpdateCourse(course))
+			if (!this.courseService.UpdateCourse(course))
 				throw new Exception($"Patching course {id} for student {studentId} failed on save.");
 
-			return NoContent();
+			return this.NoContent();
+		}
+
+		[HttpPut("{id}", Name = RouteName.UpdateCourseForStudent)]
+		[RequestHeaderMatchesMediaType(Header.ContentType, new[] { MediaType.InputFormatterJson })]
+		public IActionResult UpdateCourseForStudent(
+			Guid studentId,
+			Guid id,
+			[FromBody] CourseForUpdateDto courseForUpdateDto)
+		{
+			if (courseForUpdateDto == null) return this.BadRequest();
+
+			if (courseForUpdateDto.Description == courseForUpdateDto.Title)
+				this.ModelState.AddModelError(nameof(CourseForUpdateDto), "The provided description should be different from the title.");
+
+			if (!this.ModelState.IsValid) return new UnprocessableEntityObjectResult(this.ModelState);
+			if (!this.courseService.StudentExists(studentId)) return this.NotFound();
+
+			var course = this.courseService.GetCourse(studentId, id);
+			if (course == null)
+			{
+				var mapCourse = Mapper.Map<Course>(courseForUpdateDto);
+				mapCourse.Id = id;
+
+				if (!this.courseService.AddCourse(studentId, mapCourse))
+					throw new Exception($"Upserting course {id} for student {studentId} failed on save.");
+
+				var courseDto = Mapper.Map<CourseDto>(mapCourse);
+
+				return this.CreatedAtRoute(
+					RouteName.GetCourseForStudent,
+					new { studentId, courseDto.Id },
+					courseDto);
+			}
+
+			Mapper.Map(courseForUpdateDto, course);
+			if (!this.courseService.UpdateCourse(course))
+				throw new Exception($"Updating course {id} for student {studentId} failed on save.");
+
+			return this.NoContent();
 		}
 
 		private string CreateHref(Guid id, string routeName, string fields = null) =>
-			_urlHelper.Link(routeName, new {id, fields});
+			this.urlHelper.Link(routeName, new { id, fields });
 
 		private IEnumerable<ILinkDto> CreateLinksForCourse(Guid id, string fields = null) => new List<ILinkDto>
 		{
 			string.IsNullOrWhiteSpace(fields)
-				? CreateHref(id, RouteName.GetCoursesForStudent)
+				? this.CreateHref(id, RouteName.GetCoursesForStudent)
 					.AddRelAndMethod(Rel.Self, Method.Get)
-				: CreateHref(id, RouteName.GetCoursesForStudent, fields)
+				: this.CreateHref(id, RouteName.GetCoursesForStudent, fields)
 					.AddRelAndMethod(Rel.Self, Method.Get),
-			CreateHref(id, RouteName.CreateCourseForStudent)
+			this.CreateHref(id, RouteName.CreateCourseForStudent)
 				.AddRelAndMethod(Rel.CreateCourseForStudent, Method.Post),
-			CreateHref(id, RouteName.PartiallyUpdateCourseForStudent)
+			this.CreateHref(id, RouteName.PartiallyUpdateCourseForStudent)
 				.AddRelAndMethod(Rel.PartiallyUpdateCourse, Method.Patch),
-			CreateHref(id, RouteName.UpdateCourseForStudent)
+			this.CreateHref(id, RouteName.UpdateCourseForStudent)
 				.AddRelAndMethod(Rel.UpdateCourse, Method.Put),
-			CreateHref(id, RouteName.DeleteCourseForStudent)
-				.AddRelAndMethod(Rel.DeleteCourse, Method.Delete)
+			this.CreateHref(id, RouteName.DeleteCourseForStudent)
+				.AddRelAndMethod(Rel.DeleteCourse, Method.Delete),
 		};
 	}
 }

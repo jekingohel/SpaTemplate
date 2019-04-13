@@ -1,51 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using SpaTemplate.Core.FacultyContext;
-using SpaTemplate.Core.SharedKernel;
+﻿// -----------------------------------------------------------------------
+// <copyright file="PeopleCollectionsController.cs" company="Piotr Xeinaemm Czech">
+// Copyright (c) Piotr Xeinaemm Czech. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace SpaTemplate.Infrastructure.Api
 {
-    [Route(Route.StudentCollectionsApi)]
-    public class PeopleCollectionsController : Controller
-    {
-        private readonly IStudentService _studentService;
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+	using AutoMapper;
+	using Microsoft.AspNetCore.Mvc;
+	using SpaTemplate.Core.FacultyContext;
+	using SpaTemplate.Core.SharedKernel;
 
-        public PeopleCollectionsController(IStudentService repository) =>
-            _studentService = repository;
+	[Route(Route.StudentCollectionsApi)]
+	public class PeopleCollectionsController : Controller
+	{
+		private readonly IStudentService studentService;
 
-        [HttpGet("({ids})", Name = RouteName.GetStudentCollection)]
-        public IActionResult GetStudentCollection(
-            [ModelBinder(BinderType = typeof(ArrayModelBinder))]
-            IEnumerable<Guid> ids)
-        {
-            if (ids == null) return BadRequest();
+		public PeopleCollectionsController(IStudentService repository) =>
+			this.studentService = repository;
 
-            var collection = ids.ToList();
-            var entities = _studentService.GetCollection(collection);
+		[HttpPost]
+		public IActionResult CreateStudentCollection(
+			[FromBody] IEnumerable<StudentForCreationDto> studentForCreationDtos)
+		{
+			if (studentForCreationDtos == null) return this.BadRequest();
+			var people = Mapper.Map<IEnumerable<Student>>(studentForCreationDtos);
 
-            if (collection.Count != entities.Count) return NotFound();
-            return Ok(Mapper.Map<IEnumerable<StudentDto>>(entities));
-        }
+			foreach (var student in people)
+				this.studentService.AddStudent(student);
 
-        [HttpPost]
-        public IActionResult CreateStudentCollection(
-            [FromBody] IEnumerable<StudentForCreationDto> studentForCreationDtos)
-        {
-            if (studentForCreationDtos == null) return BadRequest();
-            var people = Mapper.Map<IEnumerable<Student>>(studentForCreationDtos);
+			var peopleDto = Mapper.Map<IEnumerable<StudentDto>>(people);
+			return this.CreatedAtRoute(
+				RouteName.GetStudentCollection,
+				new
+				{
+					ids = string.Join(",", peopleDto.Select(a => a.Id)),
+				}, peopleDto);
+		}
 
-            foreach (var student in people)
-                _studentService.AddStudent(student);
+		[HttpGet("({ids})", Name = RouteName.GetStudentCollection)]
+		public IActionResult GetStudentCollection(
+			[ModelBinder(BinderType = typeof(ArrayModelBinder))]
+			IEnumerable<Guid> ids)
+		{
+			if (ids == null) return this.BadRequest();
 
-            var peopleDto = Mapper.Map<IEnumerable<StudentDto>>(people);
-            return CreatedAtRoute(RouteName.GetStudentCollection,
-                new
-                {
-                    ids = string.Join(",", peopleDto.Select(a => a.Id))
-                }, peopleDto);
-        }
-    }
+			var collection = ids.ToList();
+			var entities = this.studentService.GetCollection(collection);
+
+			if (collection.Count != entities.Count) return this.NotFound();
+			return this.Ok(Mapper.Map<IEnumerable<StudentDto>>(entities));
+		}
+	}
 }

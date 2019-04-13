@@ -1,10 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿// -----------------------------------------------------------------------
+// <copyright file="PagedList.cs" company="Piotr Xeinaemm Czech">
+// Copyright (c) Piotr Xeinaemm Czech. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace SpaTemplate.Core.SharedKernel
 {
-	public class PagedList<T> : List<T>, IPagedList<T> where T : BaseEntity
+	using System;
+	using System.Collections.Generic;
+	using System.Linq;
+
+	public class PagedList<T> : List<T>, IPagedList<T>
+		where T : BaseEntity
 	{
 		public PagedList()
 		{
@@ -12,21 +20,24 @@ namespace SpaTemplate.Core.SharedKernel
 
 		private PagedList(IEnumerable<T> items, int count, int pageNumber, int pageSize)
 		{
-			TotalCount = count;
-			PageSize = pageSize;
-			CurrentPage = pageNumber;
-			TotalPages = (int) Math.Ceiling(count / (double) pageSize);
-			AddRange(items);
+			this.TotalCount = count;
+			this.PageSize = pageSize;
+			this.CurrentPage = pageNumber;
+			this.TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+			this.AddRange(items);
 		}
 
 		public int CurrentPage { get; }
-		public int TotalPages { get; }
+
+		public bool HasNext => this.CurrentPage < this.TotalPages;
+
+		public bool HasPrevious => this.CurrentPage > 1;
+
 		public int PageSize { get; }
+
 		public int TotalCount { get; }
 
-		public bool HasPrevious => CurrentPage > 1;
-
-		public bool HasNext => CurrentPage < TotalPages;
+		public int TotalPages { get; }
 
 		public static PagedList<T> Create(List<T> source, int pageNumber, int pageSize)
 		{

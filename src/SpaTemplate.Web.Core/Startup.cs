@@ -1,45 +1,52 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
+// -----------------------------------------------------------------------
+// <copyright file="Startup.cs" company="Piotr Xeinaemm Czech">
+// Copyright (c) Piotr Xeinaemm Czech. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace SpaTemplate.Web.Core
 {
-    public class Startup
-    {
-        public Startup(IConfiguration configuration) => Configuration = configuration;
+	using Microsoft.AspNetCore.Builder;
+	using Microsoft.AspNetCore.Hosting;
+	using Microsoft.AspNetCore.SpaServices.AngularCli;
+	using Microsoft.Extensions.Configuration;
+	using Microsoft.Extensions.DependencyInjection;
 
-        public IConfiguration Configuration { get; }
+	public class Startup
+	{
+		public Startup(IConfiguration configuration) => this.Configuration = configuration;
 
-        public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
-        }
+		public IConfiguration Configuration { get; }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                app.UseHsts();
-            }
+		public static void ConfigureServices(IServiceCollection services)
+		{
+			services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
+		}
 
-            app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+		public static void Configure(IApplicationBuilder app, IHostingEnvironment env)
+		{
+			if (env.IsDevelopment())
+			{
+				app.UseDeveloperExceptionPage();
+			}
+			else
+			{
+				app.UseExceptionHandler("/Error");
+				app.UseHsts();
+			}
 
-            app.UseMvcWithDefaultRoute();
+			app.UseStaticFiles();
+			app.UseSpaStaticFiles();
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
+			app.UseMvcWithDefaultRoute();
 
-                if (env.IsDevelopment()) spa.UseAngularCliServer("start");
-            });
-        }
-    }
+			app.UseSpa(spa =>
+			{
+				spa.Options.SourcePath = "ClientApp";
+
+				if (env.IsDevelopment()) spa.UseAngularCliServer("start");
+			});
+		}
+	}
 }

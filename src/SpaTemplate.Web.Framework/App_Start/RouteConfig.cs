@@ -1,19 +1,25 @@
-﻿using System.Web.Mvc;
-using System.Web.Routing;
+﻿// -----------------------------------------------------------------------
+// <copyright file="RouteConfig.cs" company="Piotr Xeinaemm Czech">
+// Copyright (c) Piotr Xeinaemm Czech. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace SpaTemplate.Web.Framework
 {
-    public class RouteConfig
-    {
-        public static void RegisterRoutes(RouteCollection routes)
-        {
-            routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+	using System.Web.Mvc;
+	using System.Web.Routing;
 
-            routes.MapRoute(
-                "Default",
-                "{controller}/{action}/{id}",
-                new {controller = "Home", action = "Index", id = UrlParameter.Optional}
-            );
-        }
-    }
+	public static class RouteConfig
+	{
+		public static void RegisterRoutes(RouteCollection routes)
+		{
+			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+
+			routes.MapRoute(
+				"Default",
+				"{controller}/{action}/{id}",
+				new { controller = "Home", action = "Index", id = UrlParameter.Optional });
+		}
+	}
 }

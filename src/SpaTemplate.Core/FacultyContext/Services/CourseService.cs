@@ -1,55 +1,70 @@
-﻿using System;
-using SpaTemplate.Core.SharedKernel;
+﻿// -----------------------------------------------------------------------
+// <copyright file="CourseService.cs" company="Piotr Xeinaemm Czech">
+// Copyright (c) Piotr Xeinaemm Czech. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace SpaTemplate.Core.FacultyContext
 {
-    public class CourseService : IHandle<CourseCompletedEvent>, ICourseService
-    {
-        private readonly IPropertyMappingService _propertyMappingService;
-        private readonly IRepository _repository;
-        private readonly ITypeHelperService _typeHelperService;
+	using System;
+	using SpaTemplate.Core.SharedKernel;
 
-        public CourseService(IRepository repository, IPropertyMappingService propertyMappingService,
-            ITypeHelperService typeHelperService)
-        {
-            _repository = repository;
-            _propertyMappingService = propertyMappingService;
-            _typeHelperService = typeHelperService;
-        }
+	public class CourseService : IHandle<CourseCompletedEvent>, ICourseService
+	{
+		private readonly IPropertyMappingService propertyMappingService;
+		private readonly IRepository repository;
+		private readonly ITypeHelperService typeHelperService;
 
-        public bool AddCourse(Guid studentId, Course course)
-        {
-            var people = _repository.GetFirstOrDefault(new StudentSpecification(studentId));
-            if (people == null) return false;
-            if (course.Id == Guid.Empty) course.Id = Guid.NewGuid();
-            return _repository.AddEntity(course);
-        }
+		public CourseService(
+			IRepository repository,
+			IPropertyMappingService propertyMappingService,
+			ITypeHelperService typeHelperService)
+		{
+			this.repository = repository;
+			this.propertyMappingService = propertyMappingService;
+			this.typeHelperService = typeHelperService;
+		}
 
-        public bool DeleteCourse(Course course) => _repository.DeleteEntity(course);
-        public bool UpdateCourse(Course course) => _repository.UpdateEntity(course);
-        public bool StudentExists(Guid studentId) => _repository.ExistsEntity<Student>(studentId);
+		public bool AddCourse(Guid studentId, Course course)
+		{
+			var people = this.repository.GetFirstOrDefault(new StudentSpecification(studentId));
+			if (people == null) return false;
+			if (course.Id == Guid.Empty) course.Id = Guid.NewGuid();
+			return this.repository.AddEntity(course);
+		}
 
-        public PagedList<Course> GetPagedList<TParameters>(Guid studentId, TParameters parameters)
-            where TParameters : IParameters =>
-            _repository.GetCollection<Course, CourseDto>(
-                new CourseParametersSpecification(parameters, studentId), parameters);
+		public bool CourseMappingExists<TParameters>(TParameters parameters)
+			where TParameters : IParameters
+			=>
+			this.propertyMappingService.ValidMappingExistsFor<CourseDto, Course>(
+				parameters.OrderBy);
 
-        public Course GetCourse(Guid studentId, Guid courseId) =>
-            _repository.GetFirstOrDefault(new CourseSpecification(studentId, courseId));
+		public bool CoursePropertiesExists<TParameters>(TParameters parameters)
+			where TParameters : IParameters
+			=>
+			this.typeHelperService.TypeHasProperties<CourseDto>(parameters.Fields);
 
-        public bool CourseMappingExists<TParameters>(TParameters parameters) where TParameters : IParameters =>
-            _propertyMappingService.ValidMappingExistsFor<CourseDto, Course>(
-                parameters.OrderBy);
+		public bool DeleteCourse(Course course) => this.repository.DeleteEntity(course);
 
-        public bool CoursePropertiesExists<TParameters>(TParameters parameters) where TParameters : IParameters =>
-            _typeHelperService.TypeHasProperties<CourseDto>(parameters.Fields);
+		public Course GetCourse(Guid studentId, Guid courseId) =>
+			this.repository.GetFirstOrDefault(new CourseSpecification(studentId, courseId));
 
-        public void Handle(CourseCompletedEvent domainEvent)
-        {
-            if (domainEvent == null)
-                throw new NullReferenceException($"Collection {nameof(domainEvent)} cannot be null");
+		public PagedList<Course> GetPagedList<TParameters>(Guid studentId, TParameters parameters)
+			where TParameters : IParameters =>
+			this.repository.GetCollection<Course, CourseDto>(
+				new CourseParametersSpecification(parameters, studentId), parameters);
 
-            // Do Nothing
-        }
-    }
+		public void Handle(CourseCompletedEvent domainEvent)
+		{
+			if (domainEvent == null)
+				throw new NullReferenceException($"Collection {nameof(domainEvent)} cannot be null");
+
+			// Do Nothing
+		}
+
+		public bool StudentExists(Guid studentId) => this.repository.ExistsEntity<Student>(studentId);
+
+		public bool UpdateCourse(Course course) => this.repository.UpdateEntity(course);
+	}
 }

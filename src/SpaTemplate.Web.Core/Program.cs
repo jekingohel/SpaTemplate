@@ -1,19 +1,26 @@
-using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
+// -----------------------------------------------------------------------
+// <copyright file="Program.cs" company="Piotr Xeinaemm Czech">
+// Copyright (c) Piotr Xeinaemm Czech. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace SpaTemplate.Web.Core
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateWebHostBuilder(args).Build().Run();
-        }
+	using Microsoft.AspNetCore;
+	using Microsoft.AspNetCore.Hosting;
 
-        private static IWebHostBuilder CreateWebHostBuilder(string[] args)
-        {
-            return WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>();
-        }
-    }
+	public static class Program
+	{
+		public static void Main(string[] args)
+		{
+			CreateWebHostBuilder(args).Build().Run();
+		}
+
+		private static IWebHostBuilder CreateWebHostBuilder(string[] args)
+		{
+			return WebHost.CreateDefaultBuilder(args)
+				.UseStartup<Startup>();
+		}
+	}
 }

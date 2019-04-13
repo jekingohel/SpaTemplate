@@ -1,39 +1,47 @@
-﻿using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using SpaTemplate.Core.FacultyContext;
-using SpaTemplate.Core.SharedKernel;
+﻿// -----------------------------------------------------------------------
+// <copyright file="AppDbContext.cs" company="Piotr Xeinaemm Czech">
+// Copyright (c) Piotr Xeinaemm Czech. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace SpaTemplate.Infrastructure
 {
-    public class AppDbContext : DbContext
-    {
-        private readonly IDomainEventDispatcher _dispatcher;
+	using System.Linq;
+	using Microsoft.EntityFrameworkCore;
+	using SpaTemplate.Core.FacultyContext;
+	using SpaTemplate.Core.SharedKernel;
 
-        public AppDbContext(DbContextOptions<AppDbContext> options, IDomainEventDispatcher dispatcher)
-            : base(options)
-        {
-            _dispatcher = dispatcher;
-        }
+	public class AppDbContext : DbContext
+	{
+		private readonly IDomainEventDispatcher dispatcher;
 
-        public DbSet<Student> People { get; set; }
-        public DbSet<Course> Courses { get; set; }
+		public AppDbContext(DbContextOptions<AppDbContext> options, IDomainEventDispatcher dispatcher)
+			: base(options)
+		{
+			this.dispatcher = dispatcher;
+		}
 
-        public override int SaveChanges()
-        {
-            var result = base.SaveChanges();
+		public DbSet<Course> Courses { get; set; }
 
-            var entitiesWithEvents = ChangeTracker.Entries<BaseEntity>()
-                .Select(e => e.Entity)
-                .Where(e => e.Events.Any());
+		public DbSet<Student> People { get; set; }
 
-            foreach (var entity in entitiesWithEvents)
-            {
-                var events = entity.Events;
-                entity.Events.Clear();
-                foreach (var domainEvent in events) _dispatcher.Dispatch(domainEvent);
-            }
+		public override int SaveChanges()
+		{
+			var result = base.SaveChanges();
 
-            return result;
-        }
-    }
+			var entitiesWithEvents = this.ChangeTracker.Entries<BaseEntity>()
+				.Select(e => e.Entity)
+				.Where(e => e.Events.Count > 0);
+
+			foreach (var entity in entitiesWithEvents)
+			{
+				var events = entity.Events;
+				entity.Events.Clear();
+				foreach (var domainEvent in events) this.dispatcher.Dispatch(domainEvent);
+			}
+
+			return result;
+		}
+	}
 }

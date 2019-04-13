@@ -113,6 +113,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +136,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <None Include="XeinaemmDictionary.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpaTemplate.Core\SpaTemplate.Core.csproj">
@@ -158,6 +160,8 @@
     </None>
     <None Include="Properties\PublishProfiles\deploy-IIS.pubxml" />
     <None Include="Properties\PublishProfiles\deploy-Azure.pubxml" />
+    <None Include="Xeinaemm.ruleset" />
+    <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\e2e\src\app.e2e-spec.ts" />
@@ -179,6 +183,26 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\AsyncFixer.1.1.6\analyzers\dotnet\cs\AsyncFixer.dll" />
+    <Analyzer Include="..\..\packages\codecracker.CSharp.1.1.0\analyzers\dotnet\cs\CodeCracker.CSharp.dll" />
+    <Analyzer Include="..\..\packages\RefactoringEssentials.5.6.0\analyzers\dotnet\RefactoringEssentials.dll" />
+    <Analyzer Include="..\..\packages\Roslynator.Analyzers.2.0.0\analyzers\dotnet\cs\Roslynator.Common.dll" />
+    <Analyzer Include="..\..\packages\Roslynator.Analyzers.2.0.0\analyzers\dotnet\cs\Roslynator.Common.Workspaces.dll" />
+    <Analyzer Include="..\..\packages\Roslynator.Analyzers.2.0.0\analyzers\dotnet\cs\Roslynator.CSharp.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\..\packages\Roslynator.Analyzers.2.0.0\analyzers\dotnet\cs\Roslynator.CSharp.Analyzers.dll" />
+    <Analyzer Include="..\..\packages\Roslynator.Analyzers.2.0.0\analyzers\dotnet\cs\Roslynator.CSharp.dll" />
+    <Analyzer Include="..\..\packages\Roslynator.Analyzers.2.0.0\analyzers\dotnet\cs\Roslynator.CSharp.Workspaces.dll" />
+    <Analyzer Include="..\..\packages\Roslynator.CodeFixes.2.0.0\analyzers\dotnet\cs\Roslynator.Common.dll" />
+    <Analyzer Include="..\..\packages\Roslynator.CodeFixes.2.0.0\analyzers\dotnet\cs\Roslynator.Common.Workspaces.dll" />
+    <Analyzer Include="..\..\packages\Roslynator.CodeFixes.2.0.0\analyzers\dotnet\cs\Roslynator.CSharp.CodeFixes.dll" />
+    <Analyzer Include="..\..\packages\Roslynator.CodeFixes.2.0.0\analyzers\dotnet\cs\Roslynator.CSharp.dll" />
+    <Analyzer Include="..\..\packages\Roslynator.CodeFixes.2.0.0\analyzers\dotnet\cs\Roslynator.CSharp.Workspaces.dll" />
+    <Analyzer Include="..\..\packages\SecurityCodeScan.3.1.0.0\analyzers\dotnet\SecurityCodeScan.dll" />
+    <Analyzer Include="..\..\packages\SecurityCodeScan.3.1.0.0\analyzers\dotnet\YamlDotNet.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.Unstable.1.1.1.114\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
+    <Analyzer Include="..\..\packages\StyleCop.Analyzers.Unstable.1.1.1.114\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

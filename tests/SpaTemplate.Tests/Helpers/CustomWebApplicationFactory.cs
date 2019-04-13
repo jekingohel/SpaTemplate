@@ -1,20 +1,27 @@
-﻿using System;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using SpaTemplate.Core.SharedKernel;
-using SpaTemplate.Infrastructure;
-using SpaTemplate.Infrastructure.Api;
+﻿// -----------------------------------------------------------------------
+// <copyright file="CustomWebApplicationFactory.cs" company="Piotr Xeinaemm Czech">
+// Copyright (c) Piotr Xeinaemm Czech. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// </copyright>
+// -----------------------------------------------------------------------
 
 namespace SpaTemplate.Tests.Helpers
 {
+	using System;
+	using Microsoft.AspNetCore.Hosting;
+	using Microsoft.AspNetCore.Mvc.Testing;
+	using Microsoft.EntityFrameworkCore;
+	using Microsoft.Extensions.DependencyInjection;
+	using Microsoft.Extensions.Logging;
+	using SpaTemplate.Core.SharedKernel;
+	using SpaTemplate.Infrastructure;
+	using SpaTemplate.Infrastructure.Api;
+
 	public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<Startup>
 	{
 		protected override void ConfigureWebHost(IWebHostBuilder builder)
 		{
-            builder.UseContentRoot(".");
+			builder.UseContentRoot(".");
 			builder.ConfigureServices(services =>
 			{
 				var serviceProvider = new ServiceCollection()
@@ -47,8 +54,7 @@ namespace SpaTemplate.Tests.Helpers
 					}
 					catch (Exception ex)
 					{
-						logger.LogError(ex, "An error occurred seeding the " +
-						                    "database with test messages. Error: {ex.Message}");
+						logger.LogError(ex, "An error occurred seeding the database with test messages. Error: {ex.Message}");
 					}
 				}
 			});
