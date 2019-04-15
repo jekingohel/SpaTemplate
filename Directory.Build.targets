@@ -4,7 +4,7 @@
 		<PackageName>Xeinaemm.Analyzer</PackageName>
 		<PackageVersion>1.0.0</PackageVersion>
 	</PropertyGroup>
-	<Target Name="CopyFiles" BeforeTargets="Build">
+	<Target Name="AfterResolveReferences">
 		<ItemGroup>
 			<FilesToCopy Include="$(NuGetPackageRoot)$(PackageName)\$(PackageVersion)\content\*.*" />
 		</ItemGroup>

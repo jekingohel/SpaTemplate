@@ -2,15 +2,16 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 	<PropertyGroup>
-		<CodeAnalysisRuleSet>$(MSBuildProjectDirectory)\Xeinaemm.ruleset</CodeAnalysisRuleSet>
+		<CodeAnalysisRuleSet>Xeinaemm.ruleset</CodeAnalysisRuleSet>
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Xeinaemm.Analyzer" Version="1.0.0" />
-		<AdditionalFiles Include="$(MSBuildProjectDirectory)\stylecop.json" />
-		<None Include="$(MSBuildProjectDirectory)\Xeinaemm.ruleset" />
-		<None Include="$(MSBuildProjectDirectory)\XeinaemmDictionary.xml" />
+		<AdditionalFiles Include="stylecop.json" />
+		<None Include="Xeinaemm.ruleset" />
+    <None Include="XeinaemmDictionary.xml" />
+    <None Include="Xeinaemm.editorconfig" />
 	</ItemGroup>
 
 </Project>

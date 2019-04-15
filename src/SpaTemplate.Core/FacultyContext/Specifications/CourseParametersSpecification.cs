@@ -14,10 +14,7 @@ namespace SpaTemplate.Core.FacultyContext
 	{
 		public CourseParametersSpecification(IParameters parameters, Guid studentId)
 			: base(course =>
-				CriteriaExpression(course, parameters, studentId))
-		{
-			this.AddInclude(course => course.Student);
-		}
+				CriteriaExpression(course, parameters, studentId)) => this.AddInclude(course => course.Student);
 
 		private static bool CriteriaExpression(Course course, IParameters parameters, Guid studentId)
 		{

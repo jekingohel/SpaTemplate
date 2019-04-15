@@ -13,17 +13,11 @@ namespace SpaTemplate.Core.FacultyContext
 	public sealed class CourseSpecification : BaseSpecification<Course>
 	{
 		public CourseSpecification(Guid studentId)
-			: base(course => course.StudentId == studentId)
-		{
-			this.AddInclude(b => b.Student);
-		}
+			: base(course => course.StudentId == studentId) => this.AddInclude(b => b.Student);
 
 		public CourseSpecification(Guid studentId, Guid courseId)
 			: base(course =>
-			CourseCriteria(course, studentId, courseId))
-		{
-			this.AddInclude(b => b.Student);
-		}
+			CourseCriteria(course, studentId, courseId)) => this.AddInclude(b => b.Student);
 
 		private static bool CourseCriteria(Course course, Guid studentId, Guid courseId)
 		{

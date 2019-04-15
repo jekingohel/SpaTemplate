@@ -124,12 +124,8 @@
     <Content Include="ClientApp\src\styles.css" />
     <Content Include="Global.asax" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Web.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.config">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -155,9 +151,7 @@
     <Content Include="ClientApp\src\tslint.json" />
     <Content Include="ClientApp\tsconfig.json" />
     <Content Include="ClientApp\tslint.json" />
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\deploy-IIS.pubxml" />
     <None Include="Properties\PublishProfiles\deploy-Azure.pubxml" />
     <None Include="Xeinaemm.ruleset" />

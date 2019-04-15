@@ -7,7 +7,5 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1600:Elements should be documented", Justification = "By Design")]
-[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1601:Partial elements should be documented", Justification = "By Design")]
-[assembly: SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1602:Enumeration items must be documented", Justification = "By Design")]
-[assembly: SuppressMessage("StyleCop.CSharp.LayoutRules", "SA1503:Braces should not be omitted", Justification = "By Design")]
+[assembly: SuppressMessage("Compilator.Bug", "CS8302:Cannot initialize instance of analyzer", Justification = "By Design")]
+[assembly: SuppressMessage("Compilator.Bug", "AD0001:Exception in analyzer", Justification = "By Design")]

@@ -13,17 +13,11 @@ namespace SpaTemplate.Core.FacultyContext
 	public sealed class StudentParametersSpecification : BaseSpecification<Student>
 	{
 		public StudentParametersSpecification(Guid studentId)
-			: base(student => student.Id == studentId)
-		{
-			this.AddInclude(student => student.Courses);
-		}
+			: base(student => student.Id == studentId) => this.AddInclude(student => student.Courses);
 
 		public StudentParametersSpecification(IParameters parameters)
 			: base(student =>
-				CriteriaExpression(student, parameters))
-		{
-			this.AddInclude(student => student.Courses);
-		}
+				CriteriaExpression(student, parameters)) => this.AddInclude(student => student.Courses);
 
 		private static bool CriteriaExpression(Student student, IParameters parameters)
 		{
