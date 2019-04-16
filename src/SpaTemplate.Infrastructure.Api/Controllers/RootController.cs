@@ -19,11 +19,8 @@ namespace SpaTemplate.Infrastructure.Api
 		public RootController(IUrlHelper urlHelper) => this.urlHelper = urlHelper;
 
 		[HttpGet(Name = RouteName.GetRoot)]
-		public IActionResult GetRoot([FromHeader(Name = Header.Accept)] string mediaType)
-		{
-			if (mediaType != MediaType.OutputFormatterJson) return this.NoContent();
-			return this.Ok(this.RootDtoLinks());
-		}
+		public IActionResult GetRoot([FromHeader(Name = Header.Accept)] string mediaType) =>
+			mediaType != MediaType.OutputFormatterJson ? this.NoContent() : (IActionResult)this.Ok(this.RootDtoLinks());
 
 		private string CreateHref(string routeName) => this.urlHelper.Link(routeName, new { });
 

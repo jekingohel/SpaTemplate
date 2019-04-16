@@ -24,35 +24,35 @@ namespace SpaTemplate.Infrastructure.Api
 
 		public static void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
-			app.UseIpRateLimiting();
+			_ = app.UseIpRateLimiting();
 
 			if (env.IsDevelopment())
-				app.UseDeveloperExceptionPage();
+				_ = app.UseDeveloperExceptionPage();
 
 			// TODO: Find fix for tests(downgraded to 6.1.0)
 			Mapper.Initialize(cfg =>
 			{
-				cfg.CreateMap<Student, StudentDto>();
-				cfg.CreateMap<StudentForCreationDto, Student>();
-				cfg.CreateMap<StudentForUpdateDto, Student>();
-				cfg.CreateMap<Student, StudentForUpdateDto>();
-				cfg.CreateMap<Course, CourseDto>();
-				cfg.CreateMap<CourseDto, Course>();
-				cfg.CreateMap<CourseForCreationDto, Course>();
-				cfg.CreateMap<CourseForUpdateDto, Course>();
-				cfg.CreateMap<Course, CourseForUpdateDto>();
+				_ = cfg.CreateMap<Student, StudentDto>();
+				_ = cfg.CreateMap<StudentForCreationDto, Student>();
+				_ = cfg.CreateMap<StudentForUpdateDto, Student>();
+				_ = cfg.CreateMap<Student, StudentForUpdateDto>();
+				_ = cfg.CreateMap<Course, CourseDto>();
+				_ = cfg.CreateMap<CourseDto, Course>();
+				_ = cfg.CreateMap<CourseForCreationDto, Course>();
+				_ = cfg.CreateMap<CourseForUpdateDto, Course>();
+				_ = cfg.CreateMap<Course, CourseForUpdateDto>();
 			});
 
-			app.UseSwagger();
-			app.UseSwaggerUI(c =>
-			{
-				c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-				c.RoutePrefix = string.Empty;
-			});
+			_ = app.UseSwagger();
+			_ = app.UseSwaggerUI(c =>
+			  {
+				  c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+				  c.RoutePrefix = string.Empty;
+			  });
 
-			app.UseHttpCacheHeaders();
+			_ = app.UseHttpCacheHeaders();
 
-			app.UseMvcWithDefaultRoute();
+			_ = app.UseMvcWithDefaultRoute();
 		}
 
 		public IServiceProvider ConfigureServices(IServiceCollection services)
@@ -61,7 +61,7 @@ namespace SpaTemplate.Infrastructure.Api
 			services.AddCustomMvc();
 			services.AddSwagger();
 			services.AddCustomHttpCacheHeaders();
-			services.AddMemoryCache();
+			_ = services.AddMemoryCache();
 			services.ConfigureIpRateLimitOptions();
 			services.SetupLogging(this.Configuration);
 			return services.BuildDependencyInjectionProvider();

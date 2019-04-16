@@ -18,15 +18,9 @@ namespace SpaTemplate.Infrastructure
 	{
 		private readonly IComponentContext container;
 
-		public DomainEventDispatcher(IContainer container)
-		{
-			this.container = container;
-		}
+		public DomainEventDispatcher(IContainer container) => this.container = container;
 
-		public DomainEventDispatcher(IComponentContext container)
-		{
-			this.container = container;
-		}
+		public DomainEventDispatcher(IComponentContext container) => this.container = container;
 
 		public void Dispatch(BaseDomainEvent domainEvent)
 		{
@@ -49,15 +43,9 @@ namespace SpaTemplate.Infrastructure
 		{
 			private readonly IHandle<T> handler;
 
-			public DomainEventHandler(IHandle<T> handler)
-			{
-				this.handler = handler;
-			}
+			public DomainEventHandler(IHandle<T> handler) => this.handler = handler;
 
-			public override void Handle(BaseDomainEvent domainEvent)
-			{
-				this.handler.Handle((T)domainEvent);
-			}
+			public override void Handle(BaseDomainEvent domainEvent) => this.handler.Handle((T)domainEvent);
 		}
 	}
 }

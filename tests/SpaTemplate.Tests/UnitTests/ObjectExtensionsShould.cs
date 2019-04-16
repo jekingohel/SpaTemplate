@@ -24,8 +24,8 @@ namespace SpaTemplate.Tests.UnitTests
 			var list = sut.ShapeDataObject(field) as IDictionary<string, object>;
 
 			Assert.Equal(sut.Fizz, list?[key]);
-			Assert.Throws<KeyNotFoundException>(() => list?["Buzz"]);
-			Assert.Throws<KeyNotFoundException>(() => list?["Id"]);
+			_ = Assert.Throws<KeyNotFoundException>(() => list?["Buzz"]);
+			_ = Assert.Throws<KeyNotFoundException>(() => list?["Id"]);
 		}
 
 		[Fact]

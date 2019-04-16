@@ -40,8 +40,7 @@ namespace SpaTemplate.Tests.FunctionalTests
 	{
 		private readonly HttpClient client;
 
-		public ApiPeopleCollectionsControllerShould(CustomWebApplicationFactory<Startup> factory) =>
-			this.client = factory.CreateClientWithDefaultRequestHeaders();
+		public ApiPeopleCollectionsControllerShould(CustomWebApplicationFactory<Startup> factory) => this.client = factory.CreateClientWithDefaultRequestHeaders();
 
 		[Theory]
 		[AutoMoqData]

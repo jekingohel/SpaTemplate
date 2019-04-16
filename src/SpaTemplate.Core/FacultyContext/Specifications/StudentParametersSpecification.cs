@@ -19,11 +19,8 @@ namespace SpaTemplate.Core.FacultyContext
 			: base(student =>
 				CriteriaExpression(student, parameters)) => this.AddInclude(student => student.Courses);
 
-		private static bool CriteriaExpression(Student student, IParameters parameters)
-		{
-			if (parameters.SearchQuery == null) return true;
-			return student.Name.IndexOf(parameters.SearchQuery.Trim(), StringComparison.InvariantCultureIgnoreCase)
+		private static bool CriteriaExpression(Student student, IParameters parameters) => parameters.SearchQuery == null
+				|| student.Name.IndexOf(parameters.SearchQuery.Trim(), StringComparison.InvariantCultureIgnoreCase)
 				   >= 0 || student.Surname.IndexOf(parameters.SearchQuery.Trim(), StringComparison.InvariantCultureIgnoreCase) >= 0;
-		}
 	}
 }

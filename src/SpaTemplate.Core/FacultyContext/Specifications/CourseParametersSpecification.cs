@@ -16,14 +16,11 @@ namespace SpaTemplate.Core.FacultyContext
 			: base(course =>
 				CriteriaExpression(course, parameters, studentId)) => this.AddInclude(course => course.Student);
 
-		private static bool CriteriaExpression(Course course, IParameters parameters, Guid studentId)
-		{
-			if (parameters.SearchQuery == null) return true;
-			return course.Student.Id == studentId
+		private static bool CriteriaExpression(Course course, IParameters parameters, Guid studentId) => parameters.SearchQuery == null
+				|| (course.Student.Id == studentId
 				   && (course.Title.IndexOf(parameters.SearchQuery.Trim(), StringComparison.InvariantCultureIgnoreCase)
 					>= 0 || course.Description.IndexOf(
 						parameters.SearchQuery.Trim(),
-						StringComparison.InvariantCultureIgnoreCase) >= 0);
-		}
+						StringComparison.InvariantCultureIgnoreCase) >= 0));
 	}
 }

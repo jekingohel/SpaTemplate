@@ -9,11 +9,11 @@ namespace SpaTemplate.Core.SharedKernel
 {
 	public static class Api
 	{
-		public static string People = "api/people";
-		public static string Student = "api/people/{0}";
-		public static string Courses = "api/people/{0}/courses";
-		public static string Course = "api/people/{0}/courses/{1}";
-		public static string StudentCollections = "api/studentcollections";
-		public static string StudentCollectionsIds = "api/studentcollections/({0})";
+		public static readonly string People = "api/people";
+		public static readonly string Student = "api/people/{0}";
+		public static readonly string Courses = "api/people/{0}/courses";
+		public static readonly string Course = "api/people/{0}/courses/{1}";
+		public static readonly string StudentCollections = "api/studentcollections";
+		public static readonly string StudentCollectionsIds = "api/studentcollections/({0})";
 	}
 }

@@ -42,12 +42,16 @@ namespace SpaTemplate.Infrastructure
 					.AddRelAndMethod(Rel.Self, Method.Get),
 			};
 			if (pagedList.HasNext)
+			{
 				links.Add(urlHelper.CreateResourceUri(routeName, parameter, ResourceUriType.NextPage)
 					.AddRelAndMethod(Rel.NextPage, Method.Get));
+			}
 
 			if (pagedList.HasPrevious)
+			{
 				links.Add(urlHelper.CreateResourceUri(routeName, parameter, ResourceUriType.PreviousPage)
 					.AddRelAndMethod(Rel.PreviousPage, Method.Get));
+			}
 
 			return links;
 		}

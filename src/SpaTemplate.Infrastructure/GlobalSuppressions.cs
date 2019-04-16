@@ -7,5 +7,6 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Compilator.Bug", "CS8302:Cannot initialize instance of analyzer", Justification = "By Design")]
+[assembly: SuppressMessage("Compilator.Bug", "CS8032:Cannot initialize instance of analyzer", Justification = "By Design")]
 [assembly: SuppressMessage("Compilator.Bug", "AD0001:Exception in analyzer", Justification = "By Design")]
+[assembly: SuppressMessage("Compilator.Bug", "SA0001: XML disabled", Justification = "By Design")]

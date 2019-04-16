@@ -37,11 +37,11 @@ namespace SpaTemplate.Tests.Helpers
 		{
 			var repo = GetRepository(property);
 			var ids = DummyGuidsArray();
-			repo.AddEntity(new Student { Id = ids[0], Name = "Dummy", Surname = "FizzBuzz" });
-			repo.AddEntity(new Student { Id = ids[1], Name = "Dummy", Surname = "FizzBuzz" });
-			repo.AddEntity(new Student { Id = ids[2], Name = "Test", Surname = "Buzz" });
-			repo.AddEntity(new Student { Id = ids[3], Name = "Test", Surname = "FizzBuzz" });
-			repo.AddEntity(new Student { Id = ids[4], Name = "Test", Surname = "FizzBuzz" });
+			_ = repo.AddEntity(new Student { Id = ids[0], Name = "Dummy", Surname = "FizzBuzz" });
+			_ = repo.AddEntity(new Student { Id = ids[1], Name = "Dummy", Surname = "FizzBuzz" });
+			_ = repo.AddEntity(new Student { Id = ids[2], Name = "Test", Surname = "Buzz" });
+			_ = repo.AddEntity(new Student { Id = ids[3], Name = "Test", Surname = "FizzBuzz" });
+			_ = repo.AddEntity(new Student { Id = ids[4], Name = "Test", Surname = "FizzBuzz" });
 			return repo;
 		}
 
@@ -52,7 +52,7 @@ namespace SpaTemplate.Tests.Helpers
 				.BuildServiceProvider();
 
 			var builder = new DbContextOptionsBuilder<AppDbContext>();
-			builder.UseInMemoryDatabase("rest")
+			_ = builder.UseInMemoryDatabase("rest")
 				.UseInternalServiceProvider(serviceProvider);
 			return builder.Options;
 		}

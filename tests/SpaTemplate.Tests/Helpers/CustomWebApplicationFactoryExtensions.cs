@@ -17,7 +17,7 @@ namespace SpaTemplate.Tests.Helpers
 			this CustomWebApplicationFactory<Startup> factory)
 		{
 			var client = factory.CreateClient();
-			client.DefaultRequestHeaders.TryAddWithoutValidation(Header.XRealIp, Constants.LocalhostIp);
+			_ = client.DefaultRequestHeaders.TryAddWithoutValidation(Header.XRealIp, Constants.LocalhostIp);
 
 			return client;
 		}

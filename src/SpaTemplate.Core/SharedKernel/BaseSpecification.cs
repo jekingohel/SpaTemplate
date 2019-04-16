@@ -21,15 +21,9 @@ namespace SpaTemplate.Core.SharedKernel
 
 		public List<string> IncludeStrings { get; } = new List<string>();
 
-		protected virtual void AddInclude(Expression<Func<T, object>> includeExpression)
-		{
-			this.Includes.Add(includeExpression);
-		}
+		protected virtual void AddInclude(Expression<Func<T, object>> includeExpression) => this.Includes.Add(includeExpression);
 
 		// string-based includes allow for including children of children, e.g. Basket.Items.Product
-		protected virtual void AddInclude(string includeString)
-		{
-			this.IncludeStrings.Add(includeString);
-		}
+		protected virtual void AddInclude(string includeString) => this.IncludeStrings.Add(includeString);
 	}
 }

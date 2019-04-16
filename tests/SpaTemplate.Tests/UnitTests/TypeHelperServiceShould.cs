@@ -34,10 +34,7 @@ namespace SpaTemplate.Tests.UnitTests
 		}
 
 		[Fact]
-		public void BeAssignableFromInterface()
-		{
-			Assert.IsAssignableFrom<ITypeHelperService>(new TypeHelperService());
-		}
+		public void BeAssignableFromInterface() => Assert.IsAssignableFrom<ITypeHelperService>(new TypeHelperService());
 
 		private class DummyEntity : IDto
 		{

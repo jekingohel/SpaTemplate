@@ -31,7 +31,7 @@ namespace SpaTemplate.Infrastructure.Api
 			var people = Mapper.Map<IEnumerable<Student>>(studentForCreationDtos);
 
 			foreach (var student in people)
-				this.studentService.AddStudent(student);
+				_ = this.studentService.AddStudent(student);
 
 			var peopleDto = Mapper.Map<IEnumerable<StudentDto>>(people);
 			return this.CreatedAtRoute(
@@ -52,8 +52,7 @@ namespace SpaTemplate.Infrastructure.Api
 			var collection = ids.ToList();
 			var entities = this.studentService.GetCollection(collection);
 
-			if (collection.Count != entities.Count) return this.NotFound();
-			return this.Ok(Mapper.Map<IEnumerable<StudentDto>>(entities));
+			return collection.Count != entities.Count ? this.NotFound() : (IActionResult)this.Ok(Mapper.Map<IEnumerable<StudentDto>>(entities));
 		}
 	}
 }

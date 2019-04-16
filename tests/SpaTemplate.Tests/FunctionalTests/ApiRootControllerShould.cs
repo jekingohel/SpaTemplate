@@ -46,7 +46,7 @@ namespace SpaTemplate.Tests.FunctionalTests
 		[InlineData(Rel.CreateStudent, Method.Post, 2)]
 		public async Task ReturnsHateoasLinks_RootAsync(string rel, string method, int number)
 		{
-			this.client.DefaultRequestHeaders.TryAddWithoutValidation(Header.Accept, MediaType.OutputFormatterJson);
+			_ = this.client.DefaultRequestHeaders.TryAddWithoutValidation(Header.Accept, MediaType.OutputFormatterJson);
 			var response = await this.client.GetAsync(Route.RootApi).ConfigureAwait(false);
 			Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 

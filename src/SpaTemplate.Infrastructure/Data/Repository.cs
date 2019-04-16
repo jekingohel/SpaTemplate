@@ -27,14 +27,14 @@ namespace SpaTemplate.Infrastructure
 		public bool AddEntity<T>(T entity)
 			where T : BaseEntity
 		{
-			this.dbContext.Set<T>().Add(entity);
+			_ = this.dbContext.Set<T>().Add(entity);
 			return this.dbContext.SaveChanges() > 0;
 		}
 
 		public bool DeleteEntity<T>(T entity)
 			where T : BaseEntity
 		{
-			this.dbContext.Set<T>().Remove(entity);
+			_ = this.dbContext.Set<T>().Remove(entity);
 			return this.dbContext.SaveChanges() > 0;
 		}
 

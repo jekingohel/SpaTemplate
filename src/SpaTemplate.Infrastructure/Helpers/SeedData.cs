@@ -15,21 +15,18 @@ namespace SpaTemplate.Infrastructure
 		public static void PopulateTestData(AppDbContext dbContext)
 		{
 			dbContext.People.RemoveRange(dbContext.People);
-			dbContext.SaveChanges();
+			_ = dbContext.SaveChanges();
 			for (var i = 0; i < 20; i++) AddStudent(dbContext, $"Name{i}", $"Surname{i}", i);
-			dbContext.SaveChanges();
+			_ = dbContext.SaveChanges();
 		}
 
-		private static void AddStudent(AppDbContext dbContext, string name, string surname, int age)
+		private static void AddStudent(AppDbContext dbContext, string name, string surname, int age) => dbContext.People.Add(new Student
 		{
-			dbContext.People.Add(new Student
-			{
-				Name = name,
-				Surname = surname,
-				Age = age,
-				Courses = SeedCourses(),
-			});
-		}
+			Name = name,
+			Surname = surname,
+			Age = age,
+			Courses = SeedCourses(),
+		});
 
 		private static List<Course> SeedCourses()
 		{

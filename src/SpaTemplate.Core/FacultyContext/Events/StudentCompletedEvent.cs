@@ -13,6 +13,6 @@ namespace SpaTemplate.Core.FacultyContext
 	{
 		public StudentCompletedEvent(Student completedItem) => this.CompletedItem = completedItem;
 
-		public Student CompletedItem { get; set; }
+		public Student CompletedItem { get; }
 	}
 }

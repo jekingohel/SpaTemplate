@@ -164,7 +164,7 @@ namespace SpaTemplate.Tests.FunctionalTests
 		{
 			var (_, studentId) = await this.PostCourseAsync(courseForCreationDto).ConfigureAwait(false);
 			var patchDoc = new JsonPatchDocument<CourseForUpdateDto>();
-			patchDoc.Replace(x => x.Description, "Dummy");
+			_ = patchDoc.Replace(x => x.Description, "Dummy");
 
 			var patch = await this.PatchAsync(studentId, Guid.NewGuid(), patchDoc).ConfigureAwait(false);
 			Assert.Equal(HttpStatusCode.Created, patch.StatusCode);
@@ -176,7 +176,7 @@ namespace SpaTemplate.Tests.FunctionalTests
 		{
 			var (post, studentId) = await this.PostCourseAsync<CourseDto>(courseForCreationDto).ConfigureAwait(false);
 			var patchDoc = new JsonPatchDocument<CourseForUpdateDto>();
-			patchDoc.Replace(x => x.Description, "Dummy");
+			_ = patchDoc.Replace(x => x.Description, "Dummy");
 
 			var patch = await this.PatchAsync(studentId, post.Id, patchDoc).ConfigureAwait(false);
 			Assert.Equal(HttpStatusCode.NoContent, patch.StatusCode);
@@ -190,8 +190,8 @@ namespace SpaTemplate.Tests.FunctionalTests
 			var (post, studentId) = await this.PostCourseAsync<CourseDto>(courseForCreationDto).ConfigureAwait(false);
 
 			var patchDoc = new JsonPatchDocument<CourseForUpdateDto>();
-			patchDoc.Replace(x => x.Description, "Dummy");
-			patchDoc.Replace(x => x.Title, "Dummy");
+			_ = patchDoc.Replace(x => x.Description, "Dummy");
+			_ = patchDoc.Replace(x => x.Title, "Dummy");
 
 			var patch = await this.PatchAsync(studentId, post.Id, patchDoc).ConfigureAwait(false);
 			Assert.Equal(HttpStatusCode.UnprocessableEntity, patch.StatusCode);
@@ -204,8 +204,8 @@ namespace SpaTemplate.Tests.FunctionalTests
 		{
 			var (_, studentId) = await this.PostCourseAsync(courseForCreationDto).ConfigureAwait(false);
 			var patchDoc = new JsonPatchDocument<CourseForUpdateDto>();
-			patchDoc.Replace(x => x.Description, "Dummy");
-			patchDoc.Replace(x => x.Title, "Dummy");
+			_ = patchDoc.Replace(x => x.Description, "Dummy");
+			_ = patchDoc.Replace(x => x.Title, "Dummy");
 
 			var patch = await this.PatchAsync(studentId, Guid.NewGuid(), patchDoc).ConfigureAwait(false);
 			Assert.Equal(HttpStatusCode.UnprocessableEntity, patch.StatusCode);
@@ -361,7 +361,7 @@ namespace SpaTemplate.Tests.FunctionalTests
 
 		private async Task<Guid> GetFirstHateoasStudentIdAsync()
 		{
-			this.client.DefaultRequestHeaders.TryAddWithoutValidation(Header.Accept, MediaType.OutputFormatterJson);
+			_ = this.client.DefaultRequestHeaders.TryAddWithoutValidation(Header.Accept, MediaType.OutputFormatterJson);
 			return (await this.GetPeopleAsync<HateoasDto<StudentValuesDto>>().ConfigureAwait(false)).Values[0].Id;
 		}
 

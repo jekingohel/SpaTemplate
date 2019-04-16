@@ -36,8 +36,8 @@ namespace SpaTemplate.Tests.UnitTests
 				.ToList();
 
 			Assert.Equal(expectedValue, list[objectNumber]?[key]);
-			Assert.Throws<KeyNotFoundException>(() => list[objectNumber]?["Buzz"]);
-			Assert.Throws<KeyNotFoundException>(() => list[objectNumber]?["Id"]);
+			_ = Assert.Throws<KeyNotFoundException>(() => list[objectNumber]?["Buzz"]);
+			_ = Assert.Throws<KeyNotFoundException>(() => list[objectNumber]?["Id"]);
 		}
 
 		private static IEnumerable<DummyEntity> DummyList() => new List<DummyEntity>

@@ -113,7 +113,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -132,7 +131,6 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <None Include="XeinaemmDictionary.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpaTemplate.Core\SpaTemplate.Core.csproj">
@@ -154,8 +152,6 @@
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\deploy-IIS.pubxml" />
     <None Include="Properties\PublishProfiles\deploy-Azure.pubxml" />
-    <None Include="Xeinaemm.ruleset" />
-    <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\e2e\src\app.e2e-spec.ts" />

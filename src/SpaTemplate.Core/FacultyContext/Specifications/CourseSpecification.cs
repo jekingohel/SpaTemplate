@@ -19,13 +19,10 @@ namespace SpaTemplate.Core.FacultyContext
 			: base(course =>
 			CourseCriteria(course, studentId, courseId)) => this.AddInclude(b => b.Student);
 
-		private static bool CourseCriteria(Course course, Guid studentId, Guid courseId)
-		{
-			if (course == null) return false;
-			if (studentId != Guid.Empty && courseId != Guid.Empty)
-				return course.StudentId == studentId && course.Id == courseId;
-			if (studentId != Guid.Empty) return course.StudentId == studentId;
-			return false;
-		}
+		private static bool CourseCriteria(Course course, Guid studentId, Guid courseId) =>
+			course != null
+				&& studentId != Guid.Empty && courseId != Guid.Empty
+				? course.StudentId == studentId && course.Id == courseId
+				: studentId != Guid.Empty && course.StudentId == studentId;
 	}
 }

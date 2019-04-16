@@ -28,10 +28,7 @@ namespace SpaTemplate.Core.SharedKernel
 
 		private readonly IList<IPropertyMapping> propertyMappings = new List<IPropertyMapping>();
 
-		public PropertyMappingService()
-		{
-			this.propertyMappings.Add(new PropertyMapping(PropertyMappingDictionary));
-		}
+		public PropertyMappingService() => this.propertyMappings.Add(new PropertyMapping(PropertyMappingDictionary));
 
 		public IDictionary<string, IPropertyMappingValue> GetPropertyMapping
 			<TSource, TDestination>()
@@ -47,16 +44,12 @@ namespace SpaTemplate.Core.SharedKernel
 
 		public bool ValidMappingExistsFor<TSource, TDestination>(string fields)
 			where TSource : IDto
-			where TDestination : BaseEntity
-		{
-			if (string.IsNullOrWhiteSpace(fields)) return true;
-
-			return (from field in fields.Split(',')
-					select field.Trim()
+			where TDestination : BaseEntity => string.IsNullOrWhiteSpace(fields)
+				|| (from field in fields.Split(',')
+				   select field.Trim()
 					into trimmedField
-					let indexOfFirstSpace = trimmedField.IndexOf(" ", StringComparison.Ordinal)
-					select indexOfFirstSpace == -1 ? trimmedField : trimmedField.Remove(indexOfFirstSpace))
+				   let indexOfFirstSpace = trimmedField.IndexOf(" ", StringComparison.Ordinal)
+				   select indexOfFirstSpace == -1 ? trimmedField : trimmedField.Remove(indexOfFirstSpace))
 				.All(propertyName => this.GetPropertyMapping<TSource, TDestination>().ContainsKey(propertyName));
-		}
 	}
 }

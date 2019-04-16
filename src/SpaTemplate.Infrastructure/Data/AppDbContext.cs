@@ -17,10 +17,7 @@ namespace SpaTemplate.Infrastructure
 		private readonly IDomainEventDispatcher dispatcher;
 
 		public AppDbContext(DbContextOptions<AppDbContext> options, IDomainEventDispatcher dispatcher)
-			: base(options)
-		{
-			this.dispatcher = dispatcher;
-		}
+			: base(options) => this.dispatcher = dispatcher;
 
 		public DbSet<Course> Courses { get; set; }
 

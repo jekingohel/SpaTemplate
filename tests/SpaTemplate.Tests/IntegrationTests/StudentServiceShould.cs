@@ -18,10 +18,7 @@ namespace SpaTemplate.Tests.IntegrationTests
 	{
 		[Theory]
 		[AutoMoqData]
-		public void AssignableFromIPagedList(StudentService sut)
-		{
-			Assert.IsAssignableFrom<IStudentService>(sut);
-		}
+		public void AssignableFromIPagedList(StudentService sut) => Assert.IsAssignableFrom<IStudentService>(sut);
 
 		[Theory]
 		[AutoMoqData]
@@ -119,7 +116,7 @@ namespace SpaTemplate.Tests.IntegrationTests
 			};
 			var sut = new StudentService(DbContextHelper.SeedRepo(property), new TypeHelperService(), new PropertyMappingService());
 
-			Assert.Throws<ArgumentException>(() => sut.GetPagedList(parameters));
+			_ = Assert.Throws<ArgumentException>(() => sut.GetPagedList(parameters));
 		}
 	}
 }

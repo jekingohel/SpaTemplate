@@ -21,43 +21,43 @@ namespace SpaTemplate.Tests.Helpers
 	{
 		protected override void ConfigureWebHost(IWebHostBuilder builder)
 		{
-			builder.UseContentRoot(".");
-			builder.ConfigureServices(services =>
-			{
-				var serviceProvider = new ServiceCollection()
-					.AddEntityFrameworkInMemoryDatabase()
-					.BuildServiceProvider();
+			_ = builder.UseContentRoot(".");
+			_ = builder.ConfigureServices(services =>
+			  {
+				  var serviceProvider = new ServiceCollection()
+					  .AddEntityFrameworkInMemoryDatabase()
+					  .BuildServiceProvider();
 
-				services.AddDbContext<AppDbContext>(options =>
-				{
-					options.UseInMemoryDatabase("tests-factory");
-					options.UseInternalServiceProvider(serviceProvider);
-				});
-
-				services.AddScoped<IDomainEventDispatcher, NoOpDomainEventDispatcher>();
-
-				var sp = services.BuildServiceProvider();
-
-				using (var scope = sp.CreateScope())
-				{
-					var scopedServices = scope.ServiceProvider;
-					var db = scopedServices.GetRequiredService<AppDbContext>();
-
-					var logger = scopedServices
-						.GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
-
-					db.Database.EnsureCreated();
-
-					try
+				  _ = services.AddDbContext<AppDbContext>(options =>
 					{
-						SeedData.PopulateTestData(db);
-					}
-					catch (Exception ex)
-					{
-						logger.LogError(ex, "An error occurred seeding the database with test messages. Error: {ex.Message}");
-					}
-				}
-			});
+						_ = options.UseInMemoryDatabase("tests-factory");
+						_ = options.UseInternalServiceProvider(serviceProvider);
+					});
+
+				  _ = services.AddScoped<IDomainEventDispatcher, NoOpDomainEventDispatcher>();
+
+				  var sp = services.BuildServiceProvider();
+
+				  using (var scope = sp.CreateScope())
+				  {
+					  var scopedServices = scope.ServiceProvider;
+					  var db = scopedServices.GetRequiredService<AppDbContext>();
+
+					  var logger = scopedServices
+						  .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
+
+					  _ = db.Database.EnsureCreated();
+
+					  try
+					  {
+						  SeedData.PopulateTestData(db);
+					  }
+					  catch (Exception ex)
+					  {
+						  logger.LogError(ex, "An error occurred seeding the database with test messages. Error: {ex.Message}");
+					  }
+				  }
+			  });
 		}
 	}
 }

@@ -176,7 +176,7 @@ namespace SpaTemplate.Tests.FunctionalTests
 			var post = await this.PostReadAsStringAsync<StudentDto>(studentForUpdateDto).ConfigureAwait(false);
 
 			var patchDoc = new JsonPatchDocument<StudentDto>();
-			patchDoc.Replace(x => x.Surname, "Dummy");
+			_ = patchDoc.Replace(x => x.Surname, "Dummy");
 
 			var patch = await this.PatchAsync(post.Id, patchDoc).ConfigureAwait(false);
 			Assert.Equal(HttpStatusCode.NoContent, patch.StatusCode);
@@ -189,7 +189,7 @@ namespace SpaTemplate.Tests.FunctionalTests
 			var post = await this.PostReadAsStringAsync<StudentDto>(studentForUpdateDto).ConfigureAwait(false);
 
 			var patchDoc = new JsonPatchDocument<StudentDto>();
-			patchDoc.Replace(x => x.Name, post.Surname);
+			_ = patchDoc.Replace(x => x.Name, post.Surname);
 
 			var patch = await this.PatchAsync(post.Id, patchDoc).ConfigureAwait(false);
 			Assert.Equal(HttpStatusCode.UnprocessableEntity, patch.StatusCode);
@@ -223,7 +223,7 @@ namespace SpaTemplate.Tests.FunctionalTests
 
 		private Task<HateoasDto> GetHateoasReadAsStringAsync(string fields = "")
 		{
-			this.client.DefaultRequestHeaders.TryAddWithoutValidation(Header.Accept, MediaType.OutputFormatterJson);
+			_ = this.client.DefaultRequestHeaders.TryAddWithoutValidation(Header.Accept, MediaType.OutputFormatterJson);
 			return this.GetReadAsStringAsync<HateoasDto>(fields);
 		}
 

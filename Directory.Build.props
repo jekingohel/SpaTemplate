@@ -7,11 +7,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Xeinaemm.Analyzer" Version="1.0.0" />
+		<PackageReference Include="Xeinaemm.Analyzer" Version="1.0.0" PrivateAssets="All" />
 		<AdditionalFiles Include="stylecop.json" />
 		<None Include="Xeinaemm.ruleset" />
-    <None Include="XeinaemmDictionary.xml" />
-    <None Include="Xeinaemm.editorconfig" />
+		<None Include="XeinaemmDictionary.xml" />
+		<None Include=".editorconfig" />
 	</ItemGroup>
 
 </Project>

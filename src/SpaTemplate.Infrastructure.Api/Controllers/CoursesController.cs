@@ -78,11 +78,11 @@ namespace SpaTemplate.Infrastructure.Api
 			if (!this.courseService.StudentExists(studentId)) return this.NotFound();
 
 			var course = this.courseService.GetCourse(studentId, id);
-			if (course == null) return this.NotFound();
-
-			return mediaType != MediaType.OutputFormatterJson
+			return course == null
+				? this.NotFound()
+				: (IActionResult)(mediaType != MediaType.OutputFormatterJson
 				? this.Ok(course)
-				: this.Ok(course.ShapeDataWithoutParameters<CourseDto, Course>(this.CreateLinksForCourse));
+				: this.Ok(course.ShapeDataWithoutParameters<CourseDto, Course>(this.CreateLinksForCourse)));
 		}
 
 		[HttpGet(Name = RouteName.GetCoursesForStudent)]
@@ -131,7 +131,7 @@ namespace SpaTemplate.Infrastructure.Api
 				if (courseForUpdateDto.Description == courseForUpdateDto.Title)
 					this.ModelState.AddModelError(nameof(CourseForUpdateDto), "The provided description should be different from the title.");
 
-				this.TryValidateModel(courseForUpdateDto);
+				_ = this.TryValidateModel(courseForUpdateDto);
 
 				if (!this.ModelState.IsValid) return new UnprocessableEntityObjectResult(this.ModelState);
 
@@ -155,10 +155,10 @@ namespace SpaTemplate.Infrastructure.Api
 			if (courseToPatch.Description == courseToPatch.Title)
 				this.ModelState.AddModelError(nameof(CourseForUpdateDto), "The provided description should be different from the title.");
 
-			this.TryValidateModel(courseToPatch);
+			_ = this.TryValidateModel(courseToPatch);
 			if (!this.ModelState.IsValid) return new UnprocessableEntityObjectResult(this.ModelState);
 
-			Mapper.Map(courseToPatch, course);
+			_ = Mapper.Map(courseToPatch, course);
 
 			if (!this.courseService.UpdateCourse(course))
 				throw new Exception($"Patching course {id} for student {studentId} failed on save.");
@@ -198,7 +198,7 @@ namespace SpaTemplate.Infrastructure.Api
 					courseDto);
 			}
 
-			Mapper.Map(courseForUpdateDto, course);
+			_ = Mapper.Map(courseForUpdateDto, course);
 			if (!this.courseService.UpdateCourse(course))
 				throw new Exception($"Updating course {id} for student {studentId} failed on save.");
 

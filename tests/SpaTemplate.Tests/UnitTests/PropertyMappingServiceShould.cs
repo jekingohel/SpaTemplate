@@ -15,16 +15,10 @@ namespace SpaTemplate.Tests.UnitTests
 	{
 		[Theory]
 		[InlineAutoMoqData("Dummy")]
-		public void ReturnsTrue_ValidFields(string field, PropertyMappingService property)
-		{
-			Assert.True(property.ValidMappingExistsFor<DummyEntityDto, DummyEntity>(field));
-		}
+		public void ReturnsTrue_ValidFields(string field, PropertyMappingService property) => Assert.True(property.ValidMappingExistsFor<DummyEntityDto, DummyEntity>(field));
 
 		[Fact]
-		public void BeAssignableFromInterface()
-		{
-			Assert.IsAssignableFrom<IPropertyMappingService>(new PropertyMappingService());
-		}
+		public void BeAssignableFromInterface() => Assert.IsAssignableFrom<IPropertyMappingService>(new PropertyMappingService());
 
 		private class DummyEntity : BaseEntity
 		{

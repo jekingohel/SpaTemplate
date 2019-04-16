@@ -18,9 +18,6 @@ namespace SpaTemplate.Web.Core
 
 		public bool ShowRequestId => !string.IsNullOrEmpty(this.RequestId);
 
-		public void OnGet()
-		{
-			this.RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier;
-		}
+		public void OnGet() => this.RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier;
 	}
 }

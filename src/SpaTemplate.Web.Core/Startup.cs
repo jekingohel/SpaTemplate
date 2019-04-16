@@ -19,27 +19,24 @@ namespace SpaTemplate.Web.Core
 
 		public IConfiguration Configuration { get; }
 
-		public static void ConfigureServices(IServiceCollection services)
-		{
-			services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
-		}
+		public static void ConfigureServices(IServiceCollection services) => services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
 
 		public static void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
 			if (env.IsDevelopment())
 			{
-				app.UseDeveloperExceptionPage();
+				_ = app.UseDeveloperExceptionPage();
 			}
 			else
 			{
-				app.UseExceptionHandler("/Error");
-				app.UseHsts();
+				_ = app.UseExceptionHandler("/Error");
+				_ = app.UseHsts();
 			}
 
-			app.UseStaticFiles();
+			_ = app.UseStaticFiles();
 			app.UseSpaStaticFiles();
 
-			app.UseMvcWithDefaultRoute();
+			_ = app.UseMvcWithDefaultRoute();
 
 			app.UseSpa(spa =>
 			{

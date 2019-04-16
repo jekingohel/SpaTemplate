@@ -30,7 +30,7 @@ namespace SpaTemplate.Tests.IntegrationTests
 		{
 			var repository = DbContextHelper.GetRepository();
 			var sut = new Student();
-			repository.AddEntity(sut);
+			_ = repository.AddEntity(sut);
 			Assert.True(repository.DeleteEntity(sut));
 		}
 

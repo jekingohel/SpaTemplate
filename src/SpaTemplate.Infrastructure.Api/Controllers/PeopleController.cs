@@ -90,11 +90,11 @@ namespace SpaTemplate.Infrastructure.Api
 			if (!this.studentService.StudentPropertiesExists(parameters)) return this.BadRequest();
 
 			var student = this.studentService.GetStudent(id);
-			if (student == null) return this.NotFound();
-
-			return mediaType == MediaType.OutputFormatterJson
+			return student == null
+				? this.NotFound()
+				: (IActionResult)(mediaType == MediaType.OutputFormatterJson
 				? this.Ok(student.ShapeDataWithoutParameters<StudentDto, Student>(this.CreateLinksStudent))
-				: this.Ok(Mapper.Map<StudentDto>(student));
+				: this.Ok(Mapper.Map<StudentDto>(student)));
 		}
 
 		[HttpPatch("{id}", Name = RouteName.PartiallyUpdateStudent)]
@@ -113,10 +113,10 @@ namespace SpaTemplate.Infrastructure.Api
 			if (studentForUpdateDto.Name == studentForUpdateDto.Surname)
 				this.ModelState.AddModelError(nameof(StudentForUpdateDto), "The provided surname should be different from the name.");
 
-			this.TryValidateModel(studentForUpdateDto);
+			_ = this.TryValidateModel(studentForUpdateDto);
 			if (!this.ModelState.IsValid) return new UnprocessableEntityObjectResult(this.ModelState);
 
-			Mapper.Map(studentForUpdateDto, student);
+			_ = Mapper.Map(studentForUpdateDto, student);
 			if (!this.studentService.UpdateStudent(student)) throw new Exception($"Patching student {id} failed on save.");
 
 			return this.NoContent();

@@ -18,8 +18,8 @@ namespace SpaTemplate.Tests.UnitTests
 			var item = new Student();
 			item.MarkComplete();
 
-			Assert.Single(item.Events);
-			Assert.IsType<StudentCompletedEvent>(item.Events[0]);
+			_ = Assert.Single(item.Events);
+			_ = Assert.IsType<StudentCompletedEvent>(item.Events[0]);
 		}
 
 		[Fact]

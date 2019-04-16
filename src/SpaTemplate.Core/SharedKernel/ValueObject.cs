@@ -26,13 +26,9 @@ namespace SpaTemplate.Core.SharedKernel
 
 		public bool Equals(ValueObject other) => this.Equals(other as object);
 
-		public override bool Equals(object obj)
-		{
-			if (obj == null || this.GetType() != obj.GetType()) return false;
-
-			return this.GetProperties().All(p => this.PropertiesAreEqual(obj, p))
+		public override bool Equals(object obj) => obj != null && this.GetType() == obj.GetType()
+				   && this.GetProperties().All(p => this.PropertiesAreEqual(obj, p))
 				   && this.GetFields().All(f => this.FieldsAreEqual(obj, f));
-		}
 
 		public override int GetHashCode()
 		{

@@ -16,10 +16,7 @@ namespace SpaTemplate.Tests.UnitTests
 	{
 		[Theory]
 		[AutoMoqData]
-		public void AssignableFromIPagedList(PagedList<DummyEntity> sut)
-		{
-			Assert.IsAssignableFrom<IPagedList<DummyEntity>>(sut);
-		}
+		public void AssignableFromIPagedList(PagedList<DummyEntity> sut) => Assert.IsAssignableFrom<IPagedList<DummyEntity>>(sut);
 
 		[Theory]
 		[InlineData(1, 1, 5, true, false, 5)]

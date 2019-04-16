@@ -11,9 +11,6 @@ namespace SpaTemplate.Web.Framework.Controllers
 
 	public class HomeController : Controller
 	{
-		public ActionResult Index()
-		{
-			return this.View();
-		}
+		public ActionResult Index() => this.View();
 	}
 }

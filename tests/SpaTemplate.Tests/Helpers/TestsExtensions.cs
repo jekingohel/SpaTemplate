@@ -33,8 +33,8 @@ namespace SpaTemplate.Tests.Helpers
 
 			foreach (var guid in ids)
 			{
-				sb.Append(guid.ToString());
-				sb.Append(",");
+				_ = sb.Append(guid.ToString());
+				_ = sb.Append(",");
 			}
 
 			return string.Format(route, sb);

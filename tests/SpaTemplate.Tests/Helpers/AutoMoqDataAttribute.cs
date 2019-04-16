@@ -18,7 +18,7 @@ namespace SpaTemplate.Tests.Helpers
 		public AutoMoqDataAttribute()
 			: base(() => FixtureInstance.Customize(new AutoMoqCustomization()))
 		{
-			FixtureInstance.Behaviors.Remove(new ThrowingRecursionBehavior());
+			_ = FixtureInstance.Behaviors.Remove(new ThrowingRecursionBehavior());
 			FixtureInstance.Behaviors.Add(new OmitOnRecursionBehavior());
 		}
 	}
