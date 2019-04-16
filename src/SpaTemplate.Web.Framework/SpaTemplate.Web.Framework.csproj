@@ -113,9 +113,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".editorconfig" />
     <Content Include="ClientApp\e2e\protractor.conf.js" />
     <Content Include="ClientApp\src\assets\favicon.ico" />
     <Content Include="ClientApp\src\index.html" />
@@ -152,6 +154,8 @@
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\deploy-IIS.pubxml" />
     <None Include="Properties\PublishProfiles\deploy-Azure.pubxml" />
+    <Content Include="Xeinaemm.ruleset" />
+    <Content Include="XeinaemmDictionary.xml" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\e2e\src\app.e2e-spec.ts" />
@@ -193,6 +197,9 @@
     <Analyzer Include="..\..\packages\SecurityCodeScan.3.1.0.0\analyzers\dotnet\YamlDotNet.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.Unstable.1.1.1.114\analyzers\dotnet\cs\StyleCop.Analyzers.CodeFixes.dll" />
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.Unstable.1.1.1.114\analyzers\dotnet\cs\StyleCop.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="stylecop.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
