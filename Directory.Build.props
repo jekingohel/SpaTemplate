@@ -1,17 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  
+  <PropertyGroup Label="Common">
+    <Company>Xeinaemm Consulting</Company>
+    <Authors>$(Company)</Authors>
+    <Copyright>Copyright © $(Company) $([System.DateTime]::Now.Year)</Copyright>
+    <Trademark>$(Company)™</Trademark>
+    <Product>$(Company) Projects</Product>
+    <RepositoryType>Git</RepositoryType>
+    <PackageLicenseUrl>https://github.com/Xeinaemm/Xeinaemm.Analyzer/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/Xeinaemm/Xeinaemm.Analyzer/tree/master/src/Xeinaemm.Analyzer</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Xeinaemm/Xeinaemm.Analyzer</RepositoryUrl>
+  </PropertyGroup>
 
-	<PropertyGroup>
-		<CodeAnalysisRuleSet>Xeinaemm.ruleset</CodeAnalysisRuleSet>
-		<LangVersion>latest</LangVersion>
-	</PropertyGroup>
+  <Choose>
+    <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config')">
+      
+      <PropertyGroup>
+        <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+      </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Xeinaemm.Analyzer" Version="1.0.0" PrivateAssets="All" />
-		<AdditionalFiles Include="stylecop.json" />
-		<None Include="Xeinaemm.ruleset" />
-		<None Include="XeinaemmDictionary.xml" />
-		<None Include=".editorconfig" />
-	</ItemGroup>
+      <ItemGroup>
+        <PackageReference Include="Xeinaemm.Analyzer" Version="1.0.0" PrivateAssets="All" />
+      </ItemGroup>
+      
+    </When>
+  </Choose>
+  
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\..\.msbuild\Xeinaemm.ruleset</CodeAnalysisRuleSet>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\.msbuild\stylecop.json" Visible="false" />
+    <Compile Include="..\..\.msbuild\GlobalSuppressions.cs" Visible="false" />
+    <None Include="..\..\.msbuild\Xeinaemm.ruleset" Visible="false" />
+    <None Include="..\..\.msbuild\.editorconfig" Visible="false" />
+  </ItemGroup>
 
 </Project>

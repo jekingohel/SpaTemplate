@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-	<PropertyGroup>
+	 <PropertyGroup>
 		<PackageName>Xeinaemm.Analyzer</PackageName>
 		<PackageVersion>1.0.0</PackageVersion>
 	</PropertyGroup>
-	<Target Name="AfterResolveReferences">
+	<Target Name="PrepareForBuild">
 		<ItemGroup>
 			<FilesToCopy Include="$(NuGetPackageRoot)$(PackageName)\$(PackageVersion)\content\*.*" />
 		</ItemGroup>
-		<Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy ->'$(MSBuildProjectDirectory)\%(RecursiveDir)%(Filename)%(Extension)')" />
-	</Target>
+		<Copy SourceFiles="@(FilesToCopy)" DestinationFiles="@(FilesToCopy ->'$(SolutionDir)\.msbuild\%(RecursiveDir)%(Filename)%(Extension)')" />
+	</Target> 
 </Project>

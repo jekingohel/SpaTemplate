@@ -303,3 +303,4 @@ Thumbs.db
 **/package-lock.json
 **/dist
 **/*.DotSettings
+/.msbuild
