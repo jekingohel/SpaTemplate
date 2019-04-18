@@ -7,10 +7,6 @@
     <Copyright>Copyright © $(Company) $([System.DateTime]::Now.Year)</Copyright>
     <Trademark>$(Company)™</Trademark>
     <Product>$(Company) Projects</Product>
-    <RepositoryType>Git</RepositoryType>
-    <PackageLicenseUrl>https://github.com/Xeinaemm/Xeinaemm.Analyzer/blob/master/LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>https://github.com/Xeinaemm/Xeinaemm.Analyzer/tree/master/src/Xeinaemm.Analyzer</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Xeinaemm/Xeinaemm.Analyzer</RepositoryUrl>
   </PropertyGroup>
 
   <Choose>
