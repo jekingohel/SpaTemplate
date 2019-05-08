@@ -9,11 +9,13 @@ namespace SpaTemplate.Core.FacultyContext
 {
 	using System;
 	using System.Collections.Generic;
-	using SpaTemplate.Core.SharedKernel;
+	using System.Collections.ObjectModel;
+	using Xeinaemm.Common;
+	using Xeinaemm.Hateoas;
 
 	public interface IStudentService
 	{
-		List<Student> GetCollection(IEnumerable<Guid> ids);
+		ReadOnlyCollection<Student> GetCollection(ICollection<Guid> ids);
 
 		Student GetStudent(Guid studentId);
 
@@ -25,13 +27,10 @@ namespace SpaTemplate.Core.FacultyContext
 
 		bool StudentExists(Guid studentId);
 
-		bool StudentMappingExists<TParameters>(TParameters parameters)
-			where TParameters : IParameters;
+		bool StudentMappingExists(IParameters parameters);
 
-		bool StudentPropertiesExists<TParameters>(TParameters parameters)
-			where TParameters : IParameters;
+		bool StudentPropertiesExists(IParameters parameters);
 
-		PagedList<Student> GetPagedList<TParameters>(TParameters parameters)
-			where TParameters : IParameters;
+		PagedListCollection<Student> GetPagedList(IParameters parameters);
 	}
 }

@@ -20,7 +20,7 @@ namespace SpaTemplate.Web.Framework
 			// Web API routes
 			config.MapHttpAttributeRoutes();
 
-			_ = config.Routes.MapHttpRoute(
+			config.Routes.MapHttpRoute(
 				"DefaultApi",
 				"api/{controller}/{id}",
 				new { id = RouteParameter.Optional });

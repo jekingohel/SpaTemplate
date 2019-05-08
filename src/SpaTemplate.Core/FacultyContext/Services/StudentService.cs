@@ -9,17 +9,19 @@ namespace SpaTemplate.Core.FacultyContext
 {
 	using System;
 	using System.Collections.Generic;
-	using System.Linq;
-	using SpaTemplate.Core.SharedKernel;
+	using System.Collections.ObjectModel;
+	using Xeinaemm.Common;
+	using Xeinaemm.Domain;
+	using Xeinaemm.Hateoas;
 
 	public class StudentService : IHandle<StudentCompletedEvent>, IStudentService
 	{
 		private readonly IPropertyMappingService propertyMappingService;
-		private readonly IRepository repository;
+		private readonly IHateoasRepository repository;
 		private readonly ITypeHelperService typeHelperService;
 
 		public StudentService(
-			IRepository repository,
+			IHateoasRepository repository,
 			ITypeHelperService typeHelperService,
 			IPropertyMappingService propertyMappingService)
 		{
@@ -32,13 +34,11 @@ namespace SpaTemplate.Core.FacultyContext
 
 		public bool DeleteStudent(Student student) => this.repository.DeleteEntity(student);
 
-		// TODO: Create specification
-		public List<Student> GetCollection(IEnumerable<Guid> ids) =>
-			this.repository.GetCollection<Student>().Where(a => ids.Contains(a.Id)).ToList();
+		public ReadOnlyCollection<Student> GetCollection(ICollection<Guid> ids) =>
+			this.repository.GetCollection(new StudentSpecification(ids));
 
-		public PagedList<Student> GetPagedList<TParameters>(TParameters parameters)
-			where TParameters : IParameters => this.repository.GetCollection<Student, StudentDto>(
-			new StudentParametersSpecification(parameters), parameters);
+		public PagedListCollection<Student> GetPagedList(IParameters parameters) =>
+			this.repository.GetCollection(new StudentParametersSpecification(parameters), parameters);
 
 		public Student GetStudent(Guid studentId) => this.repository.GetEntity<Student>(studentId);
 
@@ -52,16 +52,12 @@ namespace SpaTemplate.Core.FacultyContext
 
 		public bool StudentExists(Guid studentId) => this.repository.ExistsEntity<Student>(studentId);
 
-		public bool StudentMappingExists<TParameters>(TParameters parameters)
-			where TParameters : IParameters
-			=>
-			this.propertyMappingService.ValidMappingExistsFor<StudentDto, Student>(
+		public bool StudentMappingExists(IParameters parameters)
+			=> this.propertyMappingService.ValidMappingExistsFor<StudentDto, Student>(
 				parameters.OrderBy);
 
-		public bool StudentPropertiesExists<TParameters>(TParameters parameters)
-			where TParameters : IParameters
-			=>
-			this.typeHelperService.TypeHasProperties<StudentDto>(parameters.Fields);
+		public bool StudentPropertiesExists(IParameters parameters)
+			=> this.typeHelperService.TypeHasProperties<StudentDto>(parameters.Fields);
 
 		public bool UpdateStudent(Student student) => this.repository.UpdateEntity(student);
 	}

@@ -11,29 +11,52 @@ namespace SpaTemplate.Infrastructure.Api
 	using System.Collections.Generic;
 	using System.Linq;
 	using AutoMapper;
+	using Microsoft.AspNetCore.Http;
 	using Microsoft.AspNetCore.Mvc;
 	using SpaTemplate.Core.FacultyContext;
 	using SpaTemplate.Core.SharedKernel;
+	using Xeinaemm.AspNetCore;
 
+	/// <summary>
+	///
+	/// </summary>
 	[Route(Route.StudentCollectionsApi)]
+	[ValidateModel]
+	[ApiController]
 	public class PeopleCollectionsController : Controller
 	{
 		private readonly IStudentService studentService;
+		private readonly IMapper mapper;
 
-		public PeopleCollectionsController(IStudentService repository) =>
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PeopleCollectionsController"/> class.
+		/// </summary>
+		/// <param name="repository"></param>
+		/// <param name="mapper"></param>
+		public PeopleCollectionsController(IStudentService repository, IMapper mapper)
+		{
 			this.studentService = repository;
+			this.mapper = mapper;
+		}
 
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="studentForCreationDtos"></param>
+		/// <returns></returns>
 		[HttpPost]
+		[ProducesResponseType(StatusCodes.Status201Created)]
+		[ProducesDefaultResponseType]
 		public IActionResult CreateStudentCollection(
 			[FromBody] IEnumerable<StudentForCreationDto> studentForCreationDtos)
 		{
 			if (studentForCreationDtos == null) return this.BadRequest();
-			var people = Mapper.Map<IEnumerable<Student>>(studentForCreationDtos);
+			var people = this.mapper.Map<IEnumerable<Student>>(studentForCreationDtos);
 
 			foreach (var student in people)
-				_ = this.studentService.AddStudent(student);
+				this.studentService.AddStudent(student);
 
-			var peopleDto = Mapper.Map<IEnumerable<StudentDto>>(people);
+			var peopleDto = this.mapper.Map<IEnumerable<StudentDto>>(people);
 			return this.CreatedAtRoute(
 				RouteName.GetStudentCollection,
 				new
@@ -42,7 +65,13 @@ namespace SpaTemplate.Infrastructure.Api
 				}, peopleDto);
 		}
 
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="ids"></param>
+		/// <returns></returns>
 		[HttpGet("({ids})", Name = RouteName.GetStudentCollection)]
+		[ProducesDefaultResponseType]
 		public IActionResult GetStudentCollection(
 			[ModelBinder(BinderType = typeof(ArrayModelBinder))]
 			IEnumerable<Guid> ids)
@@ -52,7 +81,7 @@ namespace SpaTemplate.Infrastructure.Api
 			var collection = ids.ToList();
 			var entities = this.studentService.GetCollection(collection);
 
-			return collection.Count != entities.Count ? this.NotFound() : (IActionResult)this.Ok(Mapper.Map<IEnumerable<StudentDto>>(entities));
+			return collection.Count != entities.Count ? this.NotFound() : (IActionResult)this.Ok(this.mapper.Map<IEnumerable<StudentDto>>(entities));
 		}
 	}
 }

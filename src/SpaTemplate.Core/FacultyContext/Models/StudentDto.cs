@@ -8,7 +8,9 @@
 namespace SpaTemplate.Core.FacultyContext
 {
 	using System;
-	using SpaTemplate.Core.SharedKernel;
+	using System.Collections.Generic;
+	using Xeinaemm.Domain;
+	using Xeinaemm.Hateoas;
 
 	// Note: doesn't expose events or behavior
 	public class StudentDto : IDto
@@ -22,5 +24,7 @@ namespace SpaTemplate.Core.FacultyContext
 		public string Name { get; set; }
 
 		public string Surname { get; set; }
+
+		public List<BaseDomainEvent> Events { get; }
 	}
 }

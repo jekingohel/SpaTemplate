@@ -16,7 +16,7 @@ namespace SpaTemplate.Web.Framework
 		{
 			routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-			_ = routes.MapRoute(
+			routes.MapRoute(
 				"Default",
 				"{controller}/{action}/{id}",
 				new { controller = "Home", action = "Index", id = UrlParameter.Optional });

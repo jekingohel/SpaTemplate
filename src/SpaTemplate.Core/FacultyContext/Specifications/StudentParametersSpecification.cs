@@ -8,7 +8,8 @@
 namespace SpaTemplate.Core.FacultyContext
 {
 	using System;
-	using SpaTemplate.Core.SharedKernel;
+	using Xeinaemm.Domain;
+	using Xeinaemm.Hateoas;
 
 	public sealed class StudentParametersSpecification : BaseSpecification<Student>
 	{

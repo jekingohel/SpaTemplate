@@ -9,30 +9,63 @@ namespace SpaTemplate.Infrastructure.Api
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+	using System.Net.Mime;
 	using AutoMapper;
+	using Microsoft.AspNetCore.Http;
 	using Microsoft.AspNetCore.JsonPatch;
 	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.AspNetCore.Mvc.ModelBinding;
+	using Microsoft.Net.Http.Headers;
 	using Newtonsoft.Json;
 	using SpaTemplate.Core.FacultyContext;
 	using SpaTemplate.Core.SharedKernel;
+	using Xeinaemm.AspNetCore;
+	using Xeinaemm.Hateoas;
 
+	/// <summary>
+	///
+	/// </summary>
+	[Produces(MediaTypeNames.Application.Json, MediaTypeNames.Application.Xml)]
 	[Route(Route.CoursesApi)]
 	[ValidateModel]
-	public class CoursesController : Controller
+	[ApiController]
+	public class CoursesController : ControllerBase
 	{
 		private readonly ICourseService courseService;
 		private readonly IUrlHelper urlHelper;
+		private readonly IMapper mapper;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="CoursesController"/> class.
+		/// </summary>
+		/// <param name="urlHelper"></param>
+		/// <param name="mapper"></param>
+		/// <param name="courseService"></param>
 		public CoursesController(
 			IUrlHelper urlHelper,
+			IMapper mapper,
 			ICourseService courseService)
 		{
 			this.urlHelper = urlHelper;
+			this.mapper = mapper;
 			this.courseService = courseService;
 		}
 
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="studentId"></param>
+		/// <param name="courseForCreationDto"></param>
+		/// <returns>
+		///
+		/// </returns>
 		[HttpPost(Name = RouteName.CreateCourseForStudent)]
-		[RequestHeaderMatchesMediaType(Header.ContentType, new[] { MediaType.InputFormatterJson })]
+		[RequestHeaderMatchesMediaType(HeaderNames.ContentType, MediaType.InputFormatterJson)]
+		[ProducesResponseType(StatusCodes.Status201Created)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(typeof(ModelStateDictionary), StatusCodes.Status422UnprocessableEntity)]
+		[ProducesDefaultResponseType]
 		public IActionResult CreateCourseForStudent(
 			Guid studentId,
 			[FromBody] CourseForCreationDto courseForCreationDto)
@@ -45,17 +78,28 @@ namespace SpaTemplate.Infrastructure.Api
 			if (!this.ModelState.IsValid) return new UnprocessableEntityObjectResult(this.ModelState);
 			if (!this.courseService.StudentExists(studentId)) return this.NotFound();
 
-			var course = Mapper.Map<Course>(courseForCreationDto);
+			var course = this.mapper.Map<Course>(courseForCreationDto);
 
 			if (!this.courseService.AddCourse(studentId, course)) throw new Exception($"Creating a course for student {studentId} failed on save.");
 
 			return this.CreatedAtRoute(
 				RouteName.GetCourseForStudent,
 				new { studentId, course.Id },
-				course.ShapeDataWithoutParameters<CourseDto, Course>(this.CreateLinksForCourse));
+				course.ShapeDataWithoutParameters<CourseDto>(this.CreateLinksForCourse));
 		}
 
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="studentId"></param>
+		/// <param name="id"></param>
+		/// <returns>
+		///
+		/// </returns>
 		[HttpDelete("{id}", Name = RouteName.DeleteCourseForStudent)]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
 		public IActionResult DeleteCourseForStudent(Guid studentId, Guid id)
 		{
 			if (!this.courseService.StudentExists(studentId)) return this.NotFound();
@@ -69,11 +113,22 @@ namespace SpaTemplate.Infrastructure.Api
 			return this.NoContent();
 		}
 
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="studentId"></param>
+		/// <param name="id"></param>
+		/// <param name="mediaType"></param>
+		/// <returns>
+		///
+		/// </returns>
 		[HttpGet("{id}", Name = RouteName.GetCourseForStudent)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
 		public IActionResult GetCourseForStudent(
 			Guid studentId,
 			Guid id,
-			[FromHeader(Name = Header.Accept)] string mediaType)
+			[FromHeader(Name = HeaderNames.Accept)] string mediaType)
 		{
 			if (!this.courseService.StudentExists(studentId)) return this.NotFound();
 
@@ -82,37 +137,63 @@ namespace SpaTemplate.Infrastructure.Api
 				? this.NotFound()
 				: (IActionResult)(mediaType != MediaType.OutputFormatterJson
 				? this.Ok(course)
-				: this.Ok(course.ShapeDataWithoutParameters<CourseDto, Course>(this.CreateLinksForCourse)));
+				: this.Ok(course.ShapeDataWithoutParameters<CourseDto>(this.CreateLinksForCourse)));
 		}
 
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="studentId"></param>
+		/// <param name="parameters"></param>
+		/// <param name="mediaType"></param>
+		/// <returns>
+		///
+		/// </returns>
 		[HttpGet(Name = RouteName.GetCoursesForStudent)]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesDefaultResponseType]
 		public IActionResult GetCoursesForStudent(
+			Guid studentId,
 			CourseParameters parameters,
-			[FromHeader(Name = Header.Accept)] string mediaType,
-			Guid studentId)
+			[FromHeader(Name = HeaderNames.Accept)] string mediaType)
 		{
 			if (!this.courseService.StudentExists(studentId)) return this.NotFound();
 			if (!this.courseService.CourseMappingExists(parameters)) return this.BadRequest();
 			if (!this.courseService.CoursePropertiesExists(parameters)) return this.BadRequest();
 
 			var courses = this.courseService.GetPagedList(studentId, parameters);
-			var courseDtos = Mapper.Map<IEnumerable<CourseDto>>(courses);
+			var courseDtos = this.mapper.Map<IEnumerable<CourseDto>>(courses);
 
 			if (mediaType == MediaType.OutputFormatterJson)
 			{
 				this.Response.Headers.Add(Header.XPagination, JsonConvert.SerializeObject(courses.CreateBasePagination()));
 				var values = courseDtos.ShapeDataCollectionWithHateoasLinks(parameters.Fields, this.CreateLinksForCourse);
 				var links = this.urlHelper.CreateLinks(RouteName.GetCoursesForStudent, parameters, courses);
-				return this.Ok(HateoasDto.CreateHateoasDto(values, links));
+				return this.Ok(new HateoasDto(values, links));
 			}
 
 			this.Response.Headers.Add(Header.XPagination, JsonConvert.SerializeObject(
-				this.urlHelper.CreateHateoasPagination(RouteName.GetCoursesForStudent, courses, parameters)));
+				this.urlHelper.CreateHateoasPagination(RouteName.GetCoursesForStudent, parameters, courses)));
 
 			return this.Ok(courseDtos.ShapeDataCollection(parameters.Fields));
 		}
 
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="studentId"></param>
+		/// <param name="id"></param>
+		/// <param name="patchDoc"></param>
+		/// <returns>
+		///
+		/// </returns>
 		[HttpPatch("{id}", Name = RouteName.PartiallyUpdateCourseForStudent)]
+		[ProducesResponseType(StatusCodes.Status201Created)]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(typeof(ModelStateDictionary), StatusCodes.Status422UnprocessableEntity)]
+		[ProducesDefaultResponseType]
 		public IActionResult PartiallyUpdateCourseForStudent(
 			Guid studentId,
 			Guid id,
@@ -131,34 +212,34 @@ namespace SpaTemplate.Infrastructure.Api
 				if (courseForUpdateDto.Description == courseForUpdateDto.Title)
 					this.ModelState.AddModelError(nameof(CourseForUpdateDto), "The provided description should be different from the title.");
 
-				_ = this.TryValidateModel(courseForUpdateDto);
+				this.TryValidateModel(courseForUpdateDto);
 
 				if (!this.ModelState.IsValid) return new UnprocessableEntityObjectResult(this.ModelState);
 
-				var mapCourse = Mapper.Map<Course>(courseForUpdateDto);
+				var mapCourse = this.mapper.Map<Course>(courseForUpdateDto);
 				mapCourse.Id = id;
 
 				if (!this.courseService.AddCourse(studentId, mapCourse))
 					throw new Exception($"Upserting course {id} for student {studentId} failed on save.");
 
-				var courseDto = Mapper.Map<CourseDto>(mapCourse);
+				var courseDto = this.mapper.Map<CourseDto>(mapCourse);
 				return this.CreatedAtRoute(
 					RouteName.GetCourseForStudent,
 					new { studentId, courseDto.Id },
 					courseDto);
 			}
 
-			var courseToPatch = Mapper.Map<CourseForUpdateDto>(course);
+			var courseToPatch = this.mapper.Map<CourseForUpdateDto>(course);
 
 			patchDoc.ApplyTo(courseToPatch, this.ModelState);
 
 			if (courseToPatch.Description == courseToPatch.Title)
 				this.ModelState.AddModelError(nameof(CourseForUpdateDto), "The provided description should be different from the title.");
 
-			_ = this.TryValidateModel(courseToPatch);
+			this.TryValidateModel(courseToPatch);
 			if (!this.ModelState.IsValid) return new UnprocessableEntityObjectResult(this.ModelState);
 
-			_ = Mapper.Map(courseToPatch, course);
+			this.mapper.Map(courseToPatch, course);
 
 			if (!this.courseService.UpdateCourse(course))
 				throw new Exception($"Patching course {id} for student {studentId} failed on save.");
@@ -166,8 +247,22 @@ namespace SpaTemplate.Infrastructure.Api
 			return this.NoContent();
 		}
 
+		/// <summary>
+		///
+		/// </summary>
+		/// <param name="studentId"></param>
+		/// <param name="id"></param>
+		/// <param name="courseForUpdateDto"></param>
+		/// <returns>
+		///
+		/// </returns>
 		[HttpPut("{id}", Name = RouteName.UpdateCourseForStudent)]
-		[RequestHeaderMatchesMediaType(Header.ContentType, new[] { MediaType.InputFormatterJson })]
+		[RequestHeaderMatchesMediaType(HeaderNames.ContentType, MediaType.InputFormatterJson)]
+		[ProducesResponseType(StatusCodes.Status201Created)]
+		[ProducesResponseType(StatusCodes.Status204NoContent)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(typeof(ModelStateDictionary), StatusCodes.Status422UnprocessableEntity)]
+		[ProducesDefaultResponseType]
 		public IActionResult UpdateCourseForStudent(
 			Guid studentId,
 			Guid id,
@@ -184,13 +279,13 @@ namespace SpaTemplate.Infrastructure.Api
 			var course = this.courseService.GetCourse(studentId, id);
 			if (course == null)
 			{
-				var mapCourse = Mapper.Map<Course>(courseForUpdateDto);
+				var mapCourse = this.mapper.Map<Course>(courseForUpdateDto);
 				mapCourse.Id = id;
 
 				if (!this.courseService.AddCourse(studentId, mapCourse))
 					throw new Exception($"Upserting course {id} for student {studentId} failed on save.");
 
-				var courseDto = Mapper.Map<CourseDto>(mapCourse);
+				var courseDto = this.mapper.Map<CourseDto>(mapCourse);
 
 				return this.CreatedAtRoute(
 					RouteName.GetCourseForStudent,
@@ -198,7 +293,7 @@ namespace SpaTemplate.Infrastructure.Api
 					courseDto);
 			}
 
-			_ = Mapper.Map(courseForUpdateDto, course);
+			this.mapper.Map(courseForUpdateDto, course);
 			if (!this.courseService.UpdateCourse(course))
 				throw new Exception($"Updating course {id} for student {studentId} failed on save.");
 
@@ -208,21 +303,21 @@ namespace SpaTemplate.Infrastructure.Api
 		private string CreateHref(Guid id, string routeName, string fields = null) =>
 			this.urlHelper.Link(routeName, new { id, fields });
 
-		private IEnumerable<ILinkDto> CreateLinksForCourse(Guid id, string fields = null) => new List<ILinkDto>
+		private Collection<LinkDto> CreateLinksForCourse(Guid id, string fields = null) => new Collection<LinkDto>
 		{
 			string.IsNullOrWhiteSpace(fields)
 				? this.CreateHref(id, RouteName.GetCoursesForStudent)
-					.AddRelAndMethod(Rel.Self, Method.Get)
+					.AddRelAndMethod(Rel.Self, HttpMethods.Get)
 				: this.CreateHref(id, RouteName.GetCoursesForStudent, fields)
-					.AddRelAndMethod(Rel.Self, Method.Get),
+					.AddRelAndMethod(Rel.Self, HttpMethods.Get),
 			this.CreateHref(id, RouteName.CreateCourseForStudent)
-				.AddRelAndMethod(Rel.CreateCourseForStudent, Method.Post),
+				.AddRelAndMethod(SpaTemplateRel.CreateCourseForStudent, HttpMethods.Post),
 			this.CreateHref(id, RouteName.PartiallyUpdateCourseForStudent)
-				.AddRelAndMethod(Rel.PartiallyUpdateCourse, Method.Patch),
+				.AddRelAndMethod(SpaTemplateRel.PartiallyUpdateCourse, HttpMethods.Patch),
 			this.CreateHref(id, RouteName.UpdateCourseForStudent)
-				.AddRelAndMethod(Rel.UpdateCourse, Method.Put),
+				.AddRelAndMethod(SpaTemplateRel.UpdateCourse, HttpMethods.Put),
 			this.CreateHref(id, RouteName.DeleteCourseForStudent)
-				.AddRelAndMethod(Rel.DeleteCourse, Method.Delete),
+				.AddRelAndMethod(SpaTemplateRel.DeleteCourse, HttpMethods.Delete),
 		};
 	}
 }

@@ -11,7 +11,7 @@ namespace SpaTemplate.Core.FacultyContext
 
 	public class StudentForUpdateDto : StudentForManipulationDto
 	{
-		public List<CourseForUpdateDto> CourseForUpdateDtos { get; set; }
+		public List<CourseForUpdateDto> CourseForUpdateDtos { get; }
 			= new List<CourseForUpdateDto>();
 	}
 }

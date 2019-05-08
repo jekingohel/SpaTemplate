@@ -8,7 +8,7 @@
 namespace SpaTemplate.Core.FacultyContext
 {
 	using System;
-	using SpaTemplate.Core.SharedKernel;
+	using Xeinaemm.Domain;
 
 	public class Course : BaseEntity
 	{

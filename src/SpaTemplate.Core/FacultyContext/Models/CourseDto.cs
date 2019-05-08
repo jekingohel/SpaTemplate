@@ -8,7 +8,9 @@
 namespace SpaTemplate.Core.FacultyContext
 {
 	using System;
-	using SpaTemplate.Core.SharedKernel;
+	using System.Collections.Generic;
+	using Xeinaemm.Domain;
+	using Xeinaemm.Hateoas;
 
 	public class CourseDto : IDto
 	{
@@ -17,5 +19,7 @@ namespace SpaTemplate.Core.FacultyContext
 		public Guid Id { get; set; }
 
 		public string Title { get; set; }
+
+		public List<BaseDomainEvent> Events { get; }
 	}
 }

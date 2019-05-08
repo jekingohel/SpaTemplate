@@ -8,16 +8,18 @@
 namespace SpaTemplate.Core.FacultyContext
 {
 	using System;
-	using SpaTemplate.Core.SharedKernel;
+	using Xeinaemm.Common;
+	using Xeinaemm.Domain;
+	using Xeinaemm.Hateoas;
 
 	public class CourseService : IHandle<CourseCompletedEvent>, ICourseService
 	{
 		private readonly IPropertyMappingService propertyMappingService;
-		private readonly IRepository repository;
+		private readonly IHateoasRepository repository;
 		private readonly ITypeHelperService typeHelperService;
 
 		public CourseService(
-			IRepository repository,
+			IHateoasRepository repository,
 			IPropertyMappingService propertyMappingService,
 			ITypeHelperService typeHelperService)
 		{
@@ -34,15 +36,11 @@ namespace SpaTemplate.Core.FacultyContext
 			return this.repository.AddEntity(course);
 		}
 
-		public bool CourseMappingExists<TParameters>(TParameters parameters)
-			where TParameters : IParameters
-			=>
+		public bool CourseMappingExists(IParameters parameters) =>
 			this.propertyMappingService.ValidMappingExistsFor<CourseDto, Course>(
 				parameters.OrderBy);
 
-		public bool CoursePropertiesExists<TParameters>(TParameters parameters)
-			where TParameters : IParameters
-			=>
+		public bool CoursePropertiesExists(IParameters parameters) =>
 			this.typeHelperService.TypeHasProperties<CourseDto>(parameters.Fields);
 
 		public bool DeleteCourse(Course course) => this.repository.DeleteEntity(course);
@@ -50,9 +48,8 @@ namespace SpaTemplate.Core.FacultyContext
 		public Course GetCourse(Guid studentId, Guid courseId) =>
 			this.repository.GetFirstOrDefault(new CourseSpecification(studentId, courseId));
 
-		public PagedList<Course> GetPagedList<TParameters>(Guid studentId, TParameters parameters)
-			where TParameters : IParameters =>
-			this.repository.GetCollection<Course, CourseDto>(
+		public PagedListCollection<Course> GetPagedList(Guid studentId, IParameters parameters) =>
+			this.repository.GetCollection(
 				new CourseParametersSpecification(parameters, studentId), parameters);
 
 		public void Handle(CourseCompletedEvent domainEvent)

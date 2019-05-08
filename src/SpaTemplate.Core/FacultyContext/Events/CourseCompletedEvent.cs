@@ -7,7 +7,7 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	using SpaTemplate.Core.SharedKernel;
+	using Xeinaemm.Domain;
 
 	public class CourseCompletedEvent : BaseDomainEvent
 	{

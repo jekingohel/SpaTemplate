@@ -12,21 +12,26 @@ namespace SpaTemplate.Infrastructure
 
 	public static class SeedData
 	{
-		public static void PopulateTestData(AppDbContext dbContext)
+		public static void PopulateTestData(ApplicationDbContext dbContext)
 		{
 			dbContext.People.RemoveRange(dbContext.People);
-			_ = dbContext.SaveChanges();
+			dbContext.SaveChanges();
 			for (var i = 0; i < 20; i++) AddStudent(dbContext, $"Name{i}", $"Surname{i}", i);
-			_ = dbContext.SaveChanges();
+			dbContext.SaveChanges();
 		}
 
-		private static void AddStudent(AppDbContext dbContext, string name, string surname, int age) => dbContext.People.Add(new Student
+		private static void AddStudent(ApplicationDbContext dbContext, string name, string surname, int age)
 		{
-			Name = name,
-			Surname = surname,
-			Age = age,
-			Courses = SeedCourses(),
-		});
+			var student = new Student
+			{
+				Name = name,
+				Surname = surname,
+				Age = age,
+			};
+			student.Courses.Clear();
+			student.Courses.AddRange(SeedCourses());
+			dbContext.People.Add(student);
+		}
 
 		private static List<Course> SeedCourses()
 		{

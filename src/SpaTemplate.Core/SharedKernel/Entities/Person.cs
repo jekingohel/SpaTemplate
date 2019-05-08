@@ -7,6 +7,8 @@
 
 namespace SpaTemplate.Core.SharedKernel
 {
+	using Xeinaemm.Domain;
+
 	public class Person : BaseEntity
 	{
 		public int Age { get; set; }

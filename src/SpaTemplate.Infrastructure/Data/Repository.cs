@@ -8,17 +8,19 @@
 namespace SpaTemplate.Infrastructure
 {
 	using System;
-	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
 	using System.Linq;
 	using Microsoft.EntityFrameworkCore;
-	using SpaTemplate.Core.SharedKernel;
+	using Xeinaemm.Common;
+	using Xeinaemm.Domain;
+	using Xeinaemm.Hateoas;
 
-	public class Repository : IRepository
+	public class Repository : IHateoasRepository
 	{
-		private readonly AppDbContext dbContext;
+		private readonly ApplicationDbContext dbContext;
 		private readonly IPropertyMappingService propertyMappingService;
 
-		public Repository(AppDbContext dbContext, IPropertyMappingService propertyMappingService)
+		public Repository(ApplicationDbContext dbContext, IPropertyMappingService propertyMappingService)
 		{
 			this.dbContext = dbContext;
 			this.propertyMappingService = propertyMappingService;
@@ -27,14 +29,14 @@ namespace SpaTemplate.Infrastructure
 		public bool AddEntity<T>(T entity)
 			where T : BaseEntity
 		{
-			_ = this.dbContext.Set<T>().Add(entity);
+			this.dbContext.Set<T>().Add(entity);
 			return this.dbContext.SaveChanges() > 0;
 		}
 
 		public bool DeleteEntity<T>(T entity)
 			where T : BaseEntity
 		{
-			_ = this.dbContext.Set<T>().Remove(entity);
+			this.dbContext.Set<T>().Remove(entity);
 			return this.dbContext.SaveChanges() > 0;
 		}
 
@@ -43,10 +45,10 @@ namespace SpaTemplate.Infrastructure
 			=>
 			this.dbContext.Set<T>().Any(t => t.Id == entity);
 
-		public List<TEntity> GetCollection<TEntity>(ISpecification<TEntity> specification = null)
+		public ReadOnlyCollection<TEntity> GetCollection<TEntity>(ISpecification<TEntity> specification)
 			where TEntity : BaseEntity
 		{
-			if (specification == null) return this.dbContext.Set<TEntity>().ToList();
+			if (specification == null) return new ReadOnlyCollection<TEntity>(this.dbContext.Set<TEntity>().ToList());
 
 			var queryableResultWithIncludes = specification.Includes
 				.Aggregate(
@@ -58,22 +60,21 @@ namespace SpaTemplate.Infrastructure
 					queryableResultWithIncludes,
 					(current, include) => current.Include(include));
 
-			return secondaryResult
-				.Where(specification.Criteria).ToList();
+			return new ReadOnlyCollection<TEntity>(secondaryResult
+				.Where(specification.Criteria).ToList());
 		}
 
-		public PagedList<TEntity> GetCollection<TEntity, TDto>(
+		public PagedListCollection<TEntity> GetCollection<TEntity>(
 			ISpecification<TEntity> specification,
 			IParameters parameters)
 			where TEntity : BaseEntity
-			where TDto : IDto
 		{
 			var entities = this.GetCollection(specification)
 				.ApplySort(
 					parameters.OrderBy,
-					this.propertyMappingService.GetPropertyMapping<TDto, TEntity>()).ToList();
+					this.propertyMappingService.GetPropertyMapping<IDto, TEntity>()).ToList();
 
-			return PagedList<TEntity>.Create(entities, parameters.PageNumber, parameters.PageSize);
+			return new PagedListCollection<TEntity>(entities, parameters.PageNumber, parameters.PageSize);
 		}
 
 		public T GetEntity<T>(Guid id)
@@ -81,7 +82,7 @@ namespace SpaTemplate.Infrastructure
 			=>
 			this.dbContext.Set<T>().SingleOrDefault(e => e.Id == id);
 
-		public TEntity GetFirstOrDefault<TEntity>(ISpecification<TEntity> specification = null)
+		public TEntity GetFirstOrDefault<TEntity>(ISpecification<TEntity> specification)
 			where TEntity : BaseEntity =>
 			specification == null
 				? this.dbContext.Set<TEntity>().FirstOrDefault()

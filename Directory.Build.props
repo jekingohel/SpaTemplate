@@ -1,38 +1,54 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   
-  <PropertyGroup Label="Common">
-    <Company>Xeinaemm Consulting</Company>
+  <PropertyGroup>
+    <ProjectAcronym>Xeinaemm</ProjectAcronym>
+    <Company>Xeinaemm Consulting Piotr Czech</Company>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <Authors>$(Company)</Authors>
     <Copyright>Copyright © $(Company) $([System.DateTime]::Now.Year)</Copyright>
     <Trademark>$(Company)™</Trademark>
     <Product>$(Company) Projects</Product>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <NoWarn>1701;1702;NU1701;AD0001;CS8032;NETSDK1071</NoWarn>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <CodeAnalysisRuleSet>..\..\$(ProjectAcronym).ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" Visible="false" />
+    <None Include="..\..\$(ProjectAcronym).ruleset" Visible="false" />
+    <None Include="..\..\.editorconfig" Visible="false" />
+    <None Include="content\*" Pack="true" PackagePath="content" />
+    <None Include="build\*" Pack="true" PackagePath="build" />
+    <None Include="lib\*" Pack="true" PackagePath="lib" />
+  </ItemGroup>
+
+  <PropertyGroup Condition="'$(MSBuildProjectName)' == '$(ProjectAcronym).Analyzer'">
+    <IncludeBuildOutput>false</IncludeBuildOutput>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(MSBuildProjectName)' == '$(ProjectAcronym).Analyzer'">
+    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" />
+  </ItemGroup>
+  
   <Choose>
     <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config')">
-      
       <PropertyGroup>
         <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
       </PropertyGroup>
-
-      <ItemGroup>
-        <PackageReference Include="Xeinaemm.Analyzer" Version="1.0.0" PrivateAssets="All" />
-      </ItemGroup>
       
+      <ItemGroup Condition=" '$(SolutionName)' != '$(ProjectAcronym).Standard'">
+        <PackageReference Include="$(ProjectAcronym).Standard.All" Version="*" PrivateAssets="All" />
+      </ItemGroup>
+      <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2' and '$(SolutionName)' != '$(ProjectAcronym).Standard'">
+        <PackageReference Include="$(ProjectAcronym).AspNetCore.All" Version="*" PrivateAssets="All" />
+      </ItemGroup>
     </When>
   </Choose>
   
-  <PropertyGroup>
-    <CodeAnalysisRuleSet>..\..\.msbuild\Xeinaemm.ruleset</CodeAnalysisRuleSet>
-    <LangVersion>latest</LangVersion>
-  </PropertyGroup>
-  
-  <ItemGroup>
-    <AdditionalFiles Include="..\..\.msbuild\stylecop.json" Visible="false" />
-    <Compile Include="..\..\.msbuild\GlobalSuppressions.cs" Visible="false" />
-    <None Include="..\..\.msbuild\Xeinaemm.ruleset" Visible="false" />
-    <None Include="..\..\.msbuild\.editorconfig" Visible="false" />
-  </ItemGroup>
-
 </Project>

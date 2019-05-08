@@ -8,12 +8,12 @@
 namespace SpaTemplate.Core.FacultyContext
 {
 	using System;
-	using SpaTemplate.Core.SharedKernel;
+	using Xeinaemm.Common;
+	using Xeinaemm.Hateoas;
 
 	public interface ICourseService
 	{
-		PagedList<Course> GetPagedList<TParameters>(Guid studentId, TParameters parameters)
-			where TParameters : IParameters;
+		PagedListCollection<Course> GetPagedList(Guid studentId, IParameters parameters);
 
 		Course GetCourse(Guid studentId, Guid courseId);
 
@@ -25,10 +25,8 @@ namespace SpaTemplate.Core.FacultyContext
 
 		bool StudentExists(Guid studentId);
 
-		bool CourseMappingExists<TParameters>(TParameters parameters)
-			where TParameters : IParameters;
+		bool CourseMappingExists(IParameters parameters);
 
-		bool CoursePropertiesExists<TParameters>(TParameters parameters)
-			where TParameters : IParameters;
+		bool CoursePropertiesExists(IParameters parameters);
 	}
 }

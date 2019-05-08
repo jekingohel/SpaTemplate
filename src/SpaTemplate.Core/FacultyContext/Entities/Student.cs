@@ -12,7 +12,7 @@ namespace SpaTemplate.Core.FacultyContext
 
 	public class Student : Person
 	{
-		public ICollection<Course> Courses { get; set; } = new List<Course>();
+		public List<Course> Courses { get; } = new List<Course>();
 
 		public bool IsDone { get; private set; }
 

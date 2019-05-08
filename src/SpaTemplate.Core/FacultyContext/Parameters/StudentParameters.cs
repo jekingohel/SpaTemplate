@@ -7,7 +7,7 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	using SpaTemplate.Core.SharedKernel;
+	using Xeinaemm.Hateoas;
 
 	public class StudentParameters : IParameters
 	{

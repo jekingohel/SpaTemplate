@@ -304,3 +304,4 @@ Thumbs.db
 **/dist
 **/*.DotSettings
 /.msbuild
+/src/SpaTemplate.IdP/Data/Migrations
