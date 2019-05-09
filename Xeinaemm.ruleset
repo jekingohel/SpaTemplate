@@ -6,12 +6,20 @@
     <Rule Id="CA1040" Action="None" />
     <Rule Id="CA1031" Action="None" />
     
+    <Rule Id="CS1591" Action="None" />
+    
+    <Rule Id="SA0001" Action="None" />
     <Rule Id="SA1501" Action="None" />
     <Rule Id="SA1503" Action="None" />
     <Rule Id="SA1600" Action="None" />
     <Rule Id="SA1601" Action="None" />
     <Rule Id="SA1602" Action="None" />
+    <Rule Id="SA1606" Action="None" />
+    <Rule Id="SA1607" Action="None" />
+    <Rule Id="SA1614" Action="None" />
+    <Rule Id="SA1616" Action="None" />
 
+    <Rule Id="RCS1138" Action="None" />
     <Rule Id="RCS1217" Action="None" />
     
     <Rule Id="RECS0154" Action="None" />

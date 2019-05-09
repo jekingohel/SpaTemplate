@@ -12,6 +12,7 @@ namespace SpaTemplate.Web.Core
 	using Microsoft.AspNetCore.SpaServices.AngularCli;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
+	using SpaTemplate.Infrastructure;
 	using Xeinaemm.AspNetCore;
 
 	public class Startup
@@ -28,7 +29,7 @@ namespace SpaTemplate.Web.Core
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddCustomClientAuthentication();
+			services.AddCustomClientAuthentication(new SpaTemplateWebCoreParameters(this.Configuration.GetSecurityString(), this.Configuration.GetAuthorityString()));
 			services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
 		}
 

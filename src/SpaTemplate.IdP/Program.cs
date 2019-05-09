@@ -10,12 +10,12 @@ namespace SpaTemplate.IdP
 	using Microsoft.AspNetCore;
 	using Microsoft.AspNetCore.Hosting;
 
-	public class Program
+	public static class Program
 	{
-		public static void Main(string[] args)
-		{
+		public static void Main(string[] args) =>
+#pragma warning disable IDISP004 // Don't ignore return value of type IDisposable.
 			CreateWebHostBuilder(args).Build().Run();
-		}
+#pragma warning restore IDISP004 // Don't ignore return value of type IDisposable.
 
 		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
 			WebHost.CreateDefaultBuilder(args)

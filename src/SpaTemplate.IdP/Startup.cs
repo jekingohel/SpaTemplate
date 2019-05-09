@@ -11,6 +11,7 @@ namespace SpaTemplate.IdP
 	using System.Text;
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Hosting;
+	using Microsoft.AspNetCore.Identity;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.IdentityModel.Tokens;
@@ -35,17 +36,17 @@ namespace SpaTemplate.IdP
 
 			if (this.Environment.IsProduction())
 			{
-				var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes("secret")), SecurityAlgorithms.HmacSha256Signature);
+				var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.Configuration.GetSecurityString())), SecurityAlgorithms.HmacSha256Signature);
 				var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-				var connectionString = this.Configuration.GetConnectionString("DefaultConnection");
-				services.AddCustomIdentityServer<ApplicationUser>(signingCredentials, connectionString, migrationsAssembly);
+				var connectionString = this.Configuration.GetConnectionString();
+				services.AddCustomIdentityServer<IdentityUser>(signingCredentials, connectionString, migrationsAssembly);
 			}
 			else
 			{
-				services.AddCustomInMemoryIdentityServer(new IdentityServerSeedDataDevelopmentConfiguration());
+				services.AddCustomInMemoryIdentityServer<IdentityUser>(new IdentitySeedDataDevelopment());
 			}
 
-			services.AddCustomIdentity<ApplicationUser, IdentityDbContext>();
+			services.AddCustomIdentity<IdentityUser, IdentityDbContext>();
 			services.AddCustomIISOptions();
 			services.AddMvc().SetCompatibilityVersion();
 		}

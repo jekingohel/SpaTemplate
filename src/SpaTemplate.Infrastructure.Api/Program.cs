@@ -10,16 +10,9 @@ namespace SpaTemplate.Infrastructure.Api
 	using Microsoft.AspNetCore;
 	using Microsoft.AspNetCore.Hosting;
 
-	/// <summary>
-	///
-	/// </summary>
 	public static class Program
 	{
 #pragma warning disable IDISP004 // Don't ignore return value of type IDisposable.
-		/// <summary>
-		///
-		/// </summary>
-		/// <param name="args"></param>
 		public static void Main(string[] args) => CreateWebHostBuilder(args).Build().Run();
 #pragma warning restore IDISP004 // Don't ignore return value of type IDisposable.
 

@@ -128,7 +128,9 @@ namespace SpaTemplate.Infrastructure.Api
 		/// <param name="id"></param>
 		/// <param name="parameters"></param>
 		/// <param name="mediaType"></param>
-		/// <returns></returns>
+		/// <returns>
+		///
+		/// </returns>
 		[HttpGet("{id}", Name = RouteName.GetStudent)]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesDefaultResponseType]
