@@ -11,29 +11,33 @@ namespace SpaTemplate.Web.Quartz
 	using global::Quartz;
 	using Xeinaemm.Quartz;
 
-	public static class QuartzScheduler
+	public class QuartzScheduler
 	{
+		private readonly IQuartzService quartzService;
+
+		public QuartzScheduler(IQuartzService quartzService) => this.quartzService = quartzService;
+
 		public static JobKey ExceptionsJobKey => new JobKey("Exceptions", "Xeinaemm.Quartz");
 
 		public static JobKey QuickJobJobKey => new JobKey("Quick", "Xeinaemm.Quartz");
 
 		public static JobKey CoreJobKey => new JobKey("NetCore", "Xeinaemm.Quartz");
 
-		public static async Task RegisterScheduledJobsAsync()
+		public async Task RegisterScheduledJobsAsync()
 		{
-			await QuartzHelper.ScheduleJobAsync<ExceptionsJob>(new QuartzJob
+			await this.quartzService.ScheduleJobAsync<ExceptionsJob>(new QuartzJob
 			{
 				JobKey = ExceptionsJobKey,
 				CronExpression = "1 * * * * ?",
 			}).ConfigureAwait(false);
 
-			await QuartzHelper.ScheduleJobAsync<QuickJob>(new QuartzJob
+			await this.quartzService.ScheduleJobAsync<QuickJob>(new QuartzJob
 			{
 				JobKey = QuickJobJobKey,
 				CronExpression = "1 * * * * ?",
 			}).ConfigureAwait(false);
 
-			await QuartzHelper.ScheduleJobAsync<CoreJob>(new QuartzJob
+			await this.quartzService.ScheduleJobAsync<CoreJob>(new QuartzJob
 			{
 				JobKey = CoreJobKey,
 				CronExpression = "1 * * * * ?",

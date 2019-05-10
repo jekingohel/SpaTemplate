@@ -55,7 +55,7 @@ namespace SpaTemplate.Infrastructure.Api
 			services.AddCustomLogging(this.Configuration);
 #pragma warning disable IDISP005 // Return type should indicate that the value should be disposed.
 			services.AddCustomAutoMapper();
-			return services.AddCustomDependencyInjectionProvider();
+			return services.AddCustomDependencyInjectionProvider(this.Configuration);
 #pragma warning restore IDISP005 // Return type should indicate that the value should be disposed.
 		}
 

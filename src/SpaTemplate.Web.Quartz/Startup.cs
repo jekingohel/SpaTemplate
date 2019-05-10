@@ -33,12 +33,12 @@ namespace SpaTemplate.Web.Quartz
 			services.AddMvc().SetCompatibilityVersion();
 		}
 
-		public async void Configure(IApplicationBuilder app)
+		public async void Configure(IApplicationBuilder app, IQuartzService quartzService)
 		{
 			app.UseCustomHostingEnvironment(this.Environment);
 			app.UseHttpsRedirection();
-			app.UseCrystalQuartz(() => QuartzHelper.ServerInstance);
-			await QuartzScheduler.RegisterScheduledJobsAsync().ConfigureAwait(false);
+			app.UseCrystalQuartz(() => quartzService.ServerInstance);
+			await new QuartzScheduler(quartzService).RegisterScheduledJobsAsync().ConfigureAwait(false);
 			app.UseAuthentication();
 			app.UseStaticFiles();
 			app.UseCookiePolicy();

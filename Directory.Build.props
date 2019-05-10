@@ -1,8 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  
+
   <PropertyGroup>
-    <ProjectAcronym>Xeinaemm</ProjectAcronym>
+    <SolutionPreffix>Xeinaemm</SolutionPreffix>
+    <SolutionSuffix>Standard</SolutionSuffix>
     <Company>Xeinaemm Consulting Piotr Czech</Company>
   </PropertyGroup>
 
@@ -15,40 +16,47 @@
 
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-    <NoWarn>1701;1702;NU1701;AD0001;CS8032;NETSDK1071</NoWarn>
+    <NoWarn>1591;1701;1702;8032;NU1701;AD0001</NoWarn>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <CodeAnalysisRuleSet>..\..\$(ProjectAcronym).ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\$(SolutionPreffix).ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" Visible="false" />
-    <None Include="..\..\$(ProjectAcronym).ruleset" Visible="false" />
+    <None Include="..\..\$(SolutionPreffix).ruleset" Visible="false" />
     <None Include="..\..\.editorconfig" Visible="false" />
     <None Include="content\*" Pack="true" PackagePath="content" />
     <None Include="build\*" Pack="true" PackagePath="build" />
     <None Include="lib\*" Pack="true" PackagePath="lib" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(MSBuildProjectName)' == '$(ProjectAcronym).Analyzer'">
-    <IncludeBuildOutput>false</IncludeBuildOutput>
-  </PropertyGroup>
-  <ItemGroup Condition="'$(MSBuildProjectName)' == '$(ProjectAcronym).Analyzer'">
-    <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" />
-  </ItemGroup>
+  <Choose>
+    <When Condition="'$(MSBuildProjectName)' == '$(SolutionPreffix).Analyzer'">
+      <PropertyGroup>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+      </PropertyGroup>
+      <ItemGroup>
+        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" />
+      </ItemGroup>
+    </When>
+  </Choose>
   
   <Choose>
     <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config')">
       <PropertyGroup>
         <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
       </PropertyGroup>
-      
-      <ItemGroup Condition=" '$(SolutionName)' != '$(ProjectAcronym).Standard'">
-        <PackageReference Include="$(ProjectAcronym).Standard.All" Version="*" PrivateAssets="All" />
-      </ItemGroup>
-      <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2' and '$(SolutionName)' != '$(ProjectAcronym).Standard'">
-        <PackageReference Include="$(ProjectAcronym).AspNetCore.All" Version="*" PrivateAssets="All" />
-      </ItemGroup>
     </When>
   </Choose>
   
+  <Choose>
+    <When Condition="'$(SolutionName)' != '$(SolutionPreffix).$(SolutionSuffix)'">
+      <ItemGroup>
+        <PackageReference Include="$(SolutionPreffix).Standard.All" Version="*" PrivateAssets="All" />
+      </ItemGroup>
+      <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2'">
+        <PackageReference Include="$(SolutionPreffix).AspNetCore.All" Version="*" PrivateAssets="All" />
+      </ItemGroup>
+    </When>
+  </Choose>
 </Project>
