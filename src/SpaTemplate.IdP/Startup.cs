@@ -17,6 +17,7 @@ namespace SpaTemplate.IdP
 	using Microsoft.IdentityModel.Tokens;
 	using SpaTemplate.Infrastructure;
 	using Xeinaemm.AspNetCore;
+	using Xeinaemm.AspNetCore.Identity;
 
 	public class Startup
 	{
@@ -43,7 +44,7 @@ namespace SpaTemplate.IdP
 			}
 			else
 			{
-				services.AddCustomInMemoryIdentityServer<IdentityUser>(new IdentitySeedDataDevelopment());
+				services.AddCustomInMemoryIdentityServer<IdentityUser>(new IdentitySeedData());
 			}
 
 			services.AddCustomIdentity<IdentityUser, IdentityDbContext>();

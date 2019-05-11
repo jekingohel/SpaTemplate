@@ -31,7 +31,7 @@
   </ItemGroup>
 
   <Choose>
-    <When Condition="'$(MSBuildProjectName)' == '$(SolutionPreffix).Analyzer'">
+    <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config') and '$(MSBuildProjectName)' == '$(SolutionPreffix).Analyzer'">
       <PropertyGroup>
         <IncludeBuildOutput>false</IncludeBuildOutput>
       </PropertyGroup>
@@ -50,7 +50,7 @@
   </Choose>
   
   <Choose>
-    <When Condition="'$(SolutionName)' != '$(SolutionPreffix).$(SolutionSuffix)'">
+    <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config') and '$(SolutionName)' != '$(SolutionPreffix).$(SolutionSuffix)'">
       <ItemGroup>
         <PackageReference Include="$(SolutionPreffix).Standard.All" Version="*" PrivateAssets="All" />
       </ItemGroup>

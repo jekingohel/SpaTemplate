@@ -8,7 +8,6 @@
 namespace SpaTemplate.Core.FacultyContext
 {
 	using AutoMapper;
-	using SpaTemplate.Core.FacultyContext;
 
 	public class CourseProfile : Profile
 	{

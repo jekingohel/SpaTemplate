@@ -14,6 +14,7 @@ namespace SpaTemplate.Web.Core
 	using Microsoft.Extensions.DependencyInjection;
 	using SpaTemplate.Infrastructure;
 	using Xeinaemm.AspNetCore;
+	using Xeinaemm.AspNetCore.Identity;
 
 	public class Startup
 	{
@@ -29,7 +30,7 @@ namespace SpaTemplate.Web.Core
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddCustomClientAuthentication(new SpaTemplateWebCoreParameters(this.Configuration.GetSecurityString(), this.Configuration.GetAuthorityString()));
+			services.AddCustomClientAuthentication(new ClientParameters(this.Configuration.GetSecurityString(), this.Configuration.GetAuthorityString()));
 			services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
 		}
 

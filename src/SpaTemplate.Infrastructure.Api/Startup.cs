@@ -17,6 +17,7 @@ namespace SpaTemplate.Infrastructure.Api
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.OpenApi.Models;
 	using Xeinaemm.AspNetCore;
+	using Xeinaemm.AspNetCore.Identity;
 
 	public class Startup
 	{
@@ -46,7 +47,7 @@ namespace SpaTemplate.Infrastructure.Api
 			services.AddCustomApiMvc();
 			services.AddCustomApiBehavior();
 			services.AddCustomVersionedApiExplorer();
-			services.AddCustomApiAuthentication(new SpaTemplateInfrastructureApiParameters(this.Configuration.GetSecurityString(), this.Configuration.GetAuthorityString()));
+			services.AddCustomApiAuthentication(new ApiParameters(this.Configuration.GetSecurityString(), this.Configuration.GetAuthorityString()));
 			services.AddCustomApiVersioning();
 			services.AddCustomSwagger(nameof(Api), new OpenApiInfo());
 			services.AddCustomHttpCacheHeaders();
