@@ -8,19 +8,33 @@
 namespace SpaTemplate.Infrastructure
 {
 	using System.Collections.Generic;
-	using System.Collections.ObjectModel;
 	using IdentityServer4.Models;
 	using Xeinaemm.Identity;
 
 	public class IdentitySeedData : IIdentitySeedData
 	{
-		public Collection<IdentityResource> IdentityResources { get; }
+		public IEnumerable<IdentityResource> IdentityResources { get; } =
+			new List<IClientParameters>
+			{
+				new ClientParameters(),
+			}.Identity();
 
-		public Collection<ApiResource> ApiResources { get; }
+		public IEnumerable<ApiResource> ApiResources { get; } =
+			new List<IApiParameters>
+			{
+				new ApiParameters(),
+			}.Api();
 
-		public Collection<Client> Clients { get; }
+		public IEnumerable<Client> Clients { get; } =
+			new List<Client>
+			{
+				new ClientParameters().Mvc(),
+			};
 
-		public List<IUser> Users { get; }
-
+		public IEnumerable<IUser> Users { get; } = new List<IUser>
+		{
+			new Alice(),
+			new Bob(),
+		};
 	}
 }

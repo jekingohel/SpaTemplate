@@ -7,11 +7,16 @@
 
 namespace SpaTemplate.Infrastructure
 {
+	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using Xeinaemm.Identity;
 
 	public class ClientParameters : IClientParameters
 	{
+		public ClientParameters()
+		{
+		}
+
 		public ClientParameters(string clientSecret, string clientAuthority)
 		{
 			this.Secret = clientSecret;
@@ -27,9 +32,9 @@ namespace SpaTemplate.Infrastructure
 
 		public string Authority { get; }
 
-		public Collection<string> ClaimTypes { get; }
+		public IEnumerable<string> ClaimTypes { get; }
 
-		public Collection<string> ApisNames { get; } = new Collection<string>
+		public IEnumerable<string> ApisNames { get; } = new Collection<string>
 		{
 			new ApiParameters().Name,
 		};

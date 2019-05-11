@@ -21,10 +21,10 @@ namespace SpaTemplate.Infrastructure
 
 	public static class SeedData
 	{
-		public static void EnsureSeedTestData(ApplicationDbContext dbContext)
+		public static void EnsureSeedTestData(this IServiceProvider provider)
 		{
-			dbContext.People.RemoveRange(dbContext.People);
-			dbContext.SaveChanges();
+			var dbContext = provider.GetRequiredService<ApplicationDbContext>();
+			dbContext.Database.Migrate();
 			for (var i = 0; i < 20; i++) AddStudent(dbContext, $"Name{i}", $"Surname{i}", i);
 			dbContext.SaveChanges();
 		}

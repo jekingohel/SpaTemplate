@@ -7,6 +7,7 @@
 
 namespace SpaTemplate.Infrastructure
 {
+	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using Xeinaemm.Identity;
 
@@ -31,6 +32,6 @@ namespace SpaTemplate.Infrastructure
 
 		public string Authority { get; }
 
-		public Collection<string> ClaimTypes { get; }
+		public IEnumerable<string> ClaimTypes { get; }
 	}
 }

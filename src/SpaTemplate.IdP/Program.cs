@@ -7,14 +7,27 @@
 
 namespace SpaTemplate.IdP
 {
+	using System.Threading.Tasks;
 	using Microsoft.AspNetCore;
 	using Microsoft.AspNetCore.Hosting;
+	using Microsoft.Extensions.DependencyInjection;
+	using SpaTemplate.Infrastructure;
 
 	public static class Program
 	{
-		public static void Main(string[] args) =>
 #pragma warning disable IDISP004 // Don't ignore return value of type IDisposable.
-			CreateWebHostBuilder(args).Build().Run();
+		public static async Task Main(string[] args)
+		{
+			using (var host = CreateWebHostBuilder(args).Build())
+			{
+				using (var scope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+				{
+					await scope.ServiceProvider.EnsureIdentitySeedDataAsync(new IdentitySeedData()).ConfigureAwait(false);
+				}
+
+				host.Run();
+			}
+		}
 #pragma warning restore IDISP004 // Don't ignore return value of type IDisposable.
 
 		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
