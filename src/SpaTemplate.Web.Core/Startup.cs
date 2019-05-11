@@ -7,6 +7,7 @@
 
 namespace SpaTemplate.Web.Core
 {
+	using System.IdentityModel.Tokens.Jwt;
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Hosting;
 	using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -22,6 +23,7 @@ namespace SpaTemplate.Web.Core
 		{
 			this.Configuration = configuration;
 			this.Environment = environment;
+			JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 		}
 
 		public IConfiguration Configuration { get; }

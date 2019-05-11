@@ -13,15 +13,10 @@ namespace SpaTemplate.Infrastructure
 
 	public class ClientParameters : IClientParameters
 	{
-		public ClientParameters()
-		{
-		}
-
 		public ClientParameters(string clientSecret, string clientAuthority)
 		{
 			this.Secret = clientSecret;
 			this.Authority = clientAuthority;
-			this.ClaimTypes = new Collection<string>();
 		}
 
 		public string Name { get; } = "E29B3139-AB17-485A-9712-F9F70777CB0A";
@@ -32,11 +27,11 @@ namespace SpaTemplate.Infrastructure
 
 		public string Authority { get; }
 
-		public IEnumerable<string> ClaimTypes { get; }
+		public IEnumerable<string> ClaimTypes { get; } = new Collection<string>();
 
 		public IEnumerable<string> ApisNames { get; } = new Collection<string>
 		{
-			new ApiParameters().Name,
+			new ApiParameters(string.Empty, string.Empty).Name,
 		};
 	}
 }

@@ -13,15 +13,10 @@ namespace SpaTemplate.Infrastructure
 
 	public class ApiParameters : IApiParameters
 	{
-		public ApiParameters()
-		{
-		}
-
 		public ApiParameters(string secret, string authority)
 		{
 			this.Secret = secret;
 			this.Authority = authority;
-			this.ClaimTypes = new Collection<string>();
 		}
 
 		public string Name { get; } = "EA3DAD10-821E-4937-A503-E72D3549E0E8";
@@ -32,6 +27,6 @@ namespace SpaTemplate.Infrastructure
 
 		public string Authority { get; }
 
-		public IEnumerable<string> ClaimTypes { get; }
+		public IEnumerable<string> ClaimTypes { get; } = new Collection<string>();
 	}
 }

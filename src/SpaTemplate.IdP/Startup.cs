@@ -7,6 +7,7 @@
 
 namespace SpaTemplate.IdP
 {
+	using System;
 	using System.Reflection;
 	using System.Text;
 	using Microsoft.AspNetCore.Builder;
@@ -21,15 +22,18 @@ namespace SpaTemplate.IdP
 
 	public class Startup
 	{
-		public Startup(IConfiguration configuration, IHostingEnvironment environment)
+		public Startup(IConfiguration configuration, IHostingEnvironment environment, IServiceProvider serviceProvider)
 		{
 			this.Configuration = configuration;
 			this.Environment = environment;
+			this.ServiceProvider = serviceProvider;
 		}
 
 		public IConfiguration Configuration { get; }
 
 		public IHostingEnvironment Environment { get; }
+
+		public IServiceProvider ServiceProvider { get; }
 
 		public void ConfigureServices(IServiceCollection services)
 		{
@@ -41,10 +45,11 @@ namespace SpaTemplate.IdP
 				var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 				var connectionString = this.Configuration.GetConnectionString();
 				services.AddCustomIdentityServer<IdentityUser>(signingCredentials, connectionString, migrationsAssembly);
+				this.ServiceProvider.EnsureIdentitySeedDataAsync(new IdentitySeedData(this.Configuration)).ConfigureAwait(false);
 			}
 			else
 			{
-				services.AddCustomInMemoryIdentityServer<IdentityUser>(new IdentitySeedData());
+				services.AddCustomInMemoryIdentityServer<IdentityUser>(new IdentitySeedData(this.Configuration));
 			}
 
 			services.AddCustomIdentity<IdentityUser, IdentityDbContext>();
