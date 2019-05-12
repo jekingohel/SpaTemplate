@@ -57,7 +57,8 @@ namespace SpaTemplate.Infrastructure.Api
 		/// <param name="studentForCreationDto"></param>
 		/// <returns></returns>
 		[HttpPost(Name = RouteName.CreateStudent)]
-		[RequestHeaderMatchesMediaType(HeaderNames.ContentType, MediaType.InputFormatterJson)]
+		[Consumes(MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
+		[RequestHeaderMatchesMediaType(HeaderNames.ContentType, MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesDefaultResponseType]
 		public IActionResult CreateStudent([FromBody] StudentForCreationDto studentForCreationDto)
@@ -97,6 +98,8 @@ namespace SpaTemplate.Infrastructure.Api
 		/// <param name="mediaType"></param>
 		/// <returns></returns>
 		[HttpGet(Name = RouteName.GetPeople)]
+		[Produces(MediaType.OutputFormatterJson)]
+		[RequestHeaderMatchesMediaType(HeaderNames.Accept, MediaTypeNames.Application.Json, MediaType.OutputFormatterJson)]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesDefaultResponseType]
 		public IActionResult GetPeople(
@@ -135,6 +138,8 @@ namespace SpaTemplate.Infrastructure.Api
 		///
 		/// </returns>
 		[HttpGet("{id}", Name = RouteName.GetStudent)]
+		[Produces(MediaType.OutputFormatterJson)]
+		[RequestHeaderMatchesMediaType(HeaderNames.Accept, MediaTypeNames.Application.Json, MediaType.OutputFormatterJson)]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesDefaultResponseType]
 		public IActionResult GetStudent(
@@ -159,6 +164,7 @@ namespace SpaTemplate.Infrastructure.Api
 		/// <param name="patchDoc"></param>
 		/// <returns></returns>
 		[HttpPatch("{id}", Name = RouteName.PartiallyUpdateStudent)]
+		[Consumes(MediaType.PatchFormatterJson)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), StatusCodes.Status422UnprocessableEntity)]

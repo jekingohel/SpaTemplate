@@ -62,7 +62,8 @@ namespace SpaTemplate.Infrastructure.Api
 		///
 		/// </returns>
 		[HttpPost(Name = RouteName.CreateCourseForStudent)]
-		[RequestHeaderMatchesMediaType(HeaderNames.ContentType, MediaType.InputFormatterJson)]
+		[Consumes(MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
+		[RequestHeaderMatchesMediaType(HeaderNames.ContentType, MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesResponseType(typeof(ModelStateDictionary), StatusCodes.Status422UnprocessableEntity)]
@@ -124,6 +125,8 @@ namespace SpaTemplate.Infrastructure.Api
 		///
 		/// </returns>
 		[HttpGet("{id}", Name = RouteName.GetCourseForStudent)]
+		[Produces(MediaType.OutputFormatterJson)]
+		[RequestHeaderMatchesMediaType(HeaderNames.Accept, MediaTypeNames.Application.Json, MediaType.OutputFormatterJson)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
 		public IActionResult GetCourseForStudent(
@@ -151,6 +154,8 @@ namespace SpaTemplate.Infrastructure.Api
 		///
 		/// </returns>
 		[HttpGet(Name = RouteName.GetCoursesForStudent)]
+		[Produces(MediaType.OutputFormatterJson)]
+		[RequestHeaderMatchesMediaType(HeaderNames.Accept, MediaTypeNames.Application.Json, MediaType.OutputFormatterJson)]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[ProducesDefaultResponseType]
@@ -190,6 +195,7 @@ namespace SpaTemplate.Infrastructure.Api
 		///
 		/// </returns>
 		[HttpPatch("{id}", Name = RouteName.PartiallyUpdateCourseForStudent)]
+		[Consumes(MediaType.PatchFormatterJson)]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -258,7 +264,8 @@ namespace SpaTemplate.Infrastructure.Api
 		///
 		/// </returns>
 		[HttpPut("{id}", Name = RouteName.UpdateCourseForStudent)]
-		[RequestHeaderMatchesMediaType(HeaderNames.ContentType, MediaType.InputFormatterJson)]
+		[Consumes(MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
+		[RequestHeaderMatchesMediaType(HeaderNames.ContentType,MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]

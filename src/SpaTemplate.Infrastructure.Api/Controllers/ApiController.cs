@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="RootController.cs" company="Piotr Xeinaemm Czech">
+// <copyright file="ApiController.cs" company="Piotr Xeinaemm Czech">
 // Copyright (c) Piotr Xeinaemm Czech. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 // </copyright>
@@ -14,6 +14,7 @@ namespace SpaTemplate.Infrastructure.Api
 	using Microsoft.Net.Http.Headers;
 	using SpaTemplate.Core.SharedKernel;
 	using Xeinaemm.AspNetCore;
+	using Xeinaemm.AspNetCore.Api;
 	using Xeinaemm.Hateoas;
 
 	/// <summary>
@@ -23,15 +24,15 @@ namespace SpaTemplate.Infrastructure.Api
 	[Route("api/v{version:apiVersion}")]
 	[ValidateModel]
 	[ApiController]
-	public class RootController : Controller
+	public class ApiController : Controller
 	{
 		private readonly IUrlHelper urlHelper;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="RootController"/> class.
+		/// Initializes a new instance of the <see cref="ApiController"/> class.
 		/// </summary>
 		/// <param name="urlHelper"></param>
-		public RootController(IUrlHelper urlHelper) => this.urlHelper = urlHelper;
+		public ApiController(IUrlHelper urlHelper) => this.urlHelper = urlHelper;
 
 		/// <summary>
 		///
@@ -41,6 +42,8 @@ namespace SpaTemplate.Infrastructure.Api
 		///
 		/// </returns>
 		[HttpGet(Name = RouteName.GetRoot)]
+		[Produces(MediaType.OutputFormatterJson)]
+		[RequestHeaderMatchesMediaType(HeaderNames.Accept, MediaTypeNames.Application.Json, MediaType.OutputFormatterJson)]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status204NoContent)]
 		[ProducesDefaultResponseType]

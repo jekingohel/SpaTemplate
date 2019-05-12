@@ -14,16 +14,18 @@ namespace SpaTemplate.Infrastructure.Api
 	using AutoMapper;
 	using Microsoft.AspNetCore.Http;
 	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.Net.Http.Headers;
 	using SpaTemplate.Core.FacultyContext;
 	using SpaTemplate.Core.SharedKernel;
 	using Xeinaemm.AspNetCore;
 	using Xeinaemm.AspNetCore.Api;
+	using Xeinaemm.Hateoas;
 
 	/// <summary>
 	///
 	/// </summary>
 	[Produces(MediaTypeNames.Application.Json, MediaTypeNames.Application.Xml)]
-	[Route("api/v{version:apiVersion}/studentcollections")]
+	[Route("api/v{version:apiVersion}/people-collections")]
 	[ValidateModel]
 	[ApiController]
 	public class PeopleCollectionsController : Controller
@@ -48,6 +50,8 @@ namespace SpaTemplate.Infrastructure.Api
 		/// <param name="studentForCreationDtos"></param>
 		/// <returns></returns>
 		[HttpPost]
+		[Consumes(MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
+		[RequestHeaderMatchesMediaType(HeaderNames.ContentType, MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
 		[ProducesResponseType(StatusCodes.Status201Created)]
 		[ProducesDefaultResponseType]
 		public IActionResult CreateStudentCollection(
@@ -74,6 +78,7 @@ namespace SpaTemplate.Infrastructure.Api
 		/// <param name="ids"></param>
 		/// <returns></returns>
 		[HttpGet("({ids})", Name = RouteName.GetStudentCollection)]
+		[RequestHeaderMatchesMediaType(HeaderNames.Accept, MediaTypeNames.Application.Json)]
 		[ProducesDefaultResponseType]
 		public IActionResult GetStudentCollection(
 			[ModelBinder(BinderType = typeof(ArrayModelBinder))]
