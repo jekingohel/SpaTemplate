@@ -19,7 +19,7 @@ namespace SpaTemplate.IdP
 	[Authorize]
 	public class DiagnosticsController : Controller
 	{
-		public async Task<IActionResult> IndexAsync()
+		public async Task<IActionResult> Index()
 		{
 			var localAddresses = new string[] { "127.0.0.1", "::1", this.HttpContext.Connection.LocalIpAddress.ToString() };
 			return !localAddresses.Contains(this.HttpContext.Connection.RemoteIpAddress.ToString())

@@ -27,7 +27,10 @@ namespace SpaTemplate.Infrastructure
 
 		public string Authority { get; }
 
-		public IEnumerable<string> ClaimTypes { get; } = new Collection<string>();
+		public IEnumerable<IIdentityResource> Resources { get; } = new Collection<IIdentityResource>
+		{
+			new Roles(),
+		};
 
 		public IEnumerable<string> ApisNames { get; } = new Collection<string>
 		{

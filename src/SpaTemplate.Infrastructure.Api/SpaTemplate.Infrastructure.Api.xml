@@ -4,6 +4,26 @@
         <name>SpaTemplate.Infrastructure.Api</name>
     </assembly>
     <members>
+        <member name="T:SpaTemplate.Infrastructure.Api.ApiController">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:SpaTemplate.Infrastructure.Api.ApiController.#ctor(Microsoft.AspNetCore.Mvc.IUrlHelper)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SpaTemplate.Infrastructure.Api.ApiController"/> class.
+            </summary>
+            <param name="urlHelper"></param>
+        </member>
+        <member name="M:SpaTemplate.Infrastructure.Api.ApiController.GetRoot(System.String)">
+             <summary>
+            
+             </summary>
+             <param name="mediaType"></param>
+             <returns>
+            
+             </returns>
+        </member>
         <member name="T:SpaTemplate.Infrastructure.Api.CoursesController">
              <summary>
             
@@ -160,26 +180,6 @@
              <param name="id"></param>
              <param name="patchDoc"></param>
              <returns></returns>
-        </member>
-        <member name="T:SpaTemplate.Infrastructure.Api.RootController">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="M:SpaTemplate.Infrastructure.Api.RootController.#ctor(Microsoft.AspNetCore.Mvc.IUrlHelper)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SpaTemplate.Infrastructure.Api.RootController"/> class.
-            </summary>
-            <param name="urlHelper"></param>
-        </member>
-        <member name="M:SpaTemplate.Infrastructure.Api.RootController.GetRoot(System.String)">
-             <summary>
-            
-             </summary>
-             <param name="mediaType"></param>
-             <returns>
-            
-             </returns>
         </member>
     </members>
 </doc>

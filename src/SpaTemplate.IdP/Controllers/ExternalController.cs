@@ -44,18 +44,18 @@ namespace SpaTemplate.IdP
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> ChallengeAsync(string provider, string returnUrl)
+		public async Task<IActionResult> Challenge(string provider, string returnUrl)
 		{
 			if (string.IsNullOrEmpty(returnUrl)) returnUrl = "~/";
 
 			if (!this.Url.IsLocalUrl(returnUrl) && !this.interaction.IsValidReturnUrl(returnUrl)) throw new Exception("invalid return URL");
 
 			if (provider == AccountOptions.WindowsAuthenticationSchemeName)
-				return await this.identityServerService.ProcessWindowsLoginAsync(returnUrl, this.HttpContext, this.Url, this, nameof(this.CallbackAsync)).ConfigureAwait(false);
+				return await this.identityServerService.ProcessWindowsLoginAsync(returnUrl, this.HttpContext, this.Url, this, nameof(this.Callback)).ConfigureAwait(false);
 
 			var props = new AuthenticationProperties
 			{
-				RedirectUri = this.Url.Action(nameof(this.CallbackAsync)),
+				RedirectUri = this.Url.Action(nameof(this.Callback)),
 				Items =
 					{
 						{ nameof(returnUrl), returnUrl },
@@ -67,7 +67,7 @@ namespace SpaTemplate.IdP
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> CallbackAsync()
+		public async Task<IActionResult> Callback()
 		{
 			var result = await this.HttpContext.AuthenticateAsync(IdentityConstants.ExternalScheme).ConfigureAwait(false);
 			if (result?.Succeeded != true) throw new Exception("External authentication error");

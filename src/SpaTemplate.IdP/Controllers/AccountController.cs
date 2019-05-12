@@ -49,7 +49,7 @@ namespace SpaTemplate.IdP
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> LoginAsync(string returnUrl)
+		public async Task<IActionResult> Login(string returnUrl)
 		{
 			var vm = await this.identityServerService.BuildLoginViewModelAsync(returnUrl).ConfigureAwait(false);
 
@@ -60,7 +60,7 @@ namespace SpaTemplate.IdP
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> LoginAsync(LoginInputModel model, string button)
+		public async Task<IActionResult> Login(LoginInputModel model, string button)
 		{
 			var context = await this.interaction.GetAuthorizationContextAsync(model.ReturnUrl).ConfigureAwait(false);
 
@@ -108,15 +108,15 @@ namespace SpaTemplate.IdP
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> LogoutAsync(string logoutId)
+		public async Task<IActionResult> Logout(string logoutId)
 		{
 			var vm = await this.identityServerService.BuildLogoutViewModelAsync(logoutId, this.User).ConfigureAwait(false);
-			return !vm.ShowLogoutPrompt ? await this.LogoutAsync(vm).ConfigureAwait(false) : this.View(vm);
+			return !vm.ShowLogoutPrompt ? await this.Logout(vm).ConfigureAwait(false) : this.View(vm);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> LogoutAsync(LogoutInputModel model)
+		public async Task<IActionResult> Logout(LogoutInputModel model)
 		{
 			var vm = await this.identityServerService.BuildLoggedOutViewModelAsync(model.LogoutId, this.User, this.HttpContext).ConfigureAwait(false);
 
@@ -129,7 +129,7 @@ namespace SpaTemplate.IdP
 
 			if (vm.TriggerExternalSignout)
 			{
-				var url = this.Url.Action(nameof(this.LogoutAsync), new { logoutId = vm.LogoutId });
+				var url = this.Url.Action(nameof(this.Logout), new { logoutId = vm.LogoutId });
 
 				return this.SignOut(new AuthenticationProperties { RedirectUri = url }, vm.ExternalAuthenticationScheme);
 			}

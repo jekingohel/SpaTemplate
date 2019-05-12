@@ -52,7 +52,7 @@
   <Choose>
     <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config') and '$(SolutionName)' != '$(SolutionPreffix).$(SolutionSuffix)'">
       <ItemGroup>
-        <PackageReference Include="$(SolutionPreffix).Standard.All" Version="*" PrivateAssets="All" />
+        <PackageReference Include="$(SolutionPreffix).All" Version="*" PrivateAssets="All" />
       </ItemGroup>
       <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2'">
         <PackageReference Include="$(SolutionPreffix).AspNetCore.All" Version="*" PrivateAssets="All" />

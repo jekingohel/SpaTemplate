@@ -35,17 +35,17 @@ namespace SpaTemplate.IdP
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> IndexAsync() =>
-			this.View(nameof(this.IndexAsync), await this.identityServerService.BuildGrantsViewModelAsync().ConfigureAwait(false));
+		public async Task<IActionResult> Index() =>
+			this.View(nameof(this.Index), await this.identityServerService.BuildGrantsViewModelAsync().ConfigureAwait(false));
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> RevokeAsync(string clientId)
+		public async Task<IActionResult> Revoke(string clientId)
 		{
 			await this.interaction.RevokeUserConsentAsync(clientId).ConfigureAwait(false);
 			await this.events.RaiseAsync(new GrantsRevokedEvent(this.User.GetSubjectId(), clientId)).ConfigureAwait(false);
 
-			return this.RedirectToAction(nameof(this.IndexAsync));
+			return this.RedirectToAction(nameof(this.Index));
 		}
 	}
 }

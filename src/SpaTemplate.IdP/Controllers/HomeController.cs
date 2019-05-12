@@ -30,7 +30,7 @@ namespace SpaTemplate.IdP
 
 		public IActionResult Index() => this.environment.IsDevelopment() ? this.View() : (IActionResult)this.NotFound();
 
-		public async Task<IActionResult> ErrorAsync(string errorId)
+		public async Task<IActionResult> Error(string errorId)
 		{
 			var vm = new ErrorViewModel();
 
@@ -42,7 +42,7 @@ namespace SpaTemplate.IdP
 				if (!this.environment.IsDevelopment()) message.ErrorDescription = null;
 			}
 
-			return this.View(nameof(this.ErrorAsync), vm);
+			return this.View(nameof(this.Error), vm);
 		}
 	}
 }

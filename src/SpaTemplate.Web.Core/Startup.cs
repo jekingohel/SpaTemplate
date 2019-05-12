@@ -32,7 +32,7 @@ namespace SpaTemplate.Web.Core
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddCustomClientAuthentication(new ClientParameters(this.Configuration.GetSecurityString(), this.Configuration.GetAuthorityString()));
+			services.AddCustomClientAuthentication(new ClientParameters(this.Configuration.GetSecurityString(), this.Configuration.GetAuthorityString()), this.Configuration.GetIdPAuthorityString());
 			services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
 		}
 

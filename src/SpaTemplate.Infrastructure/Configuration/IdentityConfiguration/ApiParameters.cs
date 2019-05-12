@@ -8,11 +8,14 @@
 namespace SpaTemplate.Infrastructure
 {
 	using System.Collections.Generic;
-	using System.Collections.ObjectModel;
 	using Xeinaemm.Identity;
 
 	public class ApiParameters : IApiParameters
 	{
+		public ApiParameters()
+		{
+		}
+
 		public ApiParameters(string secret, string authority)
 		{
 			this.Secret = secret;
@@ -23,10 +26,10 @@ namespace SpaTemplate.Infrastructure
 
 		public string DisplayName { get; } = "SpaTemplate.Infrastructure.Api";
 
-		public string Secret { get; }
+		public string Secret { get; } = string.Empty;
 
-		public string Authority { get; }
+		public string Authority { get; } = string.Empty;
 
-		public IEnumerable<string> ClaimTypes { get; } = new Collection<string>();
+		public IEnumerable<string> ClaimTypes { get; } = new Roles().ClaimTypes;
 	}
 }

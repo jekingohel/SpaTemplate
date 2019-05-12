@@ -14,17 +14,17 @@
     <FindLatestNugetPackage>&quot;[System.IO.Directory]::GetFiles(%27$(NugetDestinationFolder)%27, %27$(SolutionPreffix).Analyzer%2A%27) | Select-String %27[0-9]+.[0-9]+.[0-9]+%27 | %25%25{ %24_.Matches.Value } | Select-Object -Last 1&quot;</FindLatestNugetPackage>
   </PropertyGroup>
 
-  <Target Name="BeforeBuild" Condition="Exists('$(NuGetPackageRoot)$(SolutionPreffix).Analyzer')">
-    <Exec Condition=" '$(SolutionName)' != '$(SolutionPreffix).$(SolutionSuffix)'" ConsoleToMsBuild="true" Command="$(PowerShell) $(FindLatestNugetPackage)">
+  <Target Name="BeforeBuild">
+    <Exec Condition="Exists('$(NuGetPackageRoot)$(SolutionPreffix).Analyzer') and '$(SolutionName)' != '$(SolutionPreffix).$(SolutionSuffix)'" ConsoleToMsBuild="true" Command="$(PowerShell) $(FindLatestNugetPackage)">
       <Output TaskParameter="ConsoleOutput" PropertyName="AnalyzerPackageVersion" />
     </Exec>
 
-    <ItemGroup Condition=" '$(SolutionName)' != '$(SolutionPreffix).$(SolutionSuffix)'">
+    <ItemGroup Condition="Exists('$(NuGetPackageRoot)$(SolutionPreffix).Analyzer') and '$(SolutionName)' != '$(SolutionPreffix).$(SolutionSuffix)'">
       <ContentToCopy Include="$(NuGetPackageRoot)$(SolutionPreffix).Analyzer\$(AnalyzerPackageVersion)\content\*.*" />
       <BuildToCopy Include="$(NuGetPackageRoot)$(SolutionPreffix).Analyzer\$(AnalyzerPackageVersion)\build\*.*" />
     </ItemGroup>
 
-    <ItemGroup Condition=" '$(SolutionName)' == '$(SolutionPreffix).$(SolutionSuffix)'">
+    <ItemGroup Condition="'$(SolutionName)' == '$(SolutionPreffix).$(SolutionSuffix)'">
       <ContentToCopy Include="$(MSBuildProjectDirectory)\content\*.*" />
       <BuildToCopy Include="$(MSBuildProjectDirectory)\build\*.*" />
     </ItemGroup>

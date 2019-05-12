@@ -24,9 +24,9 @@ namespace SpaTemplate.IdP
 			this.identityServerService = identityServerService;
 
 		[HttpGet]
-		public async Task<IActionResult> IndexAsync([FromQuery(Name = "user_code")] string userCode)
+		public async Task<IActionResult> Index([FromQuery(Name = "user_code")] string userCode)
 		{
-			if (string.IsNullOrWhiteSpace(userCode)) return this.View(nameof(this.UserCodeCaptureAsync));
+			if (string.IsNullOrWhiteSpace(userCode)) return this.View(nameof(this.UserCodeCapture));
 
 			var vm = await this.identityServerService.BuildDeviceAuthorizationViewModelAsync(userCode).ConfigureAwait(false);
 			if (vm == null) return this.View("Error");
@@ -37,7 +37,7 @@ namespace SpaTemplate.IdP
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> UserCodeCaptureAsync(string userCode)
+		public async Task<IActionResult> UserCodeCapture(string userCode)
 		{
 			var vm = await this.identityServerService.BuildDeviceAuthorizationViewModelAsync(userCode).ConfigureAwait(false);
 			return vm == null ? this.View("Error") : this.View("UserCodeConfirmation", vm);
@@ -45,7 +45,7 @@ namespace SpaTemplate.IdP
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> CallbackAsync(DeviceAuthorizationInputModel model)
+		public async Task<IActionResult> Callback(DeviceAuthorizationInputModel model)
 		{
 			if (model == null) throw new ArgumentNullException(nameof(model));
 

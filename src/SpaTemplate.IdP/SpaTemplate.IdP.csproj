@@ -14,4 +14,8 @@
     <ProjectReference Include="..\SpaTemplate.Infrastructure\SpaTemplate.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

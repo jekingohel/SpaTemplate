@@ -8,6 +8,7 @@
 namespace SpaTemplate.IdP
 {
 	using System.Collections.Generic;
+	using System.Linq;
 	using IdentityServer4.Models;
 	using Microsoft.Extensions.Configuration;
 	using SpaTemplate.Infrastructure;
@@ -21,19 +22,20 @@ namespace SpaTemplate.IdP
 		public IdentitySeedData(IConfiguration configuration)
 		{
 			this.configuration = configuration;
+			var client = new ClientParameters(configuration.GetClientSecurityString(), this.configuration.GetClientAuthorityString());
 			this.IdentityResources = new List<IClientParameters>
 			{
-				new ClientParameters(configuration.GetClientSecurityString(), this.configuration.GetClientAuthorityString()),
-			}.Identity();
+				client,
+			}.Identity().ToList();
 
 			this.ApiResources = new List<IApiParameters>
 			{
-				new ApiParameters(configuration.GetApiSecurityString(), configuration.GetApiAuthorityString()),
-			}.Api();
+				new ApiParameters(),
+			}.Api().ToList();
 
 			this.Clients = new List<Client>
 			{
-				new ClientParameters(configuration.GetClientSecurityString(), this.configuration.GetClientAuthorityString()).Mvc(),
+				client.Mvc(),
 			};
 
 			this.Users = new List<IUser>

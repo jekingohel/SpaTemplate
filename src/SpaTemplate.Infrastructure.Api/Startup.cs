@@ -15,7 +15,6 @@ namespace SpaTemplate.Infrastructure.Api
 	using Microsoft.AspNetCore.Mvc.ApiExplorer;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
-	using Microsoft.OpenApi.Models;
 	using Xeinaemm.AspNetCore;
 	using Xeinaemm.AspNetCore.Api;
 	using Xeinaemm.AspNetCore.Data;

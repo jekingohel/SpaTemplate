@@ -30,15 +30,15 @@ namespace SpaTemplate.IdP
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> IndexAsync(string returnUrl)
+		public async Task<IActionResult> Index(string returnUrl)
 		{
 			var vm = await this.identityServerService.BuildConsentViewModelAsync(returnUrl).ConfigureAwait(false);
-			return vm != null ? this.View(nameof(this.IndexAsync), vm) : this.View("Error");
+			return vm != null ? this.View(nameof(this.Index), vm) : this.View("Error");
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-		public async Task<IActionResult> IndexAsync(ConsentInputModel model)
+		public async Task<IActionResult> Index(ConsentInputModel model)
 		{
 			var result = await this.identityServerService.ProcessConsentAsync(model, this.User).ConfigureAwait(false);
 
@@ -52,7 +52,7 @@ namespace SpaTemplate.IdP
 			if (result.HasValidationError)
 				this.ModelState.AddModelError(string.Empty, result.ValidationError);
 
-			return result.ShowView ? this.View(nameof(this.IndexAsync), result.ViewModel) : this.View("Error");
+			return result.ShowView ? this.View(nameof(this.Index), result.ViewModel) : this.View("Error");
 		}
 	}
 }
