@@ -10,17 +10,20 @@ namespace SpaTemplate.Infrastructure.Api
 	using System;
 	using System.Collections.Generic;
 	using System.Linq;
+	using System.Net.Mime;
 	using AutoMapper;
 	using Microsoft.AspNetCore.Http;
 	using Microsoft.AspNetCore.Mvc;
 	using SpaTemplate.Core.FacultyContext;
 	using SpaTemplate.Core.SharedKernel;
 	using Xeinaemm.AspNetCore;
+	using Xeinaemm.AspNetCore.Api;
 
 	/// <summary>
 	///
 	/// </summary>
-	[Route(Route.StudentCollectionsApi)]
+	[Produces(MediaTypeNames.Application.Json, MediaTypeNames.Application.Xml)]
+	[Route("api/v{version:apiVersion}/studentcollections")]
 	[ValidateModel]
 	[ApiController]
 	public class PeopleCollectionsController : Controller

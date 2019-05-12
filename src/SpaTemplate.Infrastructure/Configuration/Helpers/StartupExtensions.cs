@@ -26,14 +26,8 @@ namespace SpaTemplate.Infrastructure
 
 	public static class StartupExtensions
 	{
-		public static (Assembly webAssembly, Assembly coreAssembly, Assembly infrastructureAssembly) Assemblies() =>
-			(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(EmptyClassSpaTemplateCore)), Assembly.GetAssembly(typeof(EmptyClassSpaTemplateInfrastructure)));
-
-		public static IServiceCollection AddCustomAutoMapper(this IServiceCollection services)
-		{
-			var (webAssembly, coreAssembly, infrastructureAssembly) = Assemblies();
-			return services.AddAutoMapper(webAssembly, coreAssembly, infrastructureAssembly);
-		}
+		public static IServiceCollection AddCustomAutoMapper(this IServiceCollection services) =>
+			services.AddAutoMapper(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(EmptyClassSpaTemplateCore)), Assembly.GetAssembly(typeof(EmptyClassSpaTemplateInfrastructure)));
 
 		public static IServiceProvider AddCustomDependencyInjectionProvider(this IServiceCollection services, IConfiguration config)
 		{
@@ -41,8 +35,7 @@ namespace SpaTemplate.Infrastructure
 
 			builder.Populate(services);
 
-			var (webAssembly, coreAssembly, infrastructureAssembly) = Assemblies();
-			builder.RegisterAssemblyTypes(webAssembly, coreAssembly, infrastructureAssembly)
+			builder.RegisterAssemblyTypes(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(EmptyClassSpaTemplateCore)), Assembly.GetAssembly(typeof(EmptyClassSpaTemplateInfrastructure)))
 				.AsImplementedInterfaces();
 
 			// Custom DI

@@ -11,6 +11,7 @@ namespace SpaTemplate.IdP
 	using IdentityServer4.Models;
 	using Microsoft.Extensions.Configuration;
 	using SpaTemplate.Infrastructure;
+	using Xeinaemm.AspNetCore.Identity;
 	using Xeinaemm.Identity;
 
 	public class IdentitySeedData : IIdentitySeedData

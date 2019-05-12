@@ -9,6 +9,7 @@ namespace SpaTemplate.Infrastructure.Api
 {
 	using System;
 	using System.Collections.Generic;
+	using System.Net.Mime;
 	using AutoMapper;
 	using Microsoft.AspNetCore.Http;
 	using Microsoft.AspNetCore.JsonPatch;
@@ -18,12 +19,14 @@ namespace SpaTemplate.Infrastructure.Api
 	using SpaTemplate.Core.FacultyContext;
 	using SpaTemplate.Core.SharedKernel;
 	using Xeinaemm.AspNetCore;
+	using Xeinaemm.AspNetCore.Api;
 	using Xeinaemm.Hateoas;
 
 	/// <summary>
 	///
 	/// </summary>
-	[Route(Route.PeopleApi)]
+	[Produces(MediaTypeNames.Application.Json, MediaTypeNames.Application.Xml)]
+	[Route("api/v{version:apiVersion}/people")]
 	[ValidateModel]
 	[ApiController]
 	public partial class PeopleController : Controller

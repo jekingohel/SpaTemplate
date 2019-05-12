@@ -21,13 +21,14 @@ namespace SpaTemplate.Infrastructure.Api
 	using SpaTemplate.Core.FacultyContext;
 	using SpaTemplate.Core.SharedKernel;
 	using Xeinaemm.AspNetCore;
+	using Xeinaemm.AspNetCore.Api;
 	using Xeinaemm.Hateoas;
 
 	/// <summary>
 	///
 	/// </summary>
 	[Produces(MediaTypeNames.Application.Json, MediaTypeNames.Application.Xml)]
-	[Route(Route.CoursesApi)]
+	[Route("api/v{version:apiVersion}/people/{studentId}/courses")]
 	[ValidateModel]
 	[ApiController]
 	public class CoursesController : ControllerBase

@@ -19,7 +19,8 @@ namespace SpaTemplate.IdP
 	using Microsoft.AspNetCore.Http;
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Mvc;
-	using Xeinaemm.AspNetCore.Identity;
+	using Xeinaemm.AspNetCore;
+	using Xeinaemm.AspNetCore.Identity.IdentityServer;
 
 	[SecurityHeaders]
 	[AllowAnonymous]

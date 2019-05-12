@@ -18,7 +18,8 @@ namespace SpaTemplate.IdP
 	using Microsoft.IdentityModel.Tokens;
 	using SpaTemplate.Infrastructure;
 	using Xeinaemm.AspNetCore;
-	using Xeinaemm.AspNetCore.Identity;
+	using Xeinaemm.AspNetCore.Identity.Extensions;
+	using Xeinaemm.AspNetCore.Identity.IdentityServer;
 
 	public class Startup
 	{
@@ -45,7 +46,7 @@ namespace SpaTemplate.IdP
 				var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
 				var connectionString = this.Configuration.GetConnectionString();
 				services.AddCustomIdentityServer<IdentityUser>(signingCredentials, connectionString, migrationsAssembly);
-				this.ServiceProvider.EnsureIdentitySeedDataAsync(new IdentitySeedData(this.Configuration)).ConfigureAwait(false);
+				this.ServiceProvider.EnsureIdentitySeedDataAsync<IdentityDbContext>(new IdentitySeedData(this.Configuration)).ConfigureAwait(false);
 			}
 			else
 			{

@@ -39,6 +39,12 @@
     <RemoveDir Directories="$(MSBuildProjectDirectory)\obj\Debug" Condition="Exists('$(MSBuildProjectDirectory)\obj\Debug')" />
   </Target>
 
+  <Target Name="AfterBuild" Condition="Exists('$(MSBuildProjectDirectory)\nswag.json')">
+    <Copy SourceFiles="@(ReferencePath)" DestinationFolder="$(OutDir)References" />
+    <Exec Command="$(NSwagExe_Core22) run nswag.json /variables:Configuration=$(Configuration),OutDir=$(OutDir)" />
+    <RemoveDir Directories="$(OutDir)References" />
+  </Target>
+  
   <Target Name="AfterBuild" Condition="!Exists('$(MSBuildProjectDirectory)\packages.config') and '$(Configuration)'=='Release' ">
     <Exec Command="dotnet $(Pack)"/>
   </Target>

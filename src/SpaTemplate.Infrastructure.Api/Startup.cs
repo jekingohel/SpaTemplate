@@ -17,25 +17,24 @@ namespace SpaTemplate.Infrastructure.Api
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.OpenApi.Models;
 	using Xeinaemm.AspNetCore;
+	using Xeinaemm.AspNetCore.Api;
+	using Xeinaemm.AspNetCore.Data;
 	using Xeinaemm.AspNetCore.Identity;
+	using Xeinaemm.AspNetCore.Swagger;
 
 	public class Startup
 	{
 		public Startup(
 			IHostingEnvironment environment,
-			IConfiguration configuration,
-			IApiVersionDescriptionProvider apiVersionDescriptionProvider)
+			IConfiguration configuration)
 		{
 			this.Environment = environment;
 			this.Configuration = configuration;
-			this.ApiVersionDescriptionProvider = apiVersionDescriptionProvider;
 		}
 
 		public IConfiguration Configuration { get; }
 
 		public IHostingEnvironment Environment { get; }
-
-		public IApiVersionDescriptionProvider ApiVersionDescriptionProvider { get; }
 
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
@@ -49,7 +48,14 @@ namespace SpaTemplate.Infrastructure.Api
 			services.AddCustomVersionedApiExplorer();
 			services.AddCustomApiAuthentication(new ApiParameters(this.Configuration.GetSecurityString(), this.Configuration.GetAuthorityString()));
 			services.AddCustomApiVersioning();
-			services.AddCustomSwagger(nameof(Api), new OpenApiInfo());
+			services.AddSwaggerGen(setupAction =>
+			{
+				setupAction.CustomSwaggerDoc(services, nameof(Api), OpenApiInfoCommon.Create("Api", " "));
+				setupAction.CustomSecurityDefinition();
+				setupAction.CustomSecurityRequirement();
+				setupAction.CustomDocInclusionPredicate(nameof(Api));
+				setupAction.CustomXmlComments<EmptyClassSpaTemplateInfrastructureApi>();
+			});
 			services.AddCustomHttpCacheHeaders();
 			services.AddMemoryCache();
 			services.AddCustomIpRateLimitOptions(new List<RateLimitRule>());
@@ -60,13 +66,13 @@ namespace SpaTemplate.Infrastructure.Api
 #pragma warning restore IDISP005 // Return type should indicate that the value should be disposed.
 		}
 
-		public void Configure(IApplicationBuilder app)
+		public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider apiVersionDescriptionProvider)
 		{
 			app.UseIpRateLimiting();
 			app.UseCustomHostingEnvironment(this.Environment);
 			app.UseHttpsRedirection();
 			app.UseSwagger();
-			app.UseCustomSwaggerUI(this.ApiVersionDescriptionProvider, nameof(Api));
+			app.UseCustomSwaggerUI(apiVersionDescriptionProvider, nameof(Api));
 			app.UseAuthentication();
 			app.UseStaticFiles();
 			app.UseHttpCacheHeaders();

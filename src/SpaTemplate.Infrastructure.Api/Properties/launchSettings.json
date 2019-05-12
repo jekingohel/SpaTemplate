@@ -1,16 +1,17 @@
-﻿{
+{
   "iisSettings": {
-    "windowsAuthentication": false, 
-    "anonymousAuthentication": true, 
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://localhost/SpaTemplate.Infrastructure.Api"
+      "applicationUrl": "http://localhost/SpaTemplate.Infrastructure.Api/",
+      "sslPort": 44316
     }
   },
+  "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

@@ -8,6 +8,7 @@
 namespace SpaTemplate.Infrastructure.Api
 {
 	using System.Collections.Generic;
+	using System.Net.Mime;
 	using Microsoft.AspNetCore.Http;
 	using Microsoft.AspNetCore.Mvc;
 	using Microsoft.Net.Http.Headers;
@@ -18,7 +19,8 @@ namespace SpaTemplate.Infrastructure.Api
 	/// <summary>
 	///
 	/// </summary>
-	[Route(Route.RootApi)]
+	[Produces(MediaTypeNames.Application.Json, MediaTypeNames.Application.Xml)]
+	[Route("api/v{version:apiVersion}")]
 	[ValidateModel]
 	[ApiController]
 	public class RootController : Controller

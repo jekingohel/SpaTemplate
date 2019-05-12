@@ -12,7 +12,8 @@ namespace SpaTemplate.IdP
 	using Microsoft.AspNetCore.Authentication;
 	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Mvc;
-	using Xeinaemm.AspNetCore.Identity;
+	using Xeinaemm.AspNetCore;
+	using Xeinaemm.AspNetCore.Identity.IdentityServer;
 
 	[SecurityHeaders]
 	[Authorize]
