@@ -11,7 +11,6 @@ namespace SpaTemplate.IdP
 	using System.Reflection;
 	using System.Text;
 	using Autofac;
-	using Autofac.Extensions.DependencyInjection;
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Hosting;
 	using Microsoft.AspNetCore.Identity;
@@ -20,59 +19,46 @@ namespace SpaTemplate.IdP
 	using Microsoft.IdentityModel.Tokens;
 	using SpaTemplate.Infrastructure;
 	using Xeinaemm.AspNetCore;
-	using Xeinaemm.AspNetCore.Data;
-	using Xeinaemm.AspNetCore.Identity.Extensions;
+	using Xeinaemm.AspNetCore.Identity;
 	using Xeinaemm.AspNetCore.Identity.IdentityServer;
 
 	public class Startup
 	{
-		public Startup(IConfiguration configuration, IHostingEnvironment environment, IServiceProvider serviceProvider)
+		private readonly IConfiguration configuration;
+		private readonly IHostingEnvironment environment;
+
+		public Startup(
+			IConfiguration configuration,
+			IHostingEnvironment environment)
 		{
-			this.Configuration = configuration;
-			this.Environment = environment;
-			this.ServiceProvider = serviceProvider;
+			this.environment = environment;
+			this.configuration = configuration;
 		}
-
-		public IConfiguration Configuration { get; }
-
-		public IHostingEnvironment Environment { get; }
-
-		public IServiceProvider ServiceProvider { get; }
 
 		public IServiceProvider ConfigureServices(IServiceCollection services)
 		{
 			services.AddCustomCookiePolicy();
-			services.AddCustomIdentity<IdentityUser, IdentityDbContext>();
+			services.AddMvc().SetCompatibilityVersion();
 
-			if (this.Environment.IsProduction())
+			if (this.environment.IsProduction())
 			{
-				var signingCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.Configuration.GetSecurityString())), SecurityAlgorithms.HmacSha256Signature);
-				var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
-				var connectionString = this.Configuration.GetConnectionString();
-				services.AddCustomDbContext<IdentityDbContext>(connectionString);
-				services.AddCustomIdentityServer<IdentityUser>(signingCredentials, connectionString, migrationsAssembly);
-				this.ServiceProvider.EnsureIdentitySeedDataAsync<IdentityDbContext>(new IdentitySeedData(this.Configuration)).ConfigureAwait(false);
+				services.AddCustomIdentityServer<IdentityUser, CustomIdentityDbContext>(this.configuration.GetConnectionString(), Assembly.GetExecutingAssembly().GetName().Name)
+					.AddSigningCredential(new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.configuration.GetSecurityString())), SecurityAlgorithms.HmacSha256Signature));
 			}
 			else
 			{
-				services.AddCustomInMemoryDbContext<IdentityDbContext>("idp");
-				services.AddCustomInMemoryIdentityServer<IdentityUser>(new IdentitySeedData(this.Configuration));
+				services.AddCustomInMemoryIdentityServer<IdentityUser, CustomIdentityDbContext>("idp")
+					.AddDeveloperSigningCredential();
 			}
 
-			services.AddCustomIISOptions();
-			services.AddMvc().SetCompatibilityVersion();
+			services.EnsureIdentitySeedDataAsync<CustomIdentityDbContext>(new IdentitySeedData(this.configuration)).ConfigureAwait(false);
 
-			var builder = new ContainerBuilder();
-			builder.Populate(services);
-			builder.RegisterType<IdentityServerService>().As<IIdentityServerService>();
-#pragma warning disable IDISP005 // Return type should indicate that the value should be disposed.
-			return new AutofacServiceProvider(builder.Build());
-#pragma warning restore IDISP005 // Return type should indicate that the value should be disposed.
+			return services.AddCustomDependencyInjectionProvider(setupAction => setupAction.RegisterType<IdentityServerService>().As<IIdentityServerService>());
 		}
 
 		public void Configure(IApplicationBuilder app)
 		{
-			app.UseCustomHostingEnvironment(this.Environment);
+			app.UseCustomHostingEnvironment(this.environment);
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
 			app.UseCookiePolicy();

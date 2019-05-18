@@ -10,9 +10,14 @@ namespace SpaTemplate.Infrastructure.Api
 	using System;
 	using System.Collections.Generic;
 	using AspNetCoreRateLimit;
+	using Autofac;
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Hosting;
+	using Microsoft.AspNetCore.Http;
+	using Microsoft.AspNetCore.Mvc;
 	using Microsoft.AspNetCore.Mvc.ApiExplorer;
+	using Microsoft.AspNetCore.Mvc.Infrastructure;
+	using Microsoft.AspNetCore.Mvc.Routing;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
 	using Xeinaemm.AspNetCore;
@@ -20,6 +25,8 @@ namespace SpaTemplate.Infrastructure.Api
 	using Xeinaemm.AspNetCore.Data;
 	using Xeinaemm.AspNetCore.Identity;
 	using Xeinaemm.AspNetCore.Swagger;
+	using Xeinaemm.Hateoas;
+	using Xeinaemm.Quartz;
 
 	public class Startup
 	{
@@ -49,7 +56,7 @@ namespace SpaTemplate.Infrastructure.Api
 			services.AddCustomApiVersioning();
 			services.AddSwaggerGen(setupAction =>
 			{
-				setupAction.CustomSwaggerDoc(services, nameof(Api), OpenApiInfoCommon.Create("Api", " "));
+				setupAction.CustomSwaggerDoc(services, nameof(Api), OpenApiInfoCommon.Create(nameof(Api), " "));
 				setupAction.CustomSecurityDefinition();
 				setupAction.CustomSecurityRequirement();
 				setupAction.CustomDocInclusionPredicate(nameof(Api));
@@ -61,8 +68,18 @@ namespace SpaTemplate.Infrastructure.Api
 			services.AddCustomLogging(this.Configuration);
 #pragma warning disable IDISP005 // Return type should indicate that the value should be disposed.
 			services.AddCustomAutoMapper();
-			return services.AddCustomDependencyInjectionProvider(this.Configuration);
 #pragma warning restore IDISP005 // Return type should indicate that the value should be disposed.
+			return services.AddCustomDependencyInjectionProvider(builder =>
+			{
+				builder.Register(_ => new QuartzService(this.Configuration.GetConnectionString())).As<IQuartzService>().SingleInstance();
+				builder.RegisterType<MemoryCacheRateLimitCounterStore>().As<IRateLimitCounterStore>();
+				builder.RegisterType<TypeHelperService>().As<ITypeHelperService>();
+				builder.RegisterType<MemoryCacheIpPolicyStore>().As<IIpPolicyStore>();
+				builder.RegisterType<RateLimitConfiguration>().As<IRateLimitConfiguration>();
+				builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
+				builder.RegisterType<ActionContextAccessor>().As<IActionContextAccessor>();
+				builder.Register(x => x.Resolve<IUrlHelperFactory>().GetUrlHelper(x.Resolve<IActionContextAccessor>().ActionContext)).As<IUrlHelper>();
+			});
 		}
 
 		public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider apiVersionDescriptionProvider)

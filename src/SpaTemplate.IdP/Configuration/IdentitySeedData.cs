@@ -8,7 +8,6 @@
 namespace SpaTemplate.IdP
 {
 	using System.Collections.Generic;
-	using System.Linq;
 	using IdentityServer4.Models;
 	using Microsoft.Extensions.Configuration;
 	using SpaTemplate.Infrastructure;
@@ -26,12 +25,12 @@ namespace SpaTemplate.IdP
 			this.IdentityResources = new List<IClientParameters>
 			{
 				client,
-			}.Identity().ToList();
+			}.Identity();
 
 			this.ApiResources = new List<IApiParameters>
 			{
 				new ApiParameters(),
-			}.Api().ToList();
+			}.Api();
 
 			this.Clients = new List<Client>
 			{
