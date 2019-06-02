@@ -152,6 +152,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\app.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\app.routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\core.module.ts" />
+    <Content Include="ClientApp\src\app\core\generated-services.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\core\index.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\features.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\features\index.ts" />
