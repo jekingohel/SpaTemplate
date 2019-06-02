@@ -8,7 +8,7 @@
 namespace SpaTemplate.Infrastructure
 {
 	using System.Collections.Generic;
-	using Xeinaemm.Identity;
+	using Xeinaemm.AspNetCore.Identity.IdentityServer;
 
 	public class ApiParameters : IApiParameters
 	{

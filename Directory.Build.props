@@ -1,13 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <PropertyGroup>
-    <SolutionPreffix>Xeinaemm</SolutionPreffix>
-    <SolutionSuffix>Standard</SolutionSuffix>
-    <Company>Xeinaemm Consulting Piotr Czech</Company>
-  </PropertyGroup>
+  <Import Project="DeploymentSettings.props" />
 
   <PropertyGroup>
+    <Company>Xeinaemm Consulting Piotr Czech</Company>
     <Authors>$(Company)</Authors>
     <Copyright>Copyright © $(Company) $([System.DateTime]::Now.Year)</Copyright>
     <Trademark>$(Company)™</Trademark>
@@ -18,13 +15,14 @@
     <LangVersion>latest</LangVersion>
     <NoWarn>1591;1701;1702;8032;NU1701;AD0001</NoWarn>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <CodeAnalysisRuleSet>..\..\$(SolutionPreffix).ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\Xeinaemm.ruleset</CodeAnalysisRuleSet>
     <Deterministic>true</Deterministic>
+    <BuildInParallel>false</BuildInParallel>
   </PropertyGroup>
 
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" Visible="false" />
-    <None Include="..\..\$(SolutionPreffix).ruleset" Visible="false" />
+    <None Include="..\..\Xeinaemm.ruleset" Visible="false" />
     <None Include="..\..\.editorconfig" Visible="false" />
     <None Include="content\*" Pack="true" PackagePath="content" />
     <None Include="build\*" Pack="true" PackagePath="build" />
@@ -32,36 +30,17 @@
   </ItemGroup>
 
   <Choose>
-    <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config') and '$(MSBuildProjectName)' == '$(SolutionPreffix).Analyzer'">
-      <PropertyGroup>
-        <IncludeBuildOutput>false</IncludeBuildOutput>
-      </PropertyGroup>
-      <ItemGroup>
-        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" />
-      </ItemGroup>
-    </When>
-  </Choose>
-  
-  <Choose>
     <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config')">
       <PropertyGroup>
         <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
       </PropertyGroup>
     </When>
   </Choose>
-  
+
   <Choose>
-    <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config') and '$(SolutionName)' != '$(SolutionPreffix).$(SolutionSuffix)'">
+    <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config') and '$(IsSharedLibrary)' == 'false'">
       <ItemGroup>
-        <PackageReference Include="$(SolutionPreffix).All" Version="*" PrivateAssets="All" />
-      </ItemGroup>
-    </When>
-  </Choose>
-  
-  <Choose>
-    <When Condition="!Exists('$(MSBuildProjectDirectory)\Properties\AssemblyInfo.cs') and '$(SolutionName)' != '$(SolutionPreffix).$(SolutionSuffix)'">
-      <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp2.2'">
-        <PackageReference Include="$(SolutionPreffix).AspNetCore.All" Version="*" PrivateAssets="All" />
+        <PackageReference Include="Xeinaemm.All" Version="*" PrivateAssets="All" />
       </ItemGroup>
     </When>
   </Choose>

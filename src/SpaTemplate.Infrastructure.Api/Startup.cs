@@ -23,7 +23,7 @@ namespace SpaTemplate.Infrastructure.Api
 	using Xeinaemm.AspNetCore;
 	using Xeinaemm.AspNetCore.Api;
 	using Xeinaemm.AspNetCore.Data;
-	using Xeinaemm.AspNetCore.Identity;
+	using Xeinaemm.AspNetCore.Identity.IdentityServer;
 	using Xeinaemm.AspNetCore.Swagger;
 	using Xeinaemm.Hateoas;
 	using Xeinaemm.Quartz;

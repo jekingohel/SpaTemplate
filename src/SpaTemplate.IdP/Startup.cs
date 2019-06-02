@@ -14,12 +14,12 @@ namespace SpaTemplate.IdP
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Hosting;
 	using Microsoft.AspNetCore.Identity;
+	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.IdentityModel.Tokens;
 	using SpaTemplate.Infrastructure;
 	using Xeinaemm.AspNetCore;
-	using Xeinaemm.AspNetCore.Identity;
 	using Xeinaemm.AspNetCore.Identity.IdentityServer;
 
 	public class Startup
@@ -51,9 +51,11 @@ namespace SpaTemplate.IdP
 					.AddDeveloperSigningCredential();
 			}
 
-			services.EnsureIdentitySeedDataAsync<CustomIdentityDbContext>(new IdentitySeedData(this.configuration)).ConfigureAwait(false);
-
-			return services.AddCustomDependencyInjectionProvider(setupAction => setupAction.RegisterType<IdentityServerService>().As<IIdentityServerService>());
+			return services.AddCustomDependencyInjectionProvider(setupAction =>
+			{
+				setupAction.RegisterType<CustomIdentityDbContext>().As<IdentityDbContext<IdentityUser>>();
+				setupAction.RegisterType<IdentityServerService>().As<IIdentityServerService>();
+			});
 		}
 
 		public void Configure(IApplicationBuilder app)

@@ -16,8 +16,7 @@ namespace SpaTemplate.Core.FacultyContext
 			: base(course => course.StudentId == studentId) => this.AddInclude(b => b.Student);
 
 		public CourseSpecification(Guid studentId, Guid courseId)
-			: base(course =>
-			CourseCriteria(course, studentId, courseId)) => this.AddInclude(b => b.Student);
+			: base(course => CourseCriteria(course, studentId, courseId)) => this.AddInclude(b => b.Student);
 
 		private static bool CourseCriteria(Course course, Guid studentId, Guid courseId) =>
 			course != null

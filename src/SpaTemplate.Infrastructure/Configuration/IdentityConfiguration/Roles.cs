@@ -9,7 +9,7 @@ namespace SpaTemplate.Infrastructure
 {
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
-	using Xeinaemm.Identity;
+	using Xeinaemm.AspNetCore.Identity.IdentityServer;
 
 	public class Roles : IIdentityResource
 	{

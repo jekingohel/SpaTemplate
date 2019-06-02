@@ -15,7 +15,7 @@ namespace SpaTemplate.Web.Core
 	using Microsoft.Extensions.DependencyInjection;
 	using SpaTemplate.Infrastructure;
 	using Xeinaemm.AspNetCore;
-	using Xeinaemm.AspNetCore.Identity;
+	using Xeinaemm.AspNetCore.Identity.IdentityServer;
 
 	public class Startup
 	{

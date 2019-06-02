@@ -14,14 +14,11 @@ namespace SpaTemplate.Core.FacultyContext
 	public sealed class CourseParametersSpecification : BaseSpecification<Course>
 	{
 		public CourseParametersSpecification(IParameters parameters, Guid studentId)
-			: base(course =>
-				CriteriaExpression(course, parameters, studentId)) => this.AddInclude(course => course.Student);
+			: base(course => CriteriaExpression(course, parameters, studentId)) => this.AddInclude(course => course.Student);
 
-		private static bool CriteriaExpression(Course course, IParameters parameters, Guid studentId) => parameters.SearchQuery == null
-				|| (course.Student.Id == studentId
-				   && (course.Title.IndexOf(parameters.SearchQuery.Trim(), StringComparison.InvariantCultureIgnoreCase)
-					>= 0 || course.Description.IndexOf(
-						parameters.SearchQuery.Trim(),
-						StringComparison.InvariantCultureIgnoreCase) >= 0));
+		private static bool CriteriaExpression(Course course, IParameters parameters, Guid studentId) =>
+			parameters.SearchQuery == null
+				|| (course.Student.Id == studentId && (course.Title.IndexOf(parameters.SearchQuery.Trim(), StringComparison.InvariantCultureIgnoreCase) >= 0
+					|| course.Description.IndexOf(parameters.SearchQuery.Trim(), StringComparison.InvariantCultureIgnoreCase) >= 0));
 	}
 }
