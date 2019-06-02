@@ -5,6 +5,7 @@
     <IsSharedLibrary>false</IsSharedLibrary>
     <DeployNugetPackages>false</DeployNugetPackages>
     <MigrateProjects>false</MigrateProjects>
+    <DownloadFiles>false</DownloadFiles>
     <NugetDestinationFolder>C:\NugetSource</NugetDestinationFolder>
   </PropertyGroup>
 

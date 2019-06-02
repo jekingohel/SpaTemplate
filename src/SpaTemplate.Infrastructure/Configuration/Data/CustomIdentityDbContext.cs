@@ -13,7 +13,7 @@ namespace SpaTemplate.Infrastructure
 
 	public class CustomIdentityDbContext : IdentityDbContext<IdentityUser>
 	{
-		public CustomIdentityDbContext(DbContextOptions<IdentityDbContext> options)
+		public CustomIdentityDbContext(DbContextOptions<CustomIdentityDbContext> options)
 			: base(options)
 		{
 		}

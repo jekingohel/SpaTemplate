@@ -9,9 +9,11 @@ namespace SpaTemplate.IdP
 {
 	using System;
 	using System.Diagnostics;
+	using System.Linq;
 	using System.Threading.Tasks;
 	using Microsoft.AspNetCore;
 	using Microsoft.AspNetCore.Hosting;
+	using Microsoft.AspNetCore.Identity;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
 	using SpaTemplate.Infrastructure;
@@ -23,20 +25,25 @@ namespace SpaTemplate.IdP
 #pragma warning disable IDISP001 // Dispose created.
 		public static async Task Main(string[] args)
 		{
-			var host = CreateWebHostBuilder(args).Build();
+			var seed = args.Any(x => x == "/seed");
+			if (seed) args = args.Except(new[] { "/seed" }).ToArray();
 
-			try
+			var host = CreateWebHostBuilder(args).Build();
+			if (seed)
 			{
-				using (var scope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+				try
 				{
-					var services = scope.ServiceProvider;
-					var config = services.GetRequiredService<IConfiguration>();
-					await services.EnsureIdentitySeedDataAsync<CustomIdentityDbContext>(new IdentitySeedData(config)).ConfigureAwait(false);
+					using (var scope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+					{
+						var services = scope.ServiceProvider;
+						var config = services.GetRequiredService<IConfiguration>();
+						await services.EnsureIdentitySeedDataAsync<IdentityUser, CustomIdentityDbContext>(new IdentitySeedData(config)).ConfigureAwait(false);
+					}
 				}
-			}
-			catch (Exception e)
-			{
-				Debug.WriteLine(e);
+				catch (Exception e)
+				{
+					Debug.WriteLine(e);
+				}
 			}
 
 			host.Run();

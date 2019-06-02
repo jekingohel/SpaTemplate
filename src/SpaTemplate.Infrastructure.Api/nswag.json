@@ -4,7 +4,7 @@
   "swaggerGenerator": {
     "fromSwagger": {
       "json": "",
-      "url": "",
+      "url": "wwwroot/v1/swagger.json",
       "output": null
     }
   },

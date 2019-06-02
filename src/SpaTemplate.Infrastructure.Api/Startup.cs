@@ -62,6 +62,7 @@ namespace SpaTemplate.Infrastructure.Api
 				setupAction.CustomDocInclusionPredicate(nameof(Api));
 				setupAction.CustomXmlComments<EmptyClassSpaTemplateInfrastructureApi>();
 			});
+			services.AddOpenApiDocument();
 			services.AddCustomHttpCacheHeaders();
 			services.AddMemoryCache();
 			services.AddCustomIpRateLimitOptions(new List<RateLimitRule>());
@@ -87,7 +88,7 @@ namespace SpaTemplate.Infrastructure.Api
 			app.UseIpRateLimiting();
 			app.UseCustomHostingEnvironment(this.Environment);
 			app.UseHttpsRedirection();
-			app.UseSwagger();
+			SwaggerBuilderExtensions.UseSwagger(app);
 			app.UseCustomSwaggerUI(apiVersionDescriptionProvider, nameof(Api));
 			app.UseAuthentication();
 			app.UseStaticFiles();

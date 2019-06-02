@@ -8,7 +8,7 @@
     <FindLatestNugetPackage>&quot;[System.IO.Directory]::GetFiles(%27$(NugetDestinationFolder)%27, %27Xeinaemm.Analyzer%2A%27) | Select-String %27[0-9]+.[0-9]+.[0-9]+%27 | %25%25{ %24_.Matches.Value } | Select-Object -Last 1&quot;</FindLatestNugetPackage>
   </PropertyGroup>
 
-  <Target Name="BeforeBuild">
+  <Target Name="BeforeBuild" Condition="$(DownloadFiles) == 'true'">
     <Exec Condition="Exists('$(NuGetPackageRoot)Xeinaemm.Analyzer') and '$(IsSharedLibrary)' == 'false'" ConsoleToMsBuild="true" Command="$(PowerShell) $(FindLatestNugetPackage)">
       <Output TaskParameter="ConsoleOutput" PropertyName="AnalyzerPackageVersion" />
     </Exec>
@@ -26,14 +26,15 @@
     <Copy SourceFiles="@(ContentToCopy)" DestinationFiles="@(ContentToCopy ->'$(SolutionDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
     <Copy SourceFiles="@(BuildToCopy)" DestinationFiles="@(BuildToCopy ->'$(SolutionDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
-  
-  <Target Name="Clean">
-    <Exec Command="$(Migrate)" Condition="$(MigrateProjects) == 'true'" />
-    <RemoveDir Directories="$(MSBuildProjectDirectory)\Properties" Condition="Exists('$(MSBuildProjectDirectory)\Properties') and !Exists('$(MSBuildProjectDirectory)\packages.config') and $(MigrateProjects) == 'true'" />
+
+  <Target Name="Clean" Condition="Exists('$(MSBuildProjectDirectory)\Properties\AssemblyInfo.cs') and $(MigrateProjects) == 'true'">
+    <Exec Command="$(Migrate)"/>
+    <RemoveDir Directories="$(MSBuildProjectDirectory)\Properties\AssemblyInfo.cs" Condition="!Exists('$(MSBuildProjectDirectory)\packages.config')" />
   </Target>
 
   <Target Name="AfterBuild" Condition="Exists('$(MSBuildProjectDirectory)\nswag.json')">
     <Copy SourceFiles="@(ReferencePath)" DestinationFolder="$(OutDir)References" />
+    <Exec Command="$(NSwagExe_Core22) aspnetcore2swagger /assembly:$(MSBuildProjectDirectory)/bin/$(Configuration)/$(TargetFramework)/$(AssemblyName).dll /output:$(MSBuildProjectDirectory)/wwwroot/v1/swagger.json" />
     <Exec Command="$(NSwagExe_Core22) run nswag.json /variables:Configuration=$(Configuration),OutDir=$(OutDir)" />
     <RemoveDir Directories="$(OutDir)References" />
   </Target>

@@ -9,15 +9,12 @@ namespace SpaTemplate.IdP
 {
 	using System;
 	using System.Reflection;
-	using System.Text;
 	using Autofac;
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Hosting;
 	using Microsoft.AspNetCore.Identity;
-	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
-	using Microsoft.IdentityModel.Tokens;
 	using SpaTemplate.Infrastructure;
 	using Xeinaemm.AspNetCore;
 	using Xeinaemm.AspNetCore.Identity.IdentityServer;
@@ -39,11 +36,12 @@ namespace SpaTemplate.IdP
 		{
 			services.AddCustomCookiePolicy();
 			services.AddMvc().SetCompatibilityVersion();
+			services.AddCustomIISOptions();
 
 			if (this.environment.IsProduction())
 			{
 				services.AddCustomIdentityServer<IdentityUser, CustomIdentityDbContext>(this.configuration.GetConnectionString(), Assembly.GetExecutingAssembly().GetName().Name)
-					.AddSigningCredential(new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.configuration.GetSecurityString())), SecurityAlgorithms.HmacSha256Signature));
+					.AddDeveloperSigningCredential();
 			}
 			else
 			{
@@ -53,7 +51,6 @@ namespace SpaTemplate.IdP
 
 			return services.AddCustomDependencyInjectionProvider(setupAction =>
 			{
-				setupAction.RegisterType<CustomIdentityDbContext>().As<IdentityDbContext<IdentityUser>>();
 				setupAction.RegisterType<IdentityServerService>().As<IIdentityServerService>();
 			});
 		}
