@@ -38,21 +38,10 @@ namespace SpaTemplate.IdP
 			services.AddMvc().SetCompatibilityVersion();
 			services.AddCustomIISOptions();
 
-			if (this.environment.IsProduction())
-			{
-				services.AddCustomIdentityServer<IdentityUser, CustomIdentityDbContext>(this.configuration.GetConnectionString(), Assembly.GetExecutingAssembly().GetName().Name)
-					.AddDeveloperSigningCredential();
-			}
-			else
-			{
-				services.AddCustomInMemoryIdentityServer<IdentityUser, CustomIdentityDbContext>("idp")
-					.AddDeveloperSigningCredential();
-			}
+			services.AddCustomIdentityServer<IdentityUser, CustomIdentityDbContext>(this.configuration.GetConnectionString(), Assembly.GetExecutingAssembly().GetName().Name)
+				.AddDeveloperSigningCredential();
 
-			return services.AddCustomDependencyInjectionProvider(setupAction =>
-			{
-				setupAction.RegisterType<IdentityServerService>().As<IIdentityServerService>();
-			});
+			return services.AddCustomDependencyInjectionProvider(setupAction => setupAction.RegisterType<IdentityServerService>().As<IIdentityServerService>());
 		}
 
 		public void Configure(IApplicationBuilder app)

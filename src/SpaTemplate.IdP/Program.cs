@@ -16,7 +16,7 @@ namespace SpaTemplate.IdP
 	using Microsoft.AspNetCore.Identity;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
-	using SpaTemplate.Infrastructure;
+	using SpaTemplate.IdP.Data;
 	using Xeinaemm.AspNetCore.Identity.IdentityServer;
 
 	public static class Program
@@ -35,9 +35,8 @@ namespace SpaTemplate.IdP
 				{
 					using (var scope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
 					{
-						var services = scope.ServiceProvider;
-						var config = services.GetRequiredService<IConfiguration>();
-						await services.EnsureIdentitySeedDataAsync<IdentityUser, CustomIdentityDbContext>(new IdentitySeedData(config)).ConfigureAwait(false);
+						var provider = scope.ServiceProvider;
+						await provider.EnsureIdentitySeedDataAsync<IdentityUser, CustomIdentityDbContext>(new IdentitySeedData(provider.GetRequiredService<IConfiguration>())).ConfigureAwait(false);
 					}
 				}
 				catch (Exception e)
