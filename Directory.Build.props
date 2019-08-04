@@ -17,7 +17,6 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <CodeAnalysisRuleSet>..\..\Xeinaemm.ruleset</CodeAnalysisRuleSet>
     <Deterministic>true</Deterministic>
-    <BuildInParallel>false</BuildInParallel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -40,7 +39,7 @@
   <Choose>
     <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config') and '$(IsSharedLibrary)' == 'false'">
       <ItemGroup>
-        <PackageReference Include="Xeinaemm.All" Version="*" PrivateAssets="All" />
+        <PackageReference Include="Xeinaemm.All" Version="1.0.0" PrivateAssets="All" />
       </ItemGroup>
     </When>
   </Choose>
