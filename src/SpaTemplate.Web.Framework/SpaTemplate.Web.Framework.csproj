@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="16.0" DefaultTargets="Build" 
-  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="16.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <PropertyGroup>
@@ -153,7 +152,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\app.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\app.routing.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\core.module.ts" />
-    <Content Include="ClientApp\src\app\core\generated-services.ts" />
+    <None Include="ClientApp\src\app\core\generated-services.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\core\index.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\features.module.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\features\index.ts" />
@@ -198,19 +197,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>if $(ConfigurationName) == Release (
-cd ..\ClientApp
-npm run prod
-)
-
-if $(ConfigurationName) == Azure (
-cd ..\ClientApp
-npm run prod
-)
-
-if $(ConfigurationName) == Debug (
-cd ..\ClientApp
-npm run dev
-)</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>

@@ -7,48 +7,48 @@
 
 namespace SpaTemplate.IdP
 {
-	using System.Collections.Generic;
-	using IdentityServer4.Models;
-	using Microsoft.Extensions.Configuration;
-	using SpaTemplate.Infrastructure;
-	using Xeinaemm.AspNetCore.Identity.IdentityServer;
+    using System.Collections.Generic;
+    using IdentityServer4.Models;
+    using Microsoft.Extensions.Configuration;
+    using SpaTemplate.Infrastructure;
+    using Xeinaemm.AspNetCore.Identity.IdentityServer;
 
-	public class IdentitySeedData : IIdentitySeedData
-	{
-		private readonly IConfiguration configuration;
+    public class IdentitySeedData : IIdentitySeedData
+    {
+        private readonly IConfiguration configuration;
 
-		public IdentitySeedData(IConfiguration configuration)
-		{
-			this.configuration = configuration;
-			var client = new ClientParameters(configuration.GetClientSecurityString(), this.configuration.GetClientAuthorityString());
-			this.IdentityResources = new List<IClientParameters>
-			{
-				client,
-			}.Identity();
+        public IdentitySeedData(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+            var client = new ClientParameters(configuration.GetClientSecurityString(), this.configuration.GetClientAuthorityString());
+            this.IdentityResources = new List<IClientParameters>
+            {
+                client,
+            }.Identity();
 
-			this.ApiResources = new List<IApiParameters>
-			{
-				new ApiParameters(),
-			}.Api();
+            this.ApiResources = new List<IApiParameters>
+            {
+                new ApiParameters(),
+            }.Api();
 
-			this.Clients = new List<Client>
-			{
-				client.Mvc(),
-			};
+            this.Clients = new List<Client>
+            {
+                client.Mvc(),
+            };
 
-			this.Users = new List<IUser>
-			{
-				new Alice(),
-				new Bob(),
-			};
-		}
+            this.Users = new List<IUser>
+            {
+                new Alice(),
+                new Bob(),
+            };
+        }
 
-		public IEnumerable<IdentityResource> IdentityResources { get; }
+        public IEnumerable<IdentityResource> IdentityResources { get; }
 
-		public IEnumerable<ApiResource> ApiResources { get; }
+        public IEnumerable<ApiResource> ApiResources { get; }
 
-		public IEnumerable<Client> Clients { get; }
+        public IEnumerable<Client> Clients { get; }
 
-		public IEnumerable<IUser> Users { get; }
-	}
+        public IEnumerable<IUser> Users { get; }
+    }
 }

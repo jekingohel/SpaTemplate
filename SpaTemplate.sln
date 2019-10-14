@@ -19,13 +19,24 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaTemplate.Infrastructure.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaTemplate.Web.Quartz", "src\SpaTemplate.Web.Quartz\SpaTemplate.Web.Quartz.csproj", "{FA59CD4E-E22C-4829-B8FB-BB5762CC17A7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaTemplate.Tests", "src\SpaTemplate.Tests\SpaTemplate.Tests.csproj", "{585678F3-67CE-4752-8637-253D4453FB4D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaTemplate.IdP", "src\SpaTemplate.IdP\SpaTemplate.IdP.csproj", "{71665DE8-536A-4011-B297-CE44832401B4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{6AEE3BD3-6CA6-45C1-B4D0-6D965E098E09}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{6D06D38D-A3AA-4FB4-860D-9EFD222D57CD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{030E6320-8C4D-4551-BBC3-73A9327AD95D}"
+	ProjectSection(SolutionItems) = preProject
+		build.cake = build.cake
+		build.ps1 = build.ps1
+		Deployment.Settings.props = Deployment.Settings.props
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		nuget.config = nuget.config
+		Packages.props = Packages.props
+		stylecop.json = stylecop.json
+		Xeinaemm.ruleset = Xeinaemm.ruleset
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,14 +92,6 @@ Global
 		{FA59CD4E-E22C-4829-B8FB-BB5762CC17A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FA59CD4E-E22C-4829-B8FB-BB5762CC17A7}.Release|x64.ActiveCfg = Release|Any CPU
 		{FA59CD4E-E22C-4829-B8FB-BB5762CC17A7}.Release|x64.Build.0 = Release|Any CPU
-		{585678F3-67CE-4752-8637-253D4453FB4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{585678F3-67CE-4752-8637-253D4453FB4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{585678F3-67CE-4752-8637-253D4453FB4D}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{585678F3-67CE-4752-8637-253D4453FB4D}.Debug|x64.Build.0 = Debug|Any CPU
-		{585678F3-67CE-4752-8637-253D4453FB4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{585678F3-67CE-4752-8637-253D4453FB4D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{585678F3-67CE-4752-8637-253D4453FB4D}.Release|x64.ActiveCfg = Release|Any CPU
-		{585678F3-67CE-4752-8637-253D4453FB4D}.Release|x64.Build.0 = Release|Any CPU
 		{71665DE8-536A-4011-B297-CE44832401B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{71665DE8-536A-4011-B297-CE44832401B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{71665DE8-536A-4011-B297-CE44832401B4}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -108,7 +111,6 @@ Global
 		{DA143526-18A2-4AB8-A53C-F1D6D260256F} = {6AEE3BD3-6CA6-45C1-B4D0-6D965E098E09}
 		{38D182D5-A099-465F-95C2-AD7E8D7135AA} = {6AEE3BD3-6CA6-45C1-B4D0-6D965E098E09}
 		{FA59CD4E-E22C-4829-B8FB-BB5762CC17A7} = {6AEE3BD3-6CA6-45C1-B4D0-6D965E098E09}
-		{585678F3-67CE-4752-8637-253D4453FB4D} = {AE292CA6-5A61-414F-AC0E-2DF9C8DE6A14}
 		{71665DE8-536A-4011-B297-CE44832401B4} = {6AEE3BD3-6CA6-45C1-B4D0-6D965E098E09}
 		{6AEE3BD3-6CA6-45C1-B4D0-6D965E098E09} = {428FCC61-478E-40A5-BC1D-97C862348207}
 		{6D06D38D-A3AA-4FB4-860D-9EFD222D57CD} = {428FCC61-478E-40A5-BC1D-97C862348207}

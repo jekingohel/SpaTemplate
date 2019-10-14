@@ -7,38 +7,38 @@
 
 namespace SpaTemplate.Infrastructure
 {
-	using System.Linq;
-	using Microsoft.EntityFrameworkCore;
-	using SpaTemplate.Core.FacultyContext;
-	using Xeinaemm.Domain;
+    using System.Linq;
+    using Microsoft.EntityFrameworkCore;
+    using SpaTemplate.Core.FacultyContext;
+    using Xeinaemm.Domain;
 
-	public class ApplicationDbContext : DbContext
-	{
-		private readonly IDomainEventDispatcher dispatcher;
+    public class ApplicationDbContext : DbContext
+    {
+        private readonly IDomainEventDispatcher dispatcher;
 
-		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IDomainEventDispatcher dispatcher)
-			: base(options) => this.dispatcher = dispatcher;
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IDomainEventDispatcher dispatcher)
+            : base(options) => this.dispatcher = dispatcher;
 
-		public DbSet<Course> Courses { get; set; }
+        public DbSet<Course> Courses { get; set; }
 
-		public DbSet<Student> People { get; set; }
+        public DbSet<Student> People { get; set; }
 
-		public override int SaveChanges()
-		{
-			var result = base.SaveChanges();
+        public override int SaveChanges()
+        {
+            var result = base.SaveChanges();
 
-			var entitiesWithEvents = this.ChangeTracker.Entries<BaseEntity>()
-				.Select(e => e.Entity)
-				.Where(e => e.Events.Count > 0);
+            var entitiesWithEvents = this.ChangeTracker.Entries<BaseEntity>()
+                .Select(e => e.Entity)
+                .Where(e => e.Events.Count > 0);
 
-			foreach (var entity in entitiesWithEvents)
-			{
-				var events = entity.Events;
-				entity.Events.Clear();
-				foreach (var domainEvent in events) this.dispatcher.Dispatch(domainEvent);
-			}
+            foreach (var entity in entitiesWithEvents)
+            {
+                var events = entity.Events;
+                entity.Events.Clear();
+                foreach (var domainEvent in events) this.dispatcher.Dispatch(domainEvent);
+            }
 
-			return result;
-		}
-	}
+            return result;
+        }
+    }
 }

@@ -7,15 +7,15 @@
 
 namespace SpaTemplate.IdP
 {
-	using Microsoft.AspNetCore.Identity;
-	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
 
-	public class CustomIdentityDbContext : IdentityDbContext<IdentityUser>
-	{
-		public CustomIdentityDbContext(DbContextOptions<CustomIdentityDbContext> options)
-			: base(options)
-		{
-		}
-	}
+    public class CustomIdentityDbContext : IdentityDbContext<IdentityUser>
+    {
+        public CustomIdentityDbContext(DbContextOptions<CustomIdentityDbContext> options)
+            : base(options)
+        {
+        }
+    }
 }

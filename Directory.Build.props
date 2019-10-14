@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <Import Project="DeploymentSettings.props" />
+  <Import Project="Deployment.Settings.props" />
 
   <PropertyGroup>
     <Company>Xeinaemm Consulting Piotr Czech</Company>
@@ -37,9 +37,40 @@
   </Choose>
 
   <Choose>
-    <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config') and '$(IsSharedLibrary)' == 'false'">
+    <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config') and '$(IsSharedLibrary)' != 'true'">
       <ItemGroup>
-        <PackageReference Include="Xeinaemm.All" Version="1.0.0" PrivateAssets="All" />
+        <PackageReference Include="Xeinaemm.All" VersionOverride="$(SharedLibraryVersion)" PrivateAssets="All" />
+      </ItemGroup>
+    </When>
+  </Choose>
+  
+  <Choose>
+    <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config') and '$(EnableAnalyzers)' == 'true'">
+      <ItemGroup>
+        <PackageReference Include="Xeinaemm.Analayzer" VersionOverride="$(AnalyzerVersion)" PrivateAssets="All" />
+      </ItemGroup>
+    </When>
+  </Choose>
+  
+  <Choose>
+    <When Condition="'$(SpaMode)' == 'true'">
+      <PropertyGroup>
+        <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+        <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+        <IsPackable>false</IsPackable>
+        <SpaRoot>ClientApp\</SpaRoot>
+        <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+        <BuildServerSideRenderer>false</BuildServerSideRenderer>
+      </PropertyGroup>
+  
+      <ItemGroup>
+        <Compile Remove="ClientApp\dist\**" />
+        <Content Remove="$(SpaRoot)**" />
+        <Content Remove="ClientApp\dist\**" />
+        <EmbeddedResource Remove="ClientApp\dist\**" />
+        <None Remove="$(SpaRoot)**" />
+        <None Remove="ClientApp\dist\**" />
+        <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
       </ItemGroup>
     </When>
   </Choose>

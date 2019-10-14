@@ -7,10 +7,10 @@
 
 namespace SpaTemplate.Web.Quartz
 {
-	using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
-	public class HomeController : Controller
-	{
-		public IActionResult Index() => this.View();
-	}
+    public class HomeController : Controller
+    {
+        public IActionResult Index() => this.View();
+    }
 }

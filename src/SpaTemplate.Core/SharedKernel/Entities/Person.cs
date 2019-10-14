@@ -7,14 +7,14 @@
 
 namespace SpaTemplate.Core.SharedKernel
 {
-	using Xeinaemm.Domain;
+    using Xeinaemm.Domain;
 
-	public class Person : BaseEntity
-	{
-		public int Age { get; set; }
+    public class Person : BaseEntity
+    {
+        public int Age { get; set; }
 
-		public string Name { get; set; }
+        public string Name { get; set; }
 
-		public string Surname { get; set; }
-	}
+        public string Surname { get; set; }
+    }
 }

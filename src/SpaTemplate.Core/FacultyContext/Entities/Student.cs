@@ -7,19 +7,19 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	using System.Collections.Generic;
-	using SpaTemplate.Core.SharedKernel;
+    using System.Collections.Generic;
+    using SpaTemplate.Core.SharedKernel;
 
-	public class Student : Person
-	{
-		public List<Course> Courses { get; } = new List<Course>();
+    public class Student : Person
+    {
+        public List<Course> Courses { get; } = new List<Course>();
 
-		public bool IsDone { get; private set; }
+        public bool IsDone { get; private set; }
 
-		public void MarkComplete()
-		{
-			this.IsDone = true;
-			this.Events?.Add(new StudentCompletedEvent(this));
-		}
-	}
+        public void MarkComplete()
+        {
+            this.IsDone = true;
+            this.Events?.Add(new StudentCompletedEvent(this));
+        }
+    }
 }

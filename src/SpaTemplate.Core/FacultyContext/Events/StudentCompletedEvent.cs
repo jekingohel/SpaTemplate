@@ -7,12 +7,12 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	using Xeinaemm.Domain;
+    using Xeinaemm.Domain;
 
-	public class StudentCompletedEvent : BaseDomainEvent
-	{
-		public StudentCompletedEvent(Student completedItem) => this.CompletedItem = completedItem;
+    public class StudentCompletedEvent : BaseDomainEvent
+    {
+        public StudentCompletedEvent(Student completedItem) => this.CompletedItem = completedItem;
 
-		public Student CompletedItem { get; }
-	}
+        public Student CompletedItem { get; }
+    }
 }

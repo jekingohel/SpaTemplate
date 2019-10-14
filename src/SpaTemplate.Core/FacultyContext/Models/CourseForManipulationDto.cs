@@ -7,10 +7,10 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	public class CourseForManipulationDto
-	{
-		public virtual string Description { get; set; }
+    public class CourseForManipulationDto
+    {
+        public virtual string Description { get; set; }
 
-		public string Title { get; set; }
-	}
+        public string Title { get; set; }
+    }
 }

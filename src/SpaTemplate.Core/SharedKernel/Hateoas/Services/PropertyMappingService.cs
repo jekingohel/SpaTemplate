@@ -7,25 +7,25 @@
 
 namespace SpaTemplate.Core.SharedKernel
 {
-	using System;
-	using System.Collections.Generic;
-	using Xeinaemm.Hateoas;
+    using System;
+    using System.Collections.Generic;
+    using Xeinaemm.Hateoas;
 
-	public class PropertyMappingService : PropertyMappingServiceBase
-	{
-		public PropertyMappingService()
-			: base(new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
-			{
-				{ "Name", new PropertyMappingValue(new List<string> { "Name" }) },
-				{ "Surname", new PropertyMappingValue(new List<string> { "Surname" }) },
-				{ "Age", new PropertyMappingValue(new List<string> { "Age" }, true) },
-				{ "IsDone", new PropertyMappingValue(new List<string> { "IsDone" }, true) },
-				{ "FullName", new PropertyMappingValue(new List<string> { "Name", "Surname" }) },
-				{ "Dummy", new PropertyMappingValue(new List<string> { "Dummy" }) },
-				{ "Title", new PropertyMappingValue(new List<string> { "Title" }) },
-				{ "Description", new PropertyMappingValue(new List<string> { "Description" }) },
-			})
-		{
-		}
-	}
+    public class PropertyMappingService : PropertyMappingServiceBase
+    {
+        public PropertyMappingService()
+            : base(new Dictionary<string, PropertyMappingValue>(StringComparer.OrdinalIgnoreCase)
+            {
+                { "Name", new PropertyMappingValue(new List<string> { "Name" }) },
+                { "Surname", new PropertyMappingValue(new List<string> { "Surname" }) },
+                { "Age", new PropertyMappingValue(new List<string> { "Age" }, true) },
+                { "IsDone", new PropertyMappingValue(new List<string> { "IsDone" }, true) },
+                { "FullName", new PropertyMappingValue(new List<string> { "Name", "Surname" }) },
+                { "Dummy", new PropertyMappingValue(new List<string> { "Dummy" }) },
+                { "Title", new PropertyMappingValue(new List<string> { "Title" }) },
+                { "Description", new PropertyMappingValue(new List<string> { "Description" }) },
+            })
+        {
+        }
+    }
 }

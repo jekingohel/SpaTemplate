@@ -7,10 +7,10 @@
 
 namespace SpaTemplate.IdP.Controllers
 {
-	using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 
-	public class PrivacyController : Controller
-	{
-		public IActionResult Index() => this.View();
-	}
+    public class PrivacyController : Controller
+    {
+        public IActionResult Index() => this.View();
+    }
 }

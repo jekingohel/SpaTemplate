@@ -7,16 +7,16 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	using System;
-	using System.Collections.Generic;
-	using Xeinaemm.Domain;
+    using System;
+    using System.Collections.Generic;
+    using Xeinaemm.Domain;
 
-	public sealed class StudentSpecification : BaseSpecification<Student>
-	{
-		public StudentSpecification(Guid studentId)
-			: base(student => student.Id == studentId) => this.AddInclude(student => student.Courses);
+    public sealed class StudentSpecification : BaseSpecification<Student>
+    {
+        public StudentSpecification(Guid studentId)
+            : base(student => student.Id == studentId) => this.AddInclude(student => student.Courses);
 
-		public StudentSpecification(ICollection<Guid> studentIds)
-			: base(student => studentIds.Contains(student.Id)) => this.AddInclude(student => student.Courses);
-	}
+        public StudentSpecification(ICollection<Guid> studentIds)
+            : base(student => studentIds.Contains(student.Id)) => this.AddInclude(student => student.Courses);
+    }
 }

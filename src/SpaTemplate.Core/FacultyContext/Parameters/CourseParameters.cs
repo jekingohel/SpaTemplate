@@ -7,26 +7,26 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	using Xeinaemm.Hateoas;
+    using Xeinaemm.Hateoas;
 
-	public class CourseParameters : IParameters
-	{
-		private const int MaxPageSize = 50;
+    public class CourseParameters : IParameters
+    {
+        private const int MaxPageSize = 50;
 
-		private int pageSize = 10;
+        private int pageSize = 10;
 
-		public string Fields { get; set; }
+        public string Fields { get; set; }
 
-		public string OrderBy { get; set; } = "Title";
+        public string OrderBy { get; set; } = "Title";
 
-		public int PageNumber { get; set; } = 1;
+        public int PageNumber { get; set; } = 1;
 
-		public int PageSize
-		{
-			get => this.pageSize;
-			set => this.pageSize = value > MaxPageSize ? MaxPageSize : value;
-		}
+        public int PageSize
+        {
+            get => this.pageSize;
+            set => this.pageSize = value > MaxPageSize ? MaxPageSize : value;
+        }
 
-		public string SearchQuery { get; set; }
-	}
+        public string SearchQuery { get; set; }
+    }
 }

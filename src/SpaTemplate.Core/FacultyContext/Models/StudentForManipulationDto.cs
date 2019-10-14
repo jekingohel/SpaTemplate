@@ -7,14 +7,14 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	public class StudentForManipulationDto
-	{
-		public int Age { get; set; }
+    public class StudentForManipulationDto
+    {
+        public int Age { get; set; }
 
-		public bool IsDone { get; set; }
+        public bool IsDone { get; set; }
 
-		public string Name { get; set; }
+        public string Name { get; set; }
 
-		public string Surname { get; set; }
-	}
+        public string Surname { get; set; }
+    }
 }

@@ -7,17 +7,17 @@
 
 namespace SpaTemplate.Web.Quartz
 {
-	using Microsoft.AspNetCore;
-	using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore;
+    using Microsoft.AspNetCore.Hosting;
 
-	public static class Program
-	{
+    public static class Program
+    {
 #pragma warning disable IDISP004 // Don't ignore return value of type IDisposable.
-		public static void Main(string[] args) => CreateWebHostBuilder(args).Build().Run();
+        public static void Main(string[] args) => CreateWebHostBuilder(args).Build().Run();
 #pragma warning restore IDISP004 // Don't ignore return value of type IDisposable.
 
-		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-			WebHost.CreateDefaultBuilder(args)
-				.UseStartup<Startup>();
-	}
+        public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>();
+    }
 }

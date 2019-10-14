@@ -7,19 +7,19 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	using System;
-	using System.Collections.Generic;
-	using Xeinaemm.Domain;
-	using Xeinaemm.Hateoas;
+    using System;
+    using System.Collections.Generic;
+    using Xeinaemm.Domain;
+    using Xeinaemm.Hateoas;
 
-	public class CourseDto : IDto
-	{
-		public string Description { get; set; }
+    public class CourseDto : IDto
+    {
+        public string Description { get; set; }
 
-		public Guid Id { get; set; }
+        public Guid Id { get; set; }
 
-		public string Title { get; set; }
+        public string Title { get; set; }
 
-		public List<BaseDomainEvent> Events { get; }
-	}
+        public List<BaseDomainEvent> Events { get; }
+    }
 }

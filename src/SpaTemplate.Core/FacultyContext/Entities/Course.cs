@@ -7,17 +7,17 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	using System;
-	using Xeinaemm.Domain;
+    using System;
+    using Xeinaemm.Domain;
 
-	public class Course : BaseEntity
-	{
-		public string Description { get; set; }
+    public class Course : BaseEntity
+    {
+        public string Description { get; set; }
 
-		public Student Student { get; set; }
+        public Student Student { get; set; }
 
-		public Guid StudentId { get; set; }
+        public Guid StudentId { get; set; }
 
-		public string Title { get; set; }
-	}
+        public string Title { get; set; }
+    }
 }

@@ -7,41 +7,41 @@
 
 namespace SpaTemplate.Web.Quartz
 {
-	using System.Threading.Tasks;
-	using global::Quartz;
-	using Xeinaemm.Quartz;
+    using System.Threading.Tasks;
+    using global::Quartz;
+    using Xeinaemm.Quartz;
 
-	public class QuartzScheduler
-	{
-		private readonly IQuartzService quartzService;
+    public class QuartzScheduler
+    {
+        private readonly IQuartzService quartzService;
 
-		public QuartzScheduler(IQuartzService quartzService) => this.quartzService = quartzService;
+        public QuartzScheduler(IQuartzService quartzService) => this.quartzService = quartzService;
 
-		public static JobKey ExceptionsJobKey => new JobKey("Exceptions", "Xeinaemm.Quartz");
+        public static JobKey ExceptionsJobKey => new JobKey("Exceptions", "Xeinaemm.Quartz");
 
-		public static JobKey QuickJobJobKey => new JobKey("Quick", "Xeinaemm.Quartz");
+        public static JobKey QuickJobJobKey => new JobKey("Quick", "Xeinaemm.Quartz");
 
-		public static JobKey CoreJobKey => new JobKey("NetCore", "Xeinaemm.Quartz");
+        public static JobKey CoreJobKey => new JobKey("NetCore", "Xeinaemm.Quartz");
 
-		public async Task RegisterScheduledJobsAsync()
-		{
-			await this.quartzService.ScheduleJobAsync<ExceptionsJob>(new QuartzJob
-			{
-				JobKey = ExceptionsJobKey,
-				CronExpression = "1 * * * * ?",
-			}).ConfigureAwait(false);
+        public async Task RegisterScheduledJobsAsync()
+        {
+            await this.quartzService.ScheduleJobAsync<ExceptionsJob>(new QuartzJob
+            {
+                JobKey = ExceptionsJobKey,
+                CronExpression = "1 * * * * ?",
+            }).ConfigureAwait(false);
 
-			await this.quartzService.ScheduleJobAsync<QuickJob>(new QuartzJob
-			{
-				JobKey = QuickJobJobKey,
-				CronExpression = "1 * * * * ?",
-			}).ConfigureAwait(false);
+            await this.quartzService.ScheduleJobAsync<QuickJob>(new QuartzJob
+            {
+                JobKey = QuickJobJobKey,
+                CronExpression = "1 * * * * ?",
+            }).ConfigureAwait(false);
 
-			await this.quartzService.ScheduleJobAsync<CoreJob>(new QuartzJob
-			{
-				JobKey = CoreJobKey,
-				CronExpression = "1 * * * * ?",
-			}).ConfigureAwait(false);
-		}
-	}
+            await this.quartzService.ScheduleJobAsync<CoreJob>(new QuartzJob
+            {
+                JobKey = CoreJobKey,
+                CronExpression = "1 * * * * ?",
+            }).ConfigureAwait(false);
+        }
+    }
 }

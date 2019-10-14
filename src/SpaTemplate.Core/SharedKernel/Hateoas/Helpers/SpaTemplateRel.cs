@@ -7,16 +7,16 @@
 
 namespace SpaTemplate.Core.SharedKernel
 {
-	public static class SpaTemplateRel
-	{
-		public const string People = "people";
-		public const string CreateStudent = "create_student";
-		public const string PatchStudent = "patch_student";
-		public const string DeleteStudent = "delete_student";
+    public static class SpaTemplateRel
+    {
+        public const string People = "people";
+        public const string CreateStudent = "create_student";
+        public const string PatchStudent = "patch_student";
+        public const string DeleteStudent = "delete_student";
 
-		public const string PartiallyUpdateCourse = "partiallyUpdate_course";
-		public const string UpdateCourse = "update_course";
-		public const string DeleteCourse = "delete_course";
-		public const string CreateCourseForStudent = "create_course";
-	}
+        public const string PartiallyUpdateCourse = "partiallyUpdate_course";
+        public const string UpdateCourse = "update_course";
+        public const string DeleteCourse = "delete_course";
+        public const string CreateCourseForStudent = "create_course";
+    }
 }

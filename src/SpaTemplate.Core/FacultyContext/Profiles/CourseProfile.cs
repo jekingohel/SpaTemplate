@@ -7,17 +7,17 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	using AutoMapper;
+    using AutoMapper;
 
-	public class CourseProfile : Profile
-	{
-		public CourseProfile()
-		{
-			this.CreateMap<Course, CourseDto>();
-			this.CreateMap<CourseDto, Course>();
-			this.CreateMap<CourseForCreationDto, Course>();
-			this.CreateMap<CourseForUpdateDto, Course>();
-			this.CreateMap<Course, CourseForUpdateDto>();
-		}
-	}
+    public class CourseProfile : Profile
+    {
+        public CourseProfile()
+        {
+            this.CreateMap<Course, CourseDto>();
+            this.CreateMap<CourseDto, Course>();
+            this.CreateMap<CourseForCreationDto, Course>();
+            this.CreateMap<CourseForUpdateDto, Course>();
+            this.CreateMap<Course, CourseForUpdateDto>();
+        }
+    }
 }

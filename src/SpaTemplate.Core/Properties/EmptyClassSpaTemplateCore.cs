@@ -7,7 +7,7 @@
 
 namespace SpaTemplate.Core
 {
-	public class EmptyClassSpaTemplateCore
-	{
-	}
+    public class EmptyClassSpaTemplateCore
+    {
+    }
 }

@@ -7,26 +7,26 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	using System;
-	using Xeinaemm.Common;
-	using Xeinaemm.Hateoas;
+    using System;
+    using Xeinaemm.Common;
+    using Xeinaemm.Hateoas;
 
-	public interface ICourseService
-	{
-		PagedListCollection<Course> GetPagedList(Guid studentId, IParameters parameters);
+    public interface ICourseService
+    {
+        PagedListCollection<Course> GetPagedList(Guid studentId, IParameters parameters);
 
-		Course GetCourse(Guid studentId, Guid courseId);
+        Course GetCourse(Guid studentId, Guid courseId);
 
-		bool AddCourse(Guid studentId, Course course);
+        bool AddCourse(Guid studentId, Course course);
 
-		bool DeleteCourse(Course course);
+        bool DeleteCourse(Course course);
 
-		bool UpdateCourse(Course course);
+        bool UpdateCourse(Course course);
 
-		bool StudentExists(Guid studentId);
+        bool StudentExists(Guid studentId);
 
-		bool CourseMappingExists(IParameters parameters);
+        bool CourseMappingExists(IParameters parameters);
 
-		bool CoursePropertiesExists(IParameters parameters);
-	}
+        bool CoursePropertiesExists(IParameters parameters);
+    }
 }

@@ -7,11 +7,11 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
-	public class StudentForUpdateDto : StudentForManipulationDto
-	{
-		public List<CourseForUpdateDto> CourseForUpdateDtos { get; }
-			= new List<CourseForUpdateDto>();
-	}
+    public class StudentForUpdateDto : StudentForManipulationDto
+    {
+        public List<CourseForUpdateDto> CourseForUpdateDtos { get; }
+            = new List<CourseForUpdateDto>();
+    }
 }

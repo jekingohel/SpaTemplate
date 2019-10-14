@@ -7,17 +7,17 @@
 
 namespace SpaTemplate.Web.Quartz
 {
-	using System.Diagnostics;
-	using System.Threading.Tasks;
-	using global::Quartz;
-	using Xeinaemm.Quartz;
+    using System.Diagnostics;
+    using System.Threading.Tasks;
+    using global::Quartz;
+    using Xeinaemm.Quartz;
 
-	public class CoreJob : JobBase
-	{
-		public override async Task PreExecuteAsync(IJobExecutionContext context)
-		{
-			await Task.Delay(1000).ConfigureAwait(false);
-			Debug.WriteLine(".NET Core Job invoked");
-		}
-	}
+    public class CoreJob : JobBase
+    {
+        public override async Task PreExecuteAsync(IJobExecutionContext context)
+        {
+            await Task.Delay(1000).ConfigureAwait(false);
+            Debug.WriteLine(".NET Core Job invoked");
+        }
+    }
 }

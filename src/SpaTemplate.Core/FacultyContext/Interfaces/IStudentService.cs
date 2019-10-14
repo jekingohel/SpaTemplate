@@ -7,30 +7,30 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Collections.ObjectModel;
-	using Xeinaemm.Common;
-	using Xeinaemm.Hateoas;
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using Xeinaemm.Common;
+    using Xeinaemm.Hateoas;
 
-	public interface IStudentService
-	{
-		ReadOnlyCollection<Student> GetCollection(ICollection<Guid> ids);
+    public interface IStudentService
+    {
+        ReadOnlyCollection<Student> GetCollection(ICollection<Guid> ids);
 
-		Student GetStudent(Guid studentId);
+        Student GetStudent(Guid studentId);
 
-		bool AddStudent(Student student);
+        bool AddStudent(Student student);
 
-		bool DeleteStudent(Student student);
+        bool DeleteStudent(Student student);
 
-		bool UpdateStudent(Student student);
+        bool UpdateStudent(Student student);
 
-		bool StudentExists(Guid studentId);
+        bool StudentExists(Guid studentId);
 
-		bool StudentMappingExists(IParameters parameters);
+        bool StudentMappingExists(IParameters parameters);
 
-		bool StudentPropertiesExists(IParameters parameters);
+        bool StudentPropertiesExists(IParameters parameters);
 
-		PagedListCollection<Student> GetPagedList(IParameters parameters);
-	}
+        PagedListCollection<Student> GetPagedList(IParameters parameters);
+    }
 }

@@ -7,7 +7,7 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	public class CourseForCreationDto : CourseForManipulationDto
-	{
-	}
+    public class CourseForCreationDto : CourseForManipulationDto
+    {
+    }
 }

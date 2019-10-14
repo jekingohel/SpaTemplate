@@ -7,13 +7,13 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	using System.Collections.ObjectModel;
-	using Xeinaemm.Hateoas;
+    using System.Collections.ObjectModel;
+    using Xeinaemm.Hateoas;
 
-	public class HateoasDto<T>
-	{
-		public Collection<T> Values { get; } = new Collection<T>();
+    public class HateoasDto<T>
+    {
+        public Collection<T> Values { get; } = new Collection<T>();
 
-		public Collection<LinkDto> Links { get; } = new Collection<LinkDto>();
-	}
+        public Collection<LinkDto> Links { get; } = new Collection<LinkDto>();
+    }
 }

@@ -7,24 +7,24 @@
 
 namespace SpaTemplate.IdP
 {
-	using System.Linq;
-	using System.Threading.Tasks;
-	using Microsoft.AspNetCore.Authentication;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Mvc;
-	using Xeinaemm.AspNetCore;
-	using Xeinaemm.AspNetCore.Identity.IdentityServer;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authentication;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+    using Xeinaemm.AspNetCore;
+    using Xeinaemm.AspNetCore.Identity.IdentityServer;
 
-	[SecurityHeaders]
-	[Authorize]
-	public class DiagnosticsController : Controller
-	{
-		public async Task<IActionResult> Index()
-		{
-			var localAddresses = new string[] { "127.0.0.1", "::1", this.HttpContext.Connection.LocalIpAddress.ToString() };
-			return !localAddresses.Contains(this.HttpContext.Connection.RemoteIpAddress.ToString())
-				? (IActionResult)this.NotFound()
-				: this.View(new DiagnosticsViewModel(await this.HttpContext.AuthenticateAsync().ConfigureAwait(false)));
-		}
-	}
+    [SecurityHeaders]
+    [Authorize]
+    public class DiagnosticsController : Controller
+    {
+        public async Task<IActionResult> Index()
+        {
+            var localAddresses = new string[] { "127.0.0.1", "::1", this.HttpContext.Connection.LocalIpAddress.ToString() };
+            return !localAddresses.Contains(this.HttpContext.Connection.RemoteIpAddress.ToString())
+                ? (IActionResult)this.NotFound()
+                : this.View(new DiagnosticsViewModel(await this.HttpContext.AuthenticateAsync().ConfigureAwait(false)));
+        }
+    }
 }

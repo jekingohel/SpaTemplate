@@ -1,5 +1,5 @@
 ﻿{
-  "x-generator": "NSwag v12.3.1.0 (NJsonSchema v9.14.1.0 (Newtonsoft.Json v11.0.0.0))",
+  "x-generator": "NSwag v13.1.3.0 (NJsonSchema v10.0.27.0 (Newtonsoft.Json v11.0.0.0))",
   "openapi": "3.0.0",
   "info": {
     "title": "My Title",
@@ -40,12 +40,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -55,12 +50,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -70,12 +60,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -88,12 +73,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -154,12 +134,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -169,12 +144,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -184,12 +154,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -202,12 +167,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -220,12 +180,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -235,12 +190,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ModelStateDictionary"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ModelStateDictionary"
                 }
               }
             }
@@ -302,12 +252,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -317,12 +262,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -332,12 +272,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -350,12 +285,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -368,12 +298,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -426,12 +351,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -441,12 +361,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -456,12 +371,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -474,12 +384,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -492,12 +397,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -557,12 +457,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -572,12 +467,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -587,12 +477,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -605,12 +490,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -620,12 +500,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -691,12 +566,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -706,12 +576,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -721,12 +586,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -739,12 +599,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -760,12 +615,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -775,12 +625,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ModelStateDictionary"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ModelStateDictionary"
                 }
               }
             }
@@ -843,12 +688,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -858,12 +698,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -873,12 +708,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -891,12 +721,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -912,12 +737,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -927,12 +747,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ModelStateDictionary"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ModelStateDictionary"
                 }
               }
             }
@@ -980,12 +795,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -995,12 +805,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1010,12 +815,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1028,12 +828,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1084,12 +879,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1099,12 +889,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1114,12 +899,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1132,12 +912,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1182,12 +957,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1197,12 +967,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1212,12 +977,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1230,12 +990,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1290,12 +1045,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1305,12 +1055,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1320,12 +1065,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1338,12 +1078,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1389,12 +1124,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1404,12 +1134,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1419,12 +1144,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1437,12 +1157,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1455,12 +1170,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1522,12 +1232,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1537,12 +1242,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1552,12 +1252,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1570,12 +1265,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1634,12 +1324,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1649,12 +1334,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1664,12 +1344,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1682,12 +1357,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1700,12 +1370,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ProblemDetails"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ProblemDetails"
                 }
               }
             }
@@ -1715,12 +1380,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "nullable": true,
-                  "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/ModelStateDictionary"
-                    }
-                  ]
+                  "$ref": "#/components/schemas/ModelStateDictionary"
                 }
               }
             }

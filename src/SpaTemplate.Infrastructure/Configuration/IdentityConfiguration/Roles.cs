@@ -7,16 +7,16 @@
 
 namespace SpaTemplate.Infrastructure
 {
-	using System.Collections.Generic;
-	using System.Collections.ObjectModel;
-	using Xeinaemm.AspNetCore.Identity.IdentityServer;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using Xeinaemm.AspNetCore.Identity.IdentityServer;
 
-	public class Roles : IIdentityResource
-	{
-		public string Name { get; } = nameof(Roles);
+    public class Roles : IIdentityResource
+    {
+        public string Name { get; } = nameof(Roles);
 
-		public string DisplayName { get; } = "Your role(s)";
+        public string DisplayName { get; } = "Your role(s)";
 
-		public IEnumerable<string> ClaimTypes { get; } = new Collection<string> { "role" };
-	}
+        public IEnumerable<string> ClaimTypes { get; } = new Collection<string> { "role" };
+    }
 }

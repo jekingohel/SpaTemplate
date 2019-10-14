@@ -7,7 +7,7 @@
 
 namespace SpaTemplate.Infrastructure
 {
-	public class EmptyClassSpaTemplateInfrastructure
-	{
-	}
+    public class EmptyClassSpaTemplateInfrastructure
+    {
+    }
 }

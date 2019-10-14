@@ -7,12 +7,12 @@
 
 namespace SpaTemplate.Web.Core.Pages
 {
-	using Microsoft.AspNetCore.Mvc.RazorPages;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
 
-	public class AccessDeniedModel : PageModel
-	{
-		public void OnGet()
-		{
-		}
-	}
+    public class AccessDeniedModel : PageModel
+    {
+        public void OnGet()
+        {
+        }
+    }
 }

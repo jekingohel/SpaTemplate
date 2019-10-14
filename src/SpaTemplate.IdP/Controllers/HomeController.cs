@@ -7,42 +7,42 @@
 
 namespace SpaTemplate.IdP
 {
-	using System.Threading.Tasks;
-	using IdentityServer4.Services;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Hosting;
-	using Microsoft.AspNetCore.Mvc;
-	using Xeinaemm.AspNetCore;
-	using Xeinaemm.AspNetCore.Identity.IdentityServer;
+    using System.Threading.Tasks;
+    using IdentityServer4.Services;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
+    using Xeinaemm.AspNetCore;
+    using Xeinaemm.AspNetCore.Identity.IdentityServer;
 
-	[SecurityHeaders]
-	[AllowAnonymous]
-	public class HomeController : Controller
-	{
-		private readonly IIdentityServerInteractionService interaction;
-		private readonly IHostingEnvironment environment;
+    [SecurityHeaders]
+    [AllowAnonymous]
+    public class HomeController : Controller
+    {
+        private readonly IIdentityServerInteractionService interaction;
+        private readonly IHostingEnvironment environment;
 
-		public HomeController(IIdentityServerInteractionService interaction, IHostingEnvironment environment)
-		{
-			this.interaction = interaction;
-			this.environment = environment;
-		}
+        public HomeController(IIdentityServerInteractionService interaction, IHostingEnvironment environment)
+        {
+            this.interaction = interaction;
+            this.environment = environment;
+        }
 
-		public IActionResult Index() => this.environment.IsDevelopment() ? this.View() : (IActionResult)this.NotFound();
+        public IActionResult Index() => this.environment.IsDevelopment() ? this.View() : (IActionResult)this.NotFound();
 
-		public async Task<IActionResult> Error(string errorId)
-		{
-			var vm = new ErrorViewModel();
+        public async Task<IActionResult> Error(string errorId)
+        {
+            var vm = new ErrorViewModel();
 
-			var message = await this.interaction.GetErrorContextAsync(errorId).ConfigureAwait(false);
-			if (message != null)
-			{
-				vm.Error = message;
+            var message = await this.interaction.GetErrorContextAsync(errorId).ConfigureAwait(false);
+            if (message != null)
+            {
+                vm.Error = message;
 
-				if (!this.environment.IsDevelopment()) message.ErrorDescription = null;
-			}
+                if (!this.environment.IsDevelopment()) message.ErrorDescription = null;
+            }
 
-			return this.View(nameof(this.Error), vm);
-		}
-	}
+            return this.View(nameof(this.Error), vm);
+        }
+    }
 }

@@ -7,20 +7,26 @@
 
 namespace SpaTemplate.Infrastructure
 {
-	using System;
-	using System.Reflection;
-	using Autofac;
-	using AutoMapper;
-	using Microsoft.Extensions.DependencyInjection;
-	using SpaTemplate.Core;
-	using Xeinaemm.Common;
+    using System;
+    using System.Reflection;
+    using Autofac;
+    using Autofac.Extensions.DependencyInjection;
+    using AutoMapper;
+    using Microsoft.Extensions.DependencyInjection;
+    using SpaTemplate.Core;
+    using Xeinaemm.Configuration.Autofac;
 
-	public static class StartupExtensions
-	{
-		public static IServiceCollection AddCustomAutoMapper(this IServiceCollection services) =>
-			services.AddAutoMapper(Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(EmptyClassSpaTemplateCore)), Assembly.GetAssembly(typeof(EmptyClassSpaTemplateInfrastructure)));
+    public static class StartupExtensions
+    {
+        public static ContainerConfiguration Configuration { get; } = new ContainerConfiguration
+        {
+            Assemblies = new[] { Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(EmptyClassSpaTemplateCore)), Assembly.GetAssembly(typeof(EmptyClassSpaTemplateInfrastructure)) },
+        };
 
-		public static IServiceProvider AddCustomDependencyInjectionProvider(this IServiceCollection services, Action<ContainerBuilder> builder = null) =>
-			services.AddCustomAutofacServiceProvider(setupAction => builder?.Invoke(setupAction), Assembly.GetExecutingAssembly(), Assembly.GetAssembly(typeof(EmptyClassSpaTemplateCore)), Assembly.GetAssembly(typeof(EmptyClassSpaTemplateInfrastructure)));
-	}
+        public static IServiceCollection AddCustomAutoMapper(this IServiceCollection services) =>
+            services.AddAutoMapper(Configuration.Assemblies);
+
+        public static IServiceProvider InitializeWeb(this IServiceCollection services, Action<ContainerBuilder> builder = null) =>
+            new AutofacServiceProvider(services.InitializeWeb(Configuration, extendedSetupAction => builder.Invoke(extendedSetupAction)));
+    }
 }

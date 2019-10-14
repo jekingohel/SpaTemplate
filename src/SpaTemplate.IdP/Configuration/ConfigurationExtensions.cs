@@ -7,20 +7,20 @@
 
 namespace SpaTemplate.IdP
 {
-	using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.Configuration;
 
-	public static class ConfigurationExtensions
-	{
-		public static string GetApiSecurityString(this IConfiguration config) =>
-			config.GetSection("Security")["SecurityKeyApi"];
+    public static class ConfigurationExtensions
+    {
+        public static string GetApiSecurityString(this IConfiguration config) =>
+            config.GetSection("Security")["SecurityKeyApi"];
 
-		public static string GetApiAuthorityString(this IConfiguration config) =>
-			config.GetSection("Security")["AuthorityApi"];
+        public static string GetApiAuthorityString(this IConfiguration config) =>
+            config.GetSection("Security")["AuthorityApi"];
 
-		public static string GetClientSecurityString(this IConfiguration config) =>
-			config.GetSection("Security")["SecurityKeyClient"];
+        public static string GetClientSecurityString(this IConfiguration config) =>
+            config.GetSection("Security")["SecurityKeyClient"];
 
-		public static string GetClientAuthorityString(this IConfiguration config) =>
-			config.GetSection("Security")["AuthorityClient"];
-	}
+        public static string GetClientAuthorityString(this IConfiguration config) =>
+            config.GetSection("Security")["AuthorityClient"];
+    }
 }

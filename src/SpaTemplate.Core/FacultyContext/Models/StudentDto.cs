@@ -7,24 +7,24 @@
 
 namespace SpaTemplate.Core.FacultyContext
 {
-	using System;
-	using System.Collections.Generic;
-	using Xeinaemm.Domain;
-	using Xeinaemm.Hateoas;
+    using System;
+    using System.Collections.Generic;
+    using Xeinaemm.Domain;
+    using Xeinaemm.Hateoas;
 
-	// Note: doesn't expose events or behavior
-	public class StudentDto : IDto
-	{
-		public int Age { get; set; }
+    // Note: doesn't expose events or behavior
+    public class StudentDto : IDto
+    {
+        public int Age { get; set; }
 
-		public Guid Id { get; set; }
+        public Guid Id { get; set; }
 
-		public bool IsDone { get; }
+        public bool IsDone { get; }
 
-		public string Name { get; set; }
+        public string Name { get; set; }
 
-		public string Surname { get; set; }
+        public string Surname { get; set; }
 
-		public List<BaseDomainEvent> Events { get; }
-	}
+        public List<BaseDomainEvent> Events { get; }
+    }
 }
