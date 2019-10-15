@@ -17,12 +17,9 @@ namespace SpaTemplate.Tests
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.1.3.0 (NJsonSchema v10.0.27.0 (Newtonsoft.Json v11.0.0.0))")]
     public partial interface IApiService
     {
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ApiAsync(string accept, string version);
-    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task ApiAsync(string accept, string version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task ApiAsync(string version, string accept = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
     }
     
@@ -50,15 +47,9 @@ namespace SpaTemplate.Tests
         partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
     
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task ApiAsync(string accept, string version)
-        {
-            return ApiAsync(accept, version, System.Threading.CancellationToken.None);
-        }
-    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task ApiAsync(string accept, string version, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task ApiAsync(string version, string accept = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append("api/v{version}");
@@ -238,47 +229,29 @@ namespace SpaTemplate.Tests
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.1.3.0 (NJsonSchema v10.0.27.0 (Newtonsoft.Json v11.0.0.0))")]
     public partial interface ICoursesService
     {
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CoursesPostAsync(System.Guid studentId, string version, CourseForCreationDto courseForCreationDto);
+        System.Threading.Tasks.Task CoursesPostAsync(System.Guid studentId, CourseForCreationDto courseForCreationDto, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CoursesPostAsync(System.Guid studentId, string version, CourseForCreationDto courseForCreationDto, System.Threading.CancellationToken cancellationToken);
-    
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CoursesGetAsync(System.Guid studentId, string accept, string version, CourseParameters parameters);
+        System.Threading.Tasks.Task CoursesGetAsync(System.Guid studentId, CourseParameters parameters, string version, string accept = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CoursesGetAsync(System.Guid studentId, string accept, string version, CourseParameters parameters, System.Threading.CancellationToken cancellationToken);
-    
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CoursesDeleteAsync(System.Guid studentId, System.Guid id, string version);
+        System.Threading.Tasks.Task CoursesDeleteAsync(System.Guid studentId, System.Guid id, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CoursesDeleteAsync(System.Guid studentId, System.Guid id, string version, System.Threading.CancellationToken cancellationToken);
-    
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProblemDetails> CoursesGetAsync(System.Guid studentId, System.Guid id, string accept, string version);
+        System.Threading.Tasks.Task<ProblemDetails> CoursesGetAsync(System.Guid studentId, System.Guid id, string version, string accept = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProblemDetails> CoursesGetAsync(System.Guid studentId, System.Guid id, string accept, string version, System.Threading.CancellationToken cancellationToken);
-    
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CoursesPatchAsync(System.Guid studentId, System.Guid id, string version, System.Collections.Generic.IEnumerable<Operation> patchDoc);
+        System.Threading.Tasks.Task CoursesPatchAsync(System.Guid studentId, System.Guid id, System.Collections.Generic.IEnumerable<Operation> patchDoc, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CoursesPatchAsync(System.Guid studentId, System.Guid id, string version, System.Collections.Generic.IEnumerable<Operation> patchDoc, System.Threading.CancellationToken cancellationToken);
-    
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CoursesPutAsync(System.Guid studentId, System.Guid id, string version, CourseForUpdateDto courseForUpdateDto);
-    
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task CoursesPutAsync(System.Guid studentId, System.Guid id, string version, CourseForUpdateDto courseForUpdateDto, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task CoursesPutAsync(System.Guid studentId, System.Guid id, CourseForUpdateDto courseForUpdateDto, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
     }
     
@@ -306,15 +279,9 @@ namespace SpaTemplate.Tests
         partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
     
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task CoursesPostAsync(System.Guid studentId, string version, CourseForCreationDto courseForCreationDto)
-        {
-            return CoursesPostAsync(studentId, version, courseForCreationDto, System.Threading.CancellationToken.None);
-        }
-    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task CoursesPostAsync(System.Guid studentId, string version, CourseForCreationDto courseForCreationDto, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task CoursesPostAsync(System.Guid studentId, CourseForCreationDto courseForCreationDto, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (studentId == null)
                 throw new System.ArgumentNullException("studentId");
@@ -410,15 +377,9 @@ namespace SpaTemplate.Tests
             }
         }
     
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task CoursesGetAsync(System.Guid studentId, string accept, string version, CourseParameters parameters)
-        {
-            return CoursesGetAsync(studentId, accept, version, parameters, System.Threading.CancellationToken.None);
-        }
-    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task CoursesGetAsync(System.Guid studentId, string accept, string version, CourseParameters parameters, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task CoursesGetAsync(System.Guid studentId, CourseParameters parameters, string version, string accept = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (studentId == null)
                 throw new System.ArgumentNullException("studentId");
@@ -510,15 +471,9 @@ namespace SpaTemplate.Tests
             }
         }
     
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task CoursesDeleteAsync(System.Guid studentId, System.Guid id, string version)
-        {
-            return CoursesDeleteAsync(studentId, id, version, System.Threading.CancellationToken.None);
-        }
-    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task CoursesDeleteAsync(System.Guid studentId, System.Guid id, string version, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task CoursesDeleteAsync(System.Guid studentId, System.Guid id, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (studentId == null)
                 throw new System.ArgumentNullException("studentId");
@@ -609,15 +564,9 @@ namespace SpaTemplate.Tests
             }
         }
     
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<ProblemDetails> CoursesGetAsync(System.Guid studentId, System.Guid id, string accept, string version)
-        {
-            return CoursesGetAsync(studentId, id, accept, version, System.Threading.CancellationToken.None);
-        }
-    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<ProblemDetails> CoursesGetAsync(System.Guid studentId, System.Guid id, string accept, string version, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ProblemDetails> CoursesGetAsync(System.Guid studentId, System.Guid id, string version, string accept = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (studentId == null)
                 throw new System.ArgumentNullException("studentId");
@@ -705,15 +654,9 @@ namespace SpaTemplate.Tests
             }
         }
     
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task CoursesPatchAsync(System.Guid studentId, System.Guid id, string version, System.Collections.Generic.IEnumerable<Operation> patchDoc)
-        {
-            return CoursesPatchAsync(studentId, id, version, patchDoc, System.Threading.CancellationToken.None);
-        }
-    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task CoursesPatchAsync(System.Guid studentId, System.Guid id, string version, System.Collections.Generic.IEnumerable<Operation> patchDoc, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task CoursesPatchAsync(System.Guid studentId, System.Guid id, System.Collections.Generic.IEnumerable<Operation> patchDoc, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (studentId == null)
                 throw new System.ArgumentNullException("studentId");
@@ -818,15 +761,9 @@ namespace SpaTemplate.Tests
             }
         }
     
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task CoursesPutAsync(System.Guid studentId, System.Guid id, string version, CourseForUpdateDto courseForUpdateDto)
-        {
-            return CoursesPutAsync(studentId, id, version, courseForUpdateDto, System.Threading.CancellationToken.None);
-        }
-    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task CoursesPutAsync(System.Guid studentId, System.Guid id, string version, CourseForUpdateDto courseForUpdateDto, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task CoursesPutAsync(System.Guid studentId, System.Guid id, CourseForUpdateDto courseForUpdateDto, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (studentId == null)
                 throw new System.ArgumentNullException("studentId");
@@ -1027,19 +964,13 @@ namespace SpaTemplate.Tests
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.1.3.0 (NJsonSchema v10.0.27.0 (Newtonsoft.Json v11.0.0.0))")]
     public partial interface IPeopleCollectionsService
     {
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task PeopleCollectionsPostAsync(string version, System.Collections.Generic.IEnumerable<StudentForCreationDto> studentForCreationDtos);
+        System.Threading.Tasks.Task PeopleCollectionsPostAsync(System.Collections.Generic.IEnumerable<StudentForCreationDto> studentForCreationDtos, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task PeopleCollectionsPostAsync(string version, System.Collections.Generic.IEnumerable<StudentForCreationDto> studentForCreationDtos, System.Threading.CancellationToken cancellationToken);
-    
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProblemDetails> PeopleCollectionsGetAsync(System.Collections.Generic.IEnumerable<System.Guid> ids, string version);
-    
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ProblemDetails> PeopleCollectionsGetAsync(System.Collections.Generic.IEnumerable<System.Guid> ids, string version, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ProblemDetails> PeopleCollectionsGetAsync(System.Collections.Generic.IEnumerable<System.Guid> ids, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
     }
     
@@ -1067,15 +998,9 @@ namespace SpaTemplate.Tests
         partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
     
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task PeopleCollectionsPostAsync(string version, System.Collections.Generic.IEnumerable<StudentForCreationDto> studentForCreationDtos)
-        {
-            return PeopleCollectionsPostAsync(version, studentForCreationDtos, System.Threading.CancellationToken.None);
-        }
-    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task PeopleCollectionsPostAsync(string version, System.Collections.Generic.IEnumerable<StudentForCreationDto> studentForCreationDtos, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task PeopleCollectionsPostAsync(System.Collections.Generic.IEnumerable<StudentForCreationDto> studentForCreationDtos, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append("api/v{version}/people-collections");
@@ -1155,15 +1080,9 @@ namespace SpaTemplate.Tests
             }
         }
     
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<ProblemDetails> PeopleCollectionsGetAsync(System.Collections.Generic.IEnumerable<System.Guid> ids, string version)
-        {
-            return PeopleCollectionsGetAsync(ids, version, System.Threading.CancellationToken.None);
-        }
-    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<ProblemDetails> PeopleCollectionsGetAsync(System.Collections.Generic.IEnumerable<System.Guid> ids, string version, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<ProblemDetails> PeopleCollectionsGetAsync(System.Collections.Generic.IEnumerable<System.Guid> ids, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append("api/v{version}/people-collections/({ids})");
@@ -1333,40 +1252,25 @@ namespace SpaTemplate.Tests
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.1.3.0 (NJsonSchema v10.0.27.0 (Newtonsoft.Json v11.0.0.0))")]
     public partial interface IPeopleService
     {
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task PeoplePostAsync(string version, StudentForCreationDto studentForCreationDto);
+        System.Threading.Tasks.Task PeoplePostAsync(StudentForCreationDto studentForCreationDto, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task PeoplePostAsync(string version, StudentForCreationDto studentForCreationDto, System.Threading.CancellationToken cancellationToken);
-    
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task PeopleGetAsync(string accept, string version, StudentParameters parameters);
+        System.Threading.Tasks.Task PeopleGetAsync(StudentParameters parameters, string version, string accept = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task PeopleGetAsync(string accept, string version, StudentParameters parameters, System.Threading.CancellationToken cancellationToken);
-    
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task PeopleDeleteAsync(System.Guid id, string version);
+        System.Threading.Tasks.Task PeopleDeleteAsync(System.Guid id, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task PeopleDeleteAsync(System.Guid id, string version, System.Threading.CancellationToken cancellationToken);
-    
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task PeopleGetAsync(System.Guid id, string accept, string version, StudentParameters parameters);
+        System.Threading.Tasks.Task PeopleGetAsync(System.Guid id, StudentParameters parameters, string version, string accept = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task PeopleGetAsync(System.Guid id, string accept, string version, StudentParameters parameters, System.Threading.CancellationToken cancellationToken);
-    
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task PeoplePatchAsync(System.Guid id, string version, System.Collections.Generic.IEnumerable<Operation> patchDoc);
-    
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task PeoplePatchAsync(System.Guid id, string version, System.Collections.Generic.IEnumerable<Operation> patchDoc, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task PeoplePatchAsync(System.Guid id, System.Collections.Generic.IEnumerable<Operation> patchDoc, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
     }
     
@@ -1394,15 +1298,9 @@ namespace SpaTemplate.Tests
         partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
         partial void ProcessResponse(System.Net.Http.HttpClient client, System.Net.Http.HttpResponseMessage response);
     
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task PeoplePostAsync(string version, StudentForCreationDto studentForCreationDto)
-        {
-            return PeoplePostAsync(version, studentForCreationDto, System.Threading.CancellationToken.None);
-        }
-    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task PeoplePostAsync(string version, StudentForCreationDto studentForCreationDto, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task PeoplePostAsync(StudentForCreationDto studentForCreationDto, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append("api/v{version}/people");
@@ -1482,15 +1380,9 @@ namespace SpaTemplate.Tests
             }
         }
     
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task PeopleGetAsync(string accept, string version, StudentParameters parameters)
-        {
-            return PeopleGetAsync(accept, version, parameters, System.Threading.CancellationToken.None);
-        }
-    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task PeopleGetAsync(string accept, string version, StudentParameters parameters, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task PeopleGetAsync(StudentParameters parameters, string version, string accept = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append("api/v{version}/people");
@@ -1572,15 +1464,9 @@ namespace SpaTemplate.Tests
             }
         }
     
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task PeopleDeleteAsync(System.Guid id, string version)
-        {
-            return PeopleDeleteAsync(id, version, System.Threading.CancellationToken.None);
-        }
-    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task PeopleDeleteAsync(System.Guid id, string version, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task PeopleDeleteAsync(System.Guid id, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1667,15 +1553,9 @@ namespace SpaTemplate.Tests
             }
         }
     
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task PeopleGetAsync(System.Guid id, string accept, string version, StudentParameters parameters)
-        {
-            return PeopleGetAsync(id, accept, version, parameters, System.Threading.CancellationToken.None);
-        }
-    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task PeopleGetAsync(System.Guid id, string accept, string version, StudentParameters parameters, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task PeopleGetAsync(System.Guid id, StudentParameters parameters, string version, string accept = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1761,15 +1641,9 @@ namespace SpaTemplate.Tests
             }
         }
     
-        /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task PeoplePatchAsync(System.Guid id, string version, System.Collections.Generic.IEnumerable<Operation> patchDoc)
-        {
-            return PeoplePatchAsync(id, version, patchDoc, System.Threading.CancellationToken.None);
-        }
-    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <exception cref="SwaggerException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task PeoplePatchAsync(System.Guid id, string version, System.Collections.Generic.IEnumerable<Operation> patchDoc, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task PeoplePatchAsync(System.Guid id, System.Collections.Generic.IEnumerable<Operation> patchDoc, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (id == null)
                 throw new System.ArgumentNullException("id");
@@ -1958,7 +1832,426 @@ namespace SpaTemplate.Tests
         }
     }
 
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class ProblemDetails 
+    {
+        [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Type { get; set; }
     
+        [Newtonsoft.Json.JsonProperty("title", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Title { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Status { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("detail", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Detail { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("instance", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Instance { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    
+        public static ProblemDetails FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ProblemDetails>(data);
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class ModelStateDictionary 
+    {
+        [Newtonsoft.Json.JsonProperty("root", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ModelStateEntry Root { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("maxAllowedErrors", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int MaxAllowedErrors { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("hasReachedMaxErrors", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool HasReachedMaxErrors { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("errorCount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int ErrorCount { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("count", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Count { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("keys", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<string> Keys { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("values", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<ModelStateEntry> Values { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("isValid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool IsValid { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("validationState", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ModelValidationState ValidationState { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("item", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ModelStateEntry Item { get; set; }
+    
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    
+        public static ModelStateDictionary FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ModelStateDictionary>(data);
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    public abstract partial class ModelStateEntry 
+    {
+        [Newtonsoft.Json.JsonProperty("rawValue", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public object RawValue { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("attemptedValue", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string AttemptedValue { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ModelErrorCollection Errors { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("validationState", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ModelValidationState ValidationState { get; set; }
+    
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    
+        public static ModelStateEntry FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ModelStateEntry>(data);
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class ModelErrorCollection : System.Collections.ObjectModel.Collection<ModelError>
+    {
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    
+        public static ModelErrorCollection FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ModelErrorCollection>(data);
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class ModelError 
+    {
+        [Newtonsoft.Json.JsonProperty("exception", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Exception Exception { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("errorMessage", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ErrorMessage { get; set; }
+    
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    
+        public static ModelError FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<ModelError>(data);
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    public enum ModelValidationState
+    {
+        Unvalidated = 0,
+    
+        Invalid = 1,
+    
+        Valid = 2,
+    
+        Skipped = 3,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class CourseForCreationDto : CourseForManipulationDto
+    {
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    
+        public static CourseForCreationDto FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<CourseForCreationDto>(data);
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class CourseForManipulationDto 
+    {
+        [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Description { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("title", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Title { get; set; }
+    
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    
+        public static CourseForManipulationDto FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<CourseForManipulationDto>(data);
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class CourseParameters 
+    {
+        [Newtonsoft.Json.JsonProperty("fields", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Fields { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("orderBy", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string OrderBy { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("pageNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int PageNumber { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("pageSize", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int PageSize { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("searchQuery", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string SearchQuery { get; set; }
+    
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    
+        public static CourseParameters FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<CourseParameters>(data);
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class Operation : OperationBase
+    {
+        [Newtonsoft.Json.JsonProperty("value", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public object Value { get; set; }
+    
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    
+        public static Operation FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<Operation>(data);
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class OperationBase 
+    {
+        [Newtonsoft.Json.JsonProperty("path", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Path { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("op", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Op { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("from", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string From { get; set; }
+    
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    
+        public static OperationBase FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<OperationBase>(data);
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class CourseForUpdateDto : CourseForManipulationDto
+    {
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    
+        public static CourseForUpdateDto FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<CourseForUpdateDto>(data);
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class StudentForCreationDto : StudentForManipulationDto
+    {
+        [Newtonsoft.Json.JsonProperty("courseForCreationDtos", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.ICollection<CourseForCreationDto> CourseForCreationDtos { get; set; }
+    
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    
+        public static StudentForCreationDto FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<StudentForCreationDto>(data);
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class StudentForManipulationDto 
+    {
+        [Newtonsoft.Json.JsonProperty("age", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int Age { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("isDone", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool IsDone { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Name { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("surname", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Surname { get; set; }
+    
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    
+        public static StudentForManipulationDto FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<StudentForManipulationDto>(data);
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class StudentParameters 
+    {
+        [Newtonsoft.Json.JsonProperty("fields", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Fields { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("orderBy", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string OrderBy { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("pageNumber", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int PageNumber { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("pageSize", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int PageSize { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("searchQuery", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string SearchQuery { get; set; }
+    
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    
+        public static StudentParameters FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<StudentParameters>(data);
+        }
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.27.0 (Newtonsoft.Json v11.0.0.0)")]
+    [Newtonsoft.Json.JsonObjectAttribute]
+    public partial class Exception 
+    {
+        [Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Message { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("innerException", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Exception InnerException { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("stackTrace", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string StackTrace { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("source", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Source { get; set; }
+    
+        public string ToJson() 
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        }
+    
+        public static Exception FromJson(string data)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<Exception>(data);
+        }
+    
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.1.3.0 (NJsonSchema v10.0.27.0 (Newtonsoft.Json v11.0.0.0))")]
+    public partial class SwaggerException : System.Exception
+    {
+        public int StatusCode { get; private set; }
+
+        public string Response { get; private set; }
+
+        public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> Headers { get; private set; }
+
+        public SwaggerException(string message, int statusCode, string response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Exception innerException) 
+            : base(message + "\n\nStatus: " + statusCode + "\nResponse: \n" + response.Substring(0, response.Length >= 512 ? 512 : response.Length), innerException)
+        {
+            StatusCode = statusCode;
+            Response = response; 
+            Headers = headers;
+        }
+
+        public override string ToString()
+        {
+            return string.Format("HTTP Response: \n\n{0}\n\n{1}", Response, base.ToString());
+        }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.1.3.0 (NJsonSchema v10.0.27.0 (Newtonsoft.Json v11.0.0.0))")]
+    public partial class SwaggerException<TResult> : SwaggerException
+    {
+        public TResult Result { get; private set; }
+
+        public SwaggerException(string message, int statusCode, string response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, TResult result, System.Exception innerException) 
+            : base(message, statusCode, response, headers, innerException)
+        {
+            Result = result;
+        }
+    }
 
 }
 

@@ -15,7 +15,7 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface IApiService {
-    api(accept: string | null | undefined, version: string | null): Observable<void>;
+    api(version: string | null, accept?: string | null | undefined): Observable<void>;
 }
 
 @Injectable({
@@ -31,7 +31,7 @@ export class ApiService implements IApiService {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    api(accept: string | null | undefined, version: string | null): Observable<void> {
+    api(version: string | null, accept?: string | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/v{version}";
         if (version === undefined || version === null)
             throw new Error("The parameter 'version' must be defined.");
@@ -108,12 +108,12 @@ export class ApiService implements IApiService {
 }
 
 export interface ICoursesService {
-    coursesPost(studentId: string, version: string | null, courseForCreationDto: CourseForCreationDto): Observable<void>;
-    coursesGet(studentId: string, accept: string | null | undefined, version: string | null, parameters: CourseParameters): Observable<void>;
+    coursesPost(studentId: string, courseForCreationDto: CourseForCreationDto, version: string | null): Observable<void>;
+    coursesGet(studentId: string, parameters: CourseParameters, version: string | null, accept?: string | null | undefined): Observable<void>;
     coursesDelete(studentId: string, id: string, version: string | null): Observable<void>;
-    coursesGet(studentId: string, id: string, accept: string | null | undefined, version: string | null): Observable<ProblemDetails>;
-    coursesPatch(studentId: string, id: string, version: string | null, patchDoc: Operation[]): Observable<void>;
-    coursesPut(studentId: string, id: string, version: string | null, courseForUpdateDto: CourseForUpdateDto): Observable<void>;
+    coursesGet(studentId: string, id: string, version: string | null, accept?: string | null | undefined): Observable<ProblemDetails>;
+    coursesPatch(studentId: string, id: string, patchDoc: Operation[], version: string | null): Observable<void>;
+    coursesPut(studentId: string, id: string, courseForUpdateDto: CourseForUpdateDto, version: string | null): Observable<void>;
 }
 
 @Injectable({
@@ -129,7 +129,7 @@ export class CoursesService implements ICoursesService {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    coursesPost(studentId: string, version: string | null, courseForCreationDto: CourseForCreationDto): Observable<void> {
+    coursesPost(studentId: string, courseForCreationDto: CourseForCreationDto, version: string | null): Observable<void> {
         let url_ = this.baseUrl + "/api/v{version}/people/{studentId}/courses";
         if (studentId === undefined || studentId === null)
             throw new Error("The parameter 'studentId' must be defined.");
@@ -218,7 +218,7 @@ export class CoursesService implements ICoursesService {
         }
     }
 
-    coursesGet(studentId: string, accept: string | null | undefined, version: string | null, parameters: CourseParameters): Observable<void> {
+    coursesGet(studentId: string, parameters: CourseParameters, version: string | null, accept?: string | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/v{version}/people/{studentId}/courses";
         if (studentId === undefined || studentId === null)
             throw new Error("The parameter 'studentId' must be defined.");
@@ -384,7 +384,7 @@ export class CoursesService implements ICoursesService {
         }
     }
 
-    coursesGet(studentId: string, id: string, accept: string | null | undefined, version: string | null): Observable<ProblemDetails> {
+    coursesGet(studentId: string, id: string, version: string | null, accept?: string | null | undefined): Observable<ProblemDetails> {
         let url_ = this.baseUrl + "/api/v{version}/people/{studentId}/courses/{id}";
         if (studentId === undefined || studentId === null)
             throw new Error("The parameter 'studentId' must be defined.");
@@ -463,7 +463,7 @@ export class CoursesService implements ICoursesService {
         }
     }
 
-    coursesPatch(studentId: string, id: string, version: string | null, patchDoc: Operation[]): Observable<void> {
+    coursesPatch(studentId: string, id: string, patchDoc: Operation[], version: string | null): Observable<void> {
         let url_ = this.baseUrl + "/api/v{version}/people/{studentId}/courses/{id}";
         if (studentId === undefined || studentId === null)
             throw new Error("The parameter 'studentId' must be defined.");
@@ -559,7 +559,7 @@ export class CoursesService implements ICoursesService {
         }
     }
 
-    coursesPut(studentId: string, id: string, version: string | null, courseForUpdateDto: CourseForUpdateDto): Observable<void> {
+    coursesPut(studentId: string, id: string, courseForUpdateDto: CourseForUpdateDto, version: string | null): Observable<void> {
         let url_ = this.baseUrl + "/api/v{version}/people/{studentId}/courses/{id}";
         if (studentId === undefined || studentId === null)
             throw new Error("The parameter 'studentId' must be defined.");
@@ -657,7 +657,7 @@ export class CoursesService implements ICoursesService {
 }
 
 export interface IPeopleCollectionsService {
-    peopleCollectionsPost(version: string | null, studentForCreationDtos: StudentForCreationDto[]): Observable<void>;
+    peopleCollectionsPost(studentForCreationDtos: StudentForCreationDto[], version: string | null): Observable<void>;
     peopleCollectionsGet(ids: string[] | null, version: string | null): Observable<ProblemDetails>;
 }
 
@@ -674,7 +674,7 @@ export class PeopleCollectionsService implements IPeopleCollectionsService {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    peopleCollectionsPost(version: string | null, studentForCreationDtos: StudentForCreationDto[]): Observable<void> {
+    peopleCollectionsPost(studentForCreationDtos: StudentForCreationDto[], version: string | null): Observable<void> {
         let url_ = this.baseUrl + "/api/v{version}/people-collections";
         if (version === undefined || version === null)
             throw new Error("The parameter 'version' must be defined.");
@@ -820,11 +820,11 @@ export class PeopleCollectionsService implements IPeopleCollectionsService {
 }
 
 export interface IPeopleService {
-    peoplePost(version: string | null, studentForCreationDto: StudentForCreationDto): Observable<void>;
-    peopleGet(accept: string | null | undefined, version: string | null, parameters: StudentParameters): Observable<void>;
+    peoplePost(studentForCreationDto: StudentForCreationDto, version: string | null): Observable<void>;
+    peopleGet(parameters: StudentParameters, version: string | null, accept?: string | null | undefined): Observable<void>;
     peopleDelete(id: string, version: string | null): Observable<void>;
-    peopleGet(id: string, accept: string | null | undefined, version: string | null, parameters: StudentParameters): Observable<void>;
-    peoplePatch(id: string, version: string | null, patchDoc: Operation[]): Observable<void>;
+    peopleGet(id: string, parameters: StudentParameters, version: string | null, accept?: string | null | undefined): Observable<void>;
+    peoplePatch(id: string, patchDoc: Operation[], version: string | null): Observable<void>;
 }
 
 @Injectable({
@@ -840,7 +840,7 @@ export class PeopleService implements IPeopleService {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
-    peoplePost(version: string | null, studentForCreationDto: StudentForCreationDto): Observable<void> {
+    peoplePost(studentForCreationDto: StudentForCreationDto, version: string | null): Observable<void> {
         let url_ = this.baseUrl + "/api/v{version}/people";
         if (version === undefined || version === null)
             throw new Error("The parameter 'version' must be defined.");
@@ -914,7 +914,7 @@ export class PeopleService implements IPeopleService {
         }
     }
 
-    peopleGet(accept: string | null | undefined, version: string | null, parameters: StudentParameters): Observable<void> {
+    peopleGet(parameters: StudentParameters, version: string | null, accept?: string | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/v{version}/people";
         if (version === undefined || version === null)
             throw new Error("The parameter 'version' must be defined.");
@@ -1068,7 +1068,7 @@ export class PeopleService implements IPeopleService {
         }
     }
 
-    peopleGet(id: string, accept: string | null | undefined, version: string | null, parameters: StudentParameters): Observable<void> {
+    peopleGet(id: string, parameters: StudentParameters, version: string | null, accept?: string | null | undefined): Observable<void> {
         let url_ = this.baseUrl + "/api/v{version}/people/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1146,7 +1146,7 @@ export class PeopleService implements IPeopleService {
         }
     }
 
-    peoplePatch(id: string, version: string | null, patchDoc: Operation[]): Observable<void> {
+    peoplePatch(id: string, patchDoc: Operation[], version: string | null): Observable<void> {
         let url_ = this.baseUrl + "/api/v{version}/people/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -1356,10 +1356,7 @@ export class ApiException extends Error {
 }
 
 function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): Observable<any> {
-    if (result !== null && result !== undefined)
-        return _observableThrow(result);
-    else
-        return _observableThrow(new ApiException(message, status, response, headers, null));
+    return _observableThrow(new ApiException(message, status, response, headers, result));
 }
 
 function blobToText(blob: any): Observable<string> {
