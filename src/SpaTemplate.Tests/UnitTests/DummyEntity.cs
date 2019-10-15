@@ -7,9 +7,9 @@
 
 namespace SpaTemplate.Tests.UnitTests
 {
-	using Xeinaemm.Domain;
+    using Xeinaemm.Domain;
 
-	public class DummyEntity : BaseEntity
-	{
-	}
+    public class DummyEntity : BaseEntity
+    {
+    }
 }

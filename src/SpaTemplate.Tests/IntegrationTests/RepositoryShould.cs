@@ -7,40 +7,40 @@
 
 namespace SpaTemplate.Tests.IntegrationTests
 {
-	using SpaTemplate.Core.FacultyContext;
-	using SpaTemplate.Tests.Helpers;
-	using Xunit;
+    using SpaTemplate.Core.FacultyContext;
+    using SpaTemplate.Tests.Helpers;
+    using Xunit;
 
-	public class RepositoryShould
-	{
-		[Fact]
-		public void AddItemAndSetId()
-		{
-			var repository = DbContextHelper.GetRepository();
-			var sut = new Student();
+    public class RepositoryShould
+    {
+        [Fact]
+        public void AddItemAndSetId()
+        {
+            var repository = DbContextHelper.GetRepository();
+            var sut = new Student();
 
-			Assert.True(repository.AddEntity(sut));
-			var newItem = repository.GetFirstOrDefault(new StudentSpecification(sut.Id));
+            Assert.True(repository.AddEntity(sut));
+            var newItem = repository.GetFirstOrDefault(new StudentSpecification(sut.Id));
 
-			Assert.Equal(sut.Id, newItem.Id);
-		}
+            Assert.Equal(sut.Id, newItem.Id);
+        }
 
-		[Fact]
-		public void DeleteItemAfterAddingIt()
-		{
-			var repository = DbContextHelper.GetRepository();
-			var sut = new Student();
-			repository.AddEntity(sut);
-			Assert.True(repository.DeleteEntity(sut));
-		}
+        [Fact]
+        public void DeleteItemAfterAddingIt()
+        {
+            var repository = DbContextHelper.GetRepository();
+            var sut = new Student();
+            repository.AddEntity(sut);
+            Assert.True(repository.DeleteEntity(sut));
+        }
 
-		[Fact]
-		public void ExistsItemAfterAddingIt()
-		{
-			var repository = DbContextHelper.GetRepository();
-			var sut = new Student();
-			Assert.True(repository.AddEntity(sut));
-			Assert.True(repository.ExistsEntity<Student>(sut.Id));
-		}
-	}
+        [Fact]
+        public void ExistsItemAfterAddingIt()
+        {
+            var repository = DbContextHelper.GetRepository();
+            var sut = new Student();
+            Assert.True(repository.AddEntity(sut));
+            Assert.True(repository.ExistsEntity<Student>(sut.Id));
+        }
+    }
 }

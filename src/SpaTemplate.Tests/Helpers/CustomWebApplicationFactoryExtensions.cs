@@ -7,19 +7,19 @@
 
 namespace SpaTemplate.Tests.Helpers
 {
-	using System.Net.Http;
-	using SpaTemplate.Infrastructure.Api;
-	using Xeinaemm.Hateoas;
+    using System.Net.Http;
+    using SpaTemplate.Infrastructure.Api;
+    using Xeinaemm.Hateoas;
 
-	public static class CustomWebApplicationFactoryExtensions
-	{
-		public static HttpClient CreateClientWithDefaultRequestHeaders(
-			this CustomWebApplicationFactory<Startup> factory)
-		{
-			var client = factory.CreateClient();
-			client.DefaultRequestHeaders.TryAddWithoutValidation(Header.XRealIp, CommonConstants.LocalhostIp);
+    public static class CustomWebApplicationFactoryExtensions
+    {
+        public static HttpClient CreateClientWithDefaultRequestHeaders(
+            this CustomWebApplicationFactory<Startup> factory)
+        {
+            var client = factory.CreateClient();
+            client.DefaultRequestHeaders.TryAddWithoutValidation(Header.XRealIp, CommonConstants.LocalhostIp);
 
-			return client;
-		}
-	}
+            return client;
+        }
+    }
 }

@@ -7,57 +7,57 @@
 
 namespace SpaTemplate.Tests.Helpers
 {
-	using System;
-	using Microsoft.AspNetCore.Hosting;
-	using Microsoft.AspNetCore.Mvc.Testing;
-	using Microsoft.EntityFrameworkCore;
-	using Microsoft.Extensions.DependencyInjection;
-	using Microsoft.Extensions.Logging;
-	using SpaTemplate.Infrastructure;
-	using SpaTemplate.Infrastructure.Api;
-	using Xeinaemm.Domain;
+    using System;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc.Testing;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using SpaTemplate.Infrastructure;
+    using SpaTemplate.Infrastructure.Api;
+    using Xeinaemm.Domain;
 
-	public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<Startup>
-	{
-		protected override void ConfigureWebHost(IWebHostBuilder builder)
-		{
-			builder.UseContentRoot(".");
-			builder.ConfigureServices(services =>
-			{
-				var serviceProvider = new ServiceCollection()
-					.AddEntityFrameworkInMemoryDatabase()
-					.BuildServiceProvider();
+    public class CustomWebApplicationFactory<TStartup> : WebApplicationFactory<Startup>
+    {
+        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        {
+            builder.UseContentRoot(".");
+            builder.ConfigureServices(services =>
+            {
+                var serviceProvider = new ServiceCollection()
+                    .AddEntityFrameworkInMemoryDatabase()
+                    .BuildServiceProvider();
 
-				services.AddDbContext<AppDbContext>(options =>
-				{
-					options.UseInMemoryDatabase("tests-factory");
-					options.UseInternalServiceProvider(serviceProvider);
-				});
+                services.AddDbContext<AppDbContext>(options =>
+                {
+                    options.UseInMemoryDatabase("tests-factory");
+                    options.UseInternalServiceProvider(serviceProvider);
+                });
 
-				services.AddScoped<IDomainEventDispatcher, NoOpDomainEventDispatcher>();
+                services.AddScoped<IDomainEventDispatcher, NoOpDomainEventDispatcher>();
 
-				var sp = services.BuildServiceProvider();
+                var sp = services.BuildServiceProvider();
 
-				using (var scope = sp.CreateScope())
-				{
-					var scopedServices = scope.ServiceProvider;
-					var db = scopedServices.GetRequiredService<AppDbContext>();
+                using (var scope = sp.CreateScope())
+                {
+                    var scopedServices = scope.ServiceProvider;
+                    var db = scopedServices.GetRequiredService<AppDbContext>();
 
-					var logger = scopedServices
-						.GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
+                    var logger = scopedServices
+                        .GetRequiredService<ILogger<CustomWebApplicationFactory<TStartup>>>();
 
-					db.Database.EnsureCreated();
+                    db.Database.EnsureCreated();
 
-					try
-					{
-						SeedData.PopulateTestData(db);
-					}
-					catch (Exception ex)
-					{
-						logger.LogError(ex, "An error occurred seeding the database with test messages. Error: {ex.Message}");
-					}
-				}
-			});
-		}
-	}
+                    try
+                    {
+                        SeedData.PopulateTestData(db);
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(ex, "An error occurred seeding the database with test messages. Error: {ex.Message}");
+                    }
+                }
+            });
+        }
+    }
 }

@@ -7,12 +7,12 @@
 
 namespace SpaTemplate.Tests.Helpers
 {
-	using Xeinaemm.Domain;
+    using Xeinaemm.Domain;
 
-	public class NoOpDomainEventDispatcher : IDomainEventDispatcher
-	{
-		public void Dispatch(BaseDomainEvent domainEvent)
-		{
-		}
-	}
+    public class NoOpDomainEventDispatcher : IDomainEventDispatcher
+    {
+        public void Dispatch(BaseDomainEvent domainEvent)
+        {
+        }
+    }
 }

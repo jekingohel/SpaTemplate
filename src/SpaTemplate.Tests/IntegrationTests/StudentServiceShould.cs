@@ -7,118 +7,118 @@
 
 namespace SpaTemplate.Tests.IntegrationTests
 {
-	using System;
-	using System.Linq;
-	using SpaTemplate.Core.FacultyContext;
-	using SpaTemplate.Core.SharedKernel;
-	using SpaTemplate.Tests.Helpers;
-	using Xeinaemm.Hateoas;
-	using Xeinaemm.Tests;
-	using Xunit;
+    using System;
+    using System.Linq;
+    using SpaTemplate.Core.FacultyContext;
+    using SpaTemplate.Core.SharedKernel;
+    using SpaTemplate.Tests.Helpers;
+    using Xeinaemm.Hateoas;
+    using Xeinaemm.Tests;
+    using Xunit;
 
-	public class StudentServiceShould
-	{
-		[Theory]
-		[AutoMoqData]
-		public void AssignableFromIPagedList(StudentService sut) => Assert.IsAssignableFrom<IStudentService>(sut);
+    public class StudentServiceShould
+    {
+        [Theory]
+        [AutoMoqData]
+        public void AssignableFromIPagedList(StudentService sut) => Assert.IsAssignableFrom<IStudentService>(sut);
 
-		[Theory]
-		[AutoMoqData]
-		public void ReturnsChangedPaginationWithSpecifiedPageNumber(PropertyMappingService property)
-		{
-			var parameters = new StudentParameters { PageSize = 2, PageNumber = 2 };
-			var sut = new StudentService(DbContextHelper.SeedRepo(property), new TypeHelperService(), new PropertyMappingService());
+        [Theory]
+        [AutoMoqData]
+        public void ReturnsChangedPaginationWithSpecifiedPageNumber(PropertyMappingService property)
+        {
+            var parameters = new StudentParameters { PageSize = 2, PageNumber = 2 };
+            var sut = new StudentService(DbContextHelper.SeedRepo(property), new TypeHelperService(), new PropertyMappingService());
 
-			var actual = sut.GetPagedList(parameters);
+            var actual = sut.GetPagedList(parameters);
 
-			Assert.Equal(2, actual.CurrentPage);
-		}
+            Assert.Equal(2, actual.CurrentPage);
+        }
 
-		[Theory]
-		[AutoMoqData]
-		public void ReturnsCorrectOrderByDescription(PropertyMappingService property)
-		{
-			var parameters = new StudentParameters
-			{
-				OrderBy = "surname",
-			};
-			var sut = new StudentService(DbContextHelper.SeedRepo(property), new TypeHelperService(), new PropertyMappingService());
+        [Theory]
+        [AutoMoqData]
+        public void ReturnsCorrectOrderByDescription(PropertyMappingService property)
+        {
+            var parameters = new StudentParameters
+            {
+                OrderBy = "surname",
+            };
+            var sut = new StudentService(DbContextHelper.SeedRepo(property), new TypeHelperService(), new PropertyMappingService());
 
-			var actual = sut.GetPagedList(parameters);
+            var actual = sut.GetPagedList(parameters);
 
-			Assert.Equal("Buzz", actual?[0]?.Surname);
-		}
+            Assert.Equal("Buzz", actual?[0]?.Surname);
+        }
 
-		[Theory]
-		[AutoMoqData]
-		public void ReturnsCorrectOrderByTitle(PropertyMappingService property)
-		{
-			var parameters = new StudentParameters
-			{
-				OrderBy = "Name",
-			};
-			var sut = new StudentService(DbContextHelper.SeedRepo(property), new TypeHelperService(), new PropertyMappingService());
+        [Theory]
+        [AutoMoqData]
+        public void ReturnsCorrectOrderByTitle(PropertyMappingService property)
+        {
+            var parameters = new StudentParameters
+            {
+                OrderBy = "Name",
+            };
+            var sut = new StudentService(DbContextHelper.SeedRepo(property), new TypeHelperService(), new PropertyMappingService());
 
-			var actual = sut.GetPagedList(parameters);
+            var actual = sut.GetPagedList(parameters);
 
-			Assert.Equal("Dummy", actual?[0]?.Name);
-		}
+            Assert.Equal("Dummy", actual?[0]?.Name);
+        }
 
-		[Theory]
-		[InlineData("dummy", 2)]
-		[InlineData("Test", 3)]
-		public void ReturnsCorrectQueryList(string searchQuery, int totalCount)
-		{
-			var parameters = new StudentParameters
-			{
-				SearchQuery = searchQuery,
-			};
-			var sut = new StudentService(DbContextHelper.SeedRepo(new PropertyMappingService()), new TypeHelperService(), new PropertyMappingService());
+        [Theory]
+        [InlineData("dummy", 2)]
+        [InlineData("Test", 3)]
+        public void ReturnsCorrectQueryList(string searchQuery, int totalCount)
+        {
+            var parameters = new StudentParameters
+            {
+                SearchQuery = searchQuery,
+            };
+            var sut = new StudentService(DbContextHelper.SeedRepo(new PropertyMappingService()), new TypeHelperService(), new PropertyMappingService());
 
-			var actual = sut.GetPagedList(parameters);
+            var actual = sut.GetPagedList(parameters);
 
-			Assert.Equal(totalCount, actual.TotalCount);
-		}
+            Assert.Equal(totalCount, actual.TotalCount);
+        }
 
-		[Theory]
-		[InlineAutoMoqData(10, 1, 1)]
-		[InlineAutoMoqData(2, 1, 3)]
-		public void ReturnsCorrectTotalPages(int pageSize, int pageNumber, int totalPages, PropertyMappingService property)
-		{
-			var parameters = new StudentParameters
-			{
-				PageSize = pageSize,
-				PageNumber = pageNumber,
-			};
-			var sut = new StudentService(DbContextHelper.SeedRepo(property), new TypeHelperService(), new PropertyMappingService());
+        [Theory]
+        [InlineAutoMoqData(10, 1, 1)]
+        [InlineAutoMoqData(2, 1, 3)]
+        public void ReturnsCorrectTotalPages(int pageSize, int pageNumber, int totalPages, PropertyMappingService property)
+        {
+            var parameters = new StudentParameters
+            {
+                PageSize = pageSize,
+                PageNumber = pageNumber,
+            };
+            var sut = new StudentService(DbContextHelper.SeedRepo(property), new TypeHelperService(), new PropertyMappingService());
 
-			var actual = sut.GetPagedList(parameters);
+            var actual = sut.GetPagedList(parameters);
 
-			Assert.Equal(totalPages, actual.TotalPages);
-		}
+            Assert.Equal(totalPages, actual.TotalPages);
+        }
 
-		[Fact]
-		public void ReturnsListEqualIds()
-		{
-			var sut = new StudentService(DbContextHelper.SeedRepo(new PropertyMappingService()), new TypeHelperService(), new PropertyMappingService());
+        [Fact]
+        public void ReturnsListEqualIds()
+        {
+            var sut = new StudentService(DbContextHelper.SeedRepo(new PropertyMappingService()), new TypeHelperService(), new PropertyMappingService());
 
-			var ids = DbContextHelper.DummyGuidsArray();
-			var actual = sut.GetCollection(ids);
+            var ids = DbContextHelper.DummyGuidsArray();
+            var actual = sut.GetCollection(ids);
 
-			Assert.Equal(ids, actual.Select(x => x.Id));
-		}
+            Assert.Equal(ids, actual.Select(x => x.Id));
+        }
 
-		[Theory]
-		[AutoMoqData]
-		public void ThrowsExceptionOrderById(PropertyMappingService property)
-		{
-			var parameters = new StudentParameters
-			{
-				OrderBy = "Id",
-			};
-			var sut = new StudentService(DbContextHelper.SeedRepo(property), new TypeHelperService(), new PropertyMappingService());
+        [Theory]
+        [AutoMoqData]
+        public void ThrowsExceptionOrderById(PropertyMappingService property)
+        {
+            var parameters = new StudentParameters
+            {
+                OrderBy = "Id",
+            };
+            var sut = new StudentService(DbContextHelper.SeedRepo(property), new TypeHelperService(), new PropertyMappingService());
 
-			Assert.Throws<ArgumentException>(() => sut.GetPagedList(parameters));
-		}
-	}
+            Assert.Throws<ArgumentException>(() => sut.GetPagedList(parameters));
+        }
+    }
 }

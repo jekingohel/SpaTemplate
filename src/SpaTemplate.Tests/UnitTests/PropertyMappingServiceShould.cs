@@ -7,34 +7,34 @@
 
 namespace SpaTemplate.Tests.UnitTests
 {
-	using System;
-	using System.Collections.Generic;
-	using SpaTemplate.Core.SharedKernel;
-	using Xeinaemm.Domain;
-	using Xeinaemm.Hateoas;
-	using Xeinaemm.Tests;
-	using Xunit;
+    using System;
+    using System.Collections.Generic;
+    using SpaTemplate.Core.SharedKernel;
+    using Xeinaemm.Domain;
+    using Xeinaemm.Hateoas;
+    using Xeinaemm.Tests;
+    using Xunit;
 
-	public class PropertyMappingServiceShould
-	{
-		[Theory]
-		[InlineAutoMoqData("Dummy")]
-		public void ReturnsTrueValidFields(string field, PropertyMappingService property) => Assert.True(property.ValidMappingExistsFor<DummyEntityDto, DummyEntity>(field));
+    public class PropertyMappingServiceShould
+    {
+        [Theory]
+        [InlineAutoMoqData("Dummy")]
+        public void ReturnsTrueValidFields(string field, PropertyMappingService property) => Assert.True(property.ValidMappingExistsFor<DummyEntityDto, DummyEntity>(field));
 
-		[Fact]
-		public void BeAssignableFromInterface() => Assert.IsAssignableFrom<IPropertyMappingService>(new PropertyMappingService());
+        [Fact]
+        public void BeAssignableFromInterface() => Assert.IsAssignableFrom<IPropertyMappingService>(new PropertyMappingService());
 
 #pragma warning disable CA1812 // Avoid uninstantiated internal classes
-		private class DummyEntity : BaseEntity
-		{
-		}
+        private class DummyEntity : BaseEntity
+        {
+        }
 
-		private class DummyEntityDto : IDto
-		{
-			public List<BaseDomainEvent> Events { get; }
+        private class DummyEntityDto : IDto
+        {
+            public List<BaseDomainEvent> Events { get; }
 
-			public Guid Id { get; set; }
-		}
+            public Guid Id { get; set; }
+        }
 #pragma warning restore CA1812 // Avoid uninstantiated internal classes
-	}
+    }
 }

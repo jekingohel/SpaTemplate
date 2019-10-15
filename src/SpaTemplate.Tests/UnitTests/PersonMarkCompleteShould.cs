@@ -7,28 +7,28 @@
 
 namespace SpaTemplate.Tests.UnitTests
 {
-	using SpaTemplate.Core.FacultyContext;
-	using Xunit;
+    using SpaTemplate.Core.FacultyContext;
+    using Xunit;
 
-	public class PersonMarkCompleteShould
-	{
-		[Fact]
-		public void RaiseCompletedEvent()
-		{
-			var item = new Student();
-			item.MarkComplete();
+    public class PersonMarkCompleteShould
+    {
+        [Fact]
+        public void RaiseCompletedEvent()
+        {
+            var item = new Student();
+            item.MarkComplete();
 
-			Assert.Single(item.Events);
-			Assert.IsType<StudentCompletedEvent>(item.Events[0]);
-		}
+            Assert.Single(item.Events);
+            Assert.IsType<StudentCompletedEvent>(item.Events[0]);
+        }
 
-		[Fact]
-		public void ReturnsTrueSetIsDone()
-		{
-			var sut = new Student();
-			sut.MarkComplete();
+        [Fact]
+        public void ReturnsTrueSetIsDone()
+        {
+            var sut = new Student();
+            sut.MarkComplete();
 
-			Assert.True(sut.IsDone);
-		}
-	}
+            Assert.True(sut.IsDone);
+        }
+    }
 }
