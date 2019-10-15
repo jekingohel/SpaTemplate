@@ -38,6 +38,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Xeinaemm.ruleset = Xeinaemm.ruleset
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaTemplate.Tests", "src\SpaTemplate.Tests\SpaTemplate.Tests.csproj", "{8FCA4232-FA1D-4891-899E-7553CA40BEF7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,6 +102,14 @@ Global
 		{71665DE8-536A-4011-B297-CE44832401B4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{71665DE8-536A-4011-B297-CE44832401B4}.Release|x64.ActiveCfg = Release|Any CPU
 		{71665DE8-536A-4011-B297-CE44832401B4}.Release|x64.Build.0 = Release|Any CPU
+		{8FCA4232-FA1D-4891-899E-7553CA40BEF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FCA4232-FA1D-4891-899E-7553CA40BEF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FCA4232-FA1D-4891-899E-7553CA40BEF7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8FCA4232-FA1D-4891-899E-7553CA40BEF7}.Debug|x64.Build.0 = Debug|Any CPU
+		{8FCA4232-FA1D-4891-899E-7553CA40BEF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FCA4232-FA1D-4891-899E-7553CA40BEF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FCA4232-FA1D-4891-899E-7553CA40BEF7}.Release|x64.ActiveCfg = Release|Any CPU
+		{8FCA4232-FA1D-4891-899E-7553CA40BEF7}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +124,7 @@ Global
 		{71665DE8-536A-4011-B297-CE44832401B4} = {6AEE3BD3-6CA6-45C1-B4D0-6D965E098E09}
 		{6AEE3BD3-6CA6-45C1-B4D0-6D965E098E09} = {428FCC61-478E-40A5-BC1D-97C862348207}
 		{6D06D38D-A3AA-4FB4-860D-9EFD222D57CD} = {428FCC61-478E-40A5-BC1D-97C862348207}
+		{8FCA4232-FA1D-4891-899E-7553CA40BEF7} = {AE292CA6-5A61-414F-AC0E-2DF9C8DE6A14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {713B0C3E-A912-41F4-AF06-2E2E95ED4E6B}
