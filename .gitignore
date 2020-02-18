@@ -305,6 +305,8 @@ Thumbs.db
 **/*.DotSettings
 /.msbuild
 /src/SpaTemplate.IdP/Data/Migrations
-/tools/Addins/Cake.FileHelpers.3.2.0
-/tools/Cake
-/tools/Cake.Bakery
+/tools/Cake*
+/tools/Addins/**
+BuildSolution.sln
+.vscode
+

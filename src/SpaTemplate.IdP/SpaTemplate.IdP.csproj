@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
-  <Sdk Name="Microsoft.Build.CentralPackageVersions" Version="2.0.46" />
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
     <UserSecretsId>aspnet-SpaTemplate.IdP-007DDEBB-3DBB-4CE9-ABE4-366BCC3E19A9</UserSecretsId>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
@@ -12,8 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" />
-    <PackageReference Include="Microsoft.AspNetCore.All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1"/>
   </ItemGroup>
 
 </Project>

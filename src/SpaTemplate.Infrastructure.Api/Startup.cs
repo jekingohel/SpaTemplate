@@ -31,20 +31,16 @@ namespace SpaTemplate.Infrastructure.Api
     public class Startup
     {
         public Startup(
-            IHostingEnvironment environment,
             IConfiguration configuration)
         {
-            this.Environment = environment;
             this.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
 
-        public IHostingEnvironment Environment { get; }
-
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
         {
-            if (this.Environment.IsProduction())
+            if (env.EnvironmentName == "Production")
                 services.AddCustomDbContext<ApplicationDbContext>(this.Configuration.GetConnectionString());
             else
                 services.AddCustomInMemoryDbContext<ApplicationDbContext>("api");
@@ -62,14 +58,12 @@ namespace SpaTemplate.Infrastructure.Api
                 setupAction.CustomDocInclusionPredicate(nameof(Api));
                 setupAction.CustomXmlComments<EmptyClassSpaTemplateInfrastructureApi>();
             });
-            services.AddOpenApiDocument();
+            //services.AddOpenApiDocument();
             services.AddCustomHttpCacheHeaders();
             services.AddMemoryCache();
             services.AddCustomIpRateLimitOptions(new List<RateLimitRule>());
-            services.AddCustomLogging(this.Configuration);
-#pragma warning disable IDISP005 // Return type should indicate that the value should be disposed.
             services.AddCustomAutoMapper();
-#pragma warning restore IDISP005 // Return type should indicate that the value should be disposed.
+
             return services.InitializeWeb(builder =>
             {
                 builder.Register(_ => new QuartzService(this.Configuration.GetConnectionString())).As<IQuartzService>().SingleInstance();
@@ -83,10 +77,13 @@ namespace SpaTemplate.Infrastructure.Api
             });
         }
 
-        public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider apiVersionDescriptionProvider)
+        public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider apiVersionDescriptionProvider, IWebHostEnvironment env)
         {
             app.UseIpRateLimiting();
-            app.UseCustomHostingEnvironment(this.Environment);
+            if (env.EnvironmentName == "Development")
+            {
+                app.UseDeveloperExceptionPage();
+            }
             app.UseHttpsRedirection();
             SwaggerBuilderExtensions.UseSwagger(app);
             app.UseCustomSwaggerUI(apiVersionDescriptionProvider, nameof(Api));

@@ -17,25 +17,27 @@ namespace SpaTemplate.Web.Quartz
 
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
+        public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
-            this.Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
 
-        public IHostingEnvironment Environment { get; }
-
         public static void ConfigureServices(IServiceCollection services)
         {
             services.AddCustomCookiePolicy();
-            services.AddMvc().SetCompatibilityVersion();
+            services.AddRazorPages();
+            services.AddControllersWithViews();
         }
 
-        public async void Configure(IApplicationBuilder app, IQuartzService quartzService)
+        public async void Configure(IApplicationBuilder app, IQuartzService quartzService, IWebHostEnvironment env)
         {
-            app.UseCustomHostingEnvironment(this.Environment);
+            if (env.EnvironmentName == "Development")
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
             app.UseHttpsRedirection();
             app.UseCrystalQuartz(() => quartzService.ServerInstance);
             await new QuartzScheduler(quartzService).RegisterScheduledJobsAsync().ConfigureAwait(false);
@@ -43,7 +45,11 @@ namespace SpaTemplate.Web.Quartz
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseMvcWithDefaultRoute();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+                endpoints.MapRazorPages();
+            });
         }
     }
 }
