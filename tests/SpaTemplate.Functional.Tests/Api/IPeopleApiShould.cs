@@ -12,14 +12,13 @@ namespace SpaTemplate.Functional.Tests.Api
     using System.Net;
     using System.Threading.Tasks;
     using Autofac;
-    using FluentAssertions;
     using Microsoft.AspNetCore.JsonPatch;
-    using Refit;
     using SpaTemplate.Application.Setup.ContainerTasks;
     using SpaTemplate.Contracts.Api;
     using SpaTemplate.Contracts.Models;
     using SpaTemplate.Contracts.Parameters;
     using SpaTemplate.Core.SharedKernel;
+    using SpaTemplate.Functional.Tests.Helpers;
     using SpaTemplate.Infrastructure.Api;
     using SpaTemplate.Tests.Helpers;
     using Xeinaemm.Hateoas;
@@ -37,30 +36,12 @@ namespace SpaTemplate.Functional.Tests.Api
         }
 
         [Fact]
-        public async Task ReturnsBadRequestOrderByNotExists()
-        {
-            try
-            {
-                var get = await this.api.GetPeople(new StudentParameters { OrderBy = "unknown" });
-            }
-            catch (ApiException validationException)
-            {
-                validationException.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-            }
-        }
+        public void ReturnsBadRequestOrderByNotExists() =>
+            RefitExceptions.Verify(async () => await this.api.GetPeople(new StudentParameters { OrderBy = "unknown" }), HttpStatusCode.BadRequest);
 
         [Fact]
-        public async Task ReturnsBadRequestFieldsMappingNotExists()
-        {
-            try
-            {
-                var get = await this.api.GetPeople(new StudentParameters { Fields = "dummy" });
-            }
-            catch (ApiException validationException)
-            {
-                validationException.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-            }
-        }
+        public void ReturnsBadRequestFieldsMappingNotExists() =>
+            RefitExceptions.Verify(async () => await this.api.GetPeople(new StudentParameters { Fields = "dummy" }), HttpStatusCode.BadRequest);
 
         [Fact]
         public async Task ReturnsCollection()
@@ -94,23 +75,13 @@ namespace SpaTemplate.Functional.Tests.Api
             var get = await this.api.GetPeopleHateoas(new StudentParameters());
 
             Assert.Equal(2, get.Links.Count);
-
             Assert.Equal(method, get.Links[number].Method);
             Assert.Equal(rel, get.Links[number].Rel);
         }
 
         [Fact]
-        public async Task ReturnsNotFoundEntityNotExists()
-        {
-            try
-            {
-                var get = await this.api.GetStudent(Guid.NewGuid(), new StudentParameters());
-            }
-            catch (ApiException validationException)
-            {
-                validationException.StatusCode.Should().Be(HttpStatusCode.NotFound);
-            }
-        }
+        public void ReturnsNotFoundEntityNotExists() =>
+            RefitExceptions.Verify(async () => await this.api.GetStudent(Guid.NewGuid(), new StudentParameters()), HttpStatusCode.NotFound);
 
         [Fact]
         public async Task ReturnsNotNullHref()
@@ -135,45 +106,19 @@ namespace SpaTemplate.Functional.Tests.Api
         }
 
         [Fact]
-        public async Task ReturnsNotFoundEntityForPatchNotExists()
-        {
-            try
-            {
-                var patch = await this.api.PartiallyUpdateStudent(Guid.NewGuid(), new JsonPatchDocument<StudentForUpdateDto>());
-            }
-            catch (ApiException validationException)
-            {
-                validationException.StatusCode.Should().Be(HttpStatusCode.NotFound);
-            }
-        }
+        public void ReturnsNotFoundEntityForPatchNotExists() =>
+            RefitExceptions.Verify(async () => await this.api.PartiallyUpdateStudent(Guid.NewGuid(), new JsonPatchDocument<StudentForUpdateDto>()), HttpStatusCode.NotFound);
 
         [Fact]
-        public async Task ReturnsNotFoundEntity()
-        {
-            try
-            {
-                await this.api.DeleteStudent(Guid.NewGuid());
-            }
-            catch (ApiException validationException)
-            {
-                validationException.StatusCode.Should().Be(HttpStatusCode.NotFound);
-            }
-        }
+        public void ReturnsNotFoundEntity() =>
+            RefitExceptions.Verify(async () => await this.api.DeleteStudent(Guid.NewGuid()), HttpStatusCode.NotFound);
 
         [Theory]
         [AutoMoqData]
         public async Task ReturnsBadRequestFieldNotExists(StudentForCreationDto studentForCreationDto)
         {
             var post = await this.api.CreateStudent(studentForCreationDto);
-
-            try
-            {
-                var get = await this.api.GetStudent(post.Id, new StudentParameters { Fields = "dummy" });
-            }
-            catch (ApiException validationException)
-            {
-                validationException.StatusCode.Should().Be(HttpStatusCode.BadRequest);
-            }
+            RefitExceptions.Verify(async () => await this.api.GetStudent(post.Id, new StudentParameters { Fields = "dummy" }), HttpStatusCode.BadRequest);
         }
 
         [Theory]
@@ -197,15 +142,7 @@ namespace SpaTemplate.Functional.Tests.Api
 
             var patchDoc = new JsonPatchDocument<StudentForUpdateDto>();
             patchDoc.Replace(x => x.Name, post.Surname);
-
-            try
-            {
-                var patch = await this.api.PartiallyUpdateStudent(post.Id, patchDoc);
-            }
-            catch (ApiException validationException)
-            {
-                validationException.StatusCode.Should().Be(HttpStatusCode.UnprocessableEntity);
-            }
+            RefitExceptions.Verify(async () => await this.api.PartiallyUpdateStudent(post.Id, patchDoc), HttpStatusCode.UnprocessableEntity);
         }
 
         [Theory]
@@ -214,15 +151,7 @@ namespace SpaTemplate.Functional.Tests.Api
         {
             var post = await this.api.CreateStudent(studentForCreationDto);
             await this.api.DeleteStudent(post.Id);
-
-            try
-            {
-                var get = await this.api.GetStudent(post.Id, new StudentParameters());
-            }
-            catch (ApiException validationException)
-            {
-                validationException.StatusCode.Should().Be(HttpStatusCode.NotFound);
-            }
+            RefitExceptions.Verify(async () => await this.api.GetStudent(post.Id, new StudentParameters()), HttpStatusCode.NotFound);
         }
     }
 }
