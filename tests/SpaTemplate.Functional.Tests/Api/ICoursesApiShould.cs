@@ -119,7 +119,7 @@ namespace SpaTemplate.Functional.Tests.Api
         public async Task ReturnsCollectionWithHateoasInsideLinks(string method, string rel, int number)
         {
             var person = (await this.peopleApi.GetPeople(new StudentParameters())).First();
-            var get = await this.api.GetCoursesForStudent(person.Id, new CourseParameters(), MediaType.OutputFormatterJson);
+            var get = await this.api.GetCoursesForStudentHateoas(person.Id, new CourseParameters());
 
             Assert.Equal(10, get.Values.Count);
             Assert.Equal(5, get.Values[0].Links.Count);
@@ -134,7 +134,7 @@ namespace SpaTemplate.Functional.Tests.Api
         public async Task ReturnsCollectionWithHateoasOutsideLinks(string method, string rel, int number)
         {
             var person = (await this.peopleApi.GetPeople(new StudentParameters())).First();
-            var get = await this.api.GetCoursesForStudent(person.Id, new CourseParameters(), MediaType.OutputFormatterJson);
+            var get = await this.api.GetCoursesForStudentHateoas(person.Id, new CourseParameters());
 
             Assert.Equal(2, get.Links.Count);
             Assert.Equal(method, get.Links[number].Method);
@@ -342,7 +342,7 @@ namespace SpaTemplate.Functional.Tests.Api
         public async Task ReturnsNotNullHrefCoursesWithHateoas()
         {
             var person = (await this.peopleApi.GetPeople(new StudentParameters())).First();
-            var get = await this.api.GetCoursesForStudent(person.Id, new CourseParameters(), MediaType.OutputFormatterJson);
+            var get = await this.api.GetCoursesForStudentHateoas(person.Id, new CourseParameters());
 
             Assert.All(get.Values[0].Links, x => Assert.NotNull(x.Href));
             Assert.All(get.Links, x => Assert.NotNull(x.Href));
@@ -405,7 +405,7 @@ namespace SpaTemplate.Functional.Tests.Api
         public async Task ReturnsOKCourseShapedWithHateoas()
         {
             var person = (await this.peopleApi.GetPeople(new StudentParameters())).First();
-            var get = await this.api.GetCoursesForStudent(person.Id, new CourseParameters(), MediaType.OutputFormatterJson);
+            var get = await this.api.GetCoursesForStudentHateoas(person.Id, new CourseParameters());
             var getCourse = await this.api.GetCourseForStudent(person.Id, get.Values[0].Values[0].Id);
             Assert.NotNull(getCourse);
         }

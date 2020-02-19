@@ -69,7 +69,6 @@ namespace SpaTemplate.Infrastructure.Api
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ModelStateDictionary), StatusCodes.Status422UnprocessableEntity)]
         [ProducesDefaultResponseType]
-        [ValidateAntiForgeryToken]
         public IActionResult CreateCourseForStudent(
             Guid studentId,
             [FromBody] CourseForCreationDto courseForCreationDto)
@@ -104,7 +103,6 @@ namespace SpaTemplate.Infrastructure.Api
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        [ValidateAntiForgeryToken]
         public IActionResult DeleteCourseForStudent(Guid studentId, Guid id)
         {
             if (!this.courseService.StudentExists(studentId)) return this.NotFound();
@@ -204,7 +202,6 @@ namespace SpaTemplate.Infrastructure.Api
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ModelStateDictionary), StatusCodes.Status422UnprocessableEntity)]
         [ProducesDefaultResponseType]
-        [ValidateAntiForgeryToken]
         public IActionResult PartiallyUpdateCourseForStudent(
             Guid studentId,
             Guid id,
@@ -275,7 +272,6 @@ namespace SpaTemplate.Infrastructure.Api
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ModelStateDictionary), StatusCodes.Status422UnprocessableEntity)]
         [ProducesDefaultResponseType]
-        [ValidateAntiForgeryToken]
         public IActionResult UpdateCourseForStudent(
             Guid studentId,
             Guid id,

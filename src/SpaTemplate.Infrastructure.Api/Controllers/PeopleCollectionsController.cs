@@ -54,7 +54,6 @@ namespace SpaTemplate.Infrastructure.Api
         [RequestHeaderMatchesMediaType("Content-Type", MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType]
-        [ValidateAntiForgeryToken]
         public IActionResult CreateStudentCollection(
             [FromBody] IEnumerable<StudentForCreationDto> studentForCreationDtos)
         {

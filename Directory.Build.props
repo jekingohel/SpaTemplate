@@ -19,7 +19,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Xeinaemm.All" Version="0.1.5" PrivateAssets="All" Condition="'$(MSBuildProjectName)' != '_build'"/>
-    <PackageReference Include="Xeinaemm.Analyzer" Version="0.1.5" PrivateAssets="All" Condition="'$(MSBuildProjectName)' != '_build'"/>
+    <PackageReference Include="Xeinaemm.All" Version="0.1.6" PrivateAssets="All" Condition="'$(MSBuildProjectName)' != '_build'"/>
+    <PackageReference Include="Xeinaemm.Analyzer" Version="0.1.6" PrivateAssets="All" Condition="'$(MSBuildProjectName)' != '_build'"/>
   </ItemGroup>
 </Project>

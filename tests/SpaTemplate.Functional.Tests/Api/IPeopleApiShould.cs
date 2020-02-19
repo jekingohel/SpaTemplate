@@ -76,7 +76,7 @@ namespace SpaTemplate.Functional.Tests.Api
         [InlineData("DELETE", SpaTemplateRel.DeleteStudent, 3)]
         public async Task ReturnsCollectionValidMethodAndRelInsideLinks(string method, string rel, int number)
         {
-            var get = await this.api.GetPeople(new StudentParameters(), MediaType.OutputFormatterJson);
+            var get = await this.api.GetPeopleHateoas(new StudentParameters());
 
             Assert.Equal(10, get.Values.Count);
             Assert.Equal(4, get.Values[0].Links.Count);
@@ -91,7 +91,7 @@ namespace SpaTemplate.Functional.Tests.Api
         [InlineData("GET", Rel.NextPage, 1)]
         public async Task ReturnsCollectionValidMethodAndRelOutsideLinks(string method, string rel, int number)
         {
-            var get = await this.api.GetPeople(new StudentParameters(), MediaType.OutputFormatterJson);
+            var get = await this.api.GetPeopleHateoas(new StudentParameters());
 
             Assert.Equal(2, get.Links.Count);
 
@@ -115,12 +115,12 @@ namespace SpaTemplate.Functional.Tests.Api
         [Fact]
         public async Task ReturnsNotNullHref()
         {
-            var get = await this.api.GetPeople(new StudentParameters(), MediaType.OutputFormatterJson);
+            var get = await this.api.GetPeopleHateoas(new StudentParameters());
             Assert.All(get.Values[0].Links, x => Assert.NotNull(x.Href));
             Assert.All(get.Links, x => Assert.NotNull(x.Href));
             Assert.Contains(get.Links, x => x.Rel == Rel.NextPage);
 
-            var getSecond = await this.api.GetPeople(new StudentParameters { PageNumber = 2 }, MediaType.OutputFormatterJson);
+            var getSecond = await this.api.GetPeopleHateoas(new StudentParameters { PageNumber = 2 });
             Assert.All(getSecond.Values[0].Links, x => Assert.NotNull(x.Href));
             Assert.All(getSecond.Links, x => Assert.NotNull(x.Href));
             Assert.Contains(getSecond.Links, x => x.Rel == Rel.PreviousPage);

@@ -9,6 +9,7 @@ namespace SpaTemplate.Contracts.Api
 {
     using System;
     using System.Collections.Generic;
+    using System.Net.Mime;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.JsonPatch;
     using Refit;
@@ -25,16 +26,16 @@ namespace SpaTemplate.Contracts.Api
         Task DeleteCourseForStudent(Guid studentId, Guid id);
 
         [Get("/api/v1/people/{studentId}/courses/{id}")]
-        Task<CourseDto> GetCourseForStudent(Guid studentId, Guid id);
+        Task<CourseDto> GetCourseForStudent(Guid studentId, Guid id, [Header("Accept")] string contentType = MediaTypeNames.Application.Json);
 
         [Get("/api/v1/people/{studentId}/courses/{id}")]
-        Task<HateoasCollectionDto<CourseDto>> GetCourseForStudent(Guid studentId, Guid id, [Header("Accept")] string mediaType);
+        Task<HateoasCollectionDto<CourseDto>> GetCourseForStudentHateoas(Guid studentId, Guid id, [Header("Accept")] string mediaType = MediaType.OutputFormatterJson);
 
         [Get("/api/v1/people/{studentId}/courses")]
-        Task<IEnumerable<CourseDto>> GetCoursesForStudent(Guid studentId, CourseParameters parameters);
+        Task<IEnumerable<CourseDto>> GetCoursesForStudent(Guid studentId, CourseParameters parameters, [Header("Accept")] string contentType = MediaTypeNames.Application.Json);
 
         [Get("/api/v1/people/{studentId}/courses")]
-        Task<HateoasCollectionDto<CourseDto>> GetCoursesForStudent(Guid studentId, CourseParameters parameters, [Header("Accept")] string mediaType);
+        Task<HateoasCollectionDto<CourseDto>> GetCoursesForStudentHateoas(Guid studentId, CourseParameters parameters, [Header("Accept")] string mediaType = MediaType.OutputFormatterJson);
 
         [Patch("/api/v1/people/{studentId}/courses/{id}")]
         Task<CourseDto> PartiallyUpdateCourseForStudent(Guid studentId, Guid id, [Body] JsonPatchDocument<CourseForUpdateDto> patchDoc);

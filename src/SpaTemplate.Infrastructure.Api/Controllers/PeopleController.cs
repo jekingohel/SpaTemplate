@@ -62,7 +62,6 @@ namespace SpaTemplate.Infrastructure.Api
         [RequestHeaderMatchesMediaType("Content-Type", MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType]
-        [ValidateAntiForgeryToken]
         public IActionResult CreateStudent([FromBody] StudentForCreationDto studentForCreationDto)
         {
             if (studentForCreationDto == null) return this.BadRequest();
@@ -84,7 +83,6 @@ namespace SpaTemplate.Infrastructure.Api
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        [ValidateAntiForgeryToken]
         public IActionResult DeleteStudent(Guid id)
         {
             var student = this.studentService.GetStudent(id);
@@ -172,7 +170,6 @@ namespace SpaTemplate.Infrastructure.Api
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), StatusCodes.Status422UnprocessableEntity)]
         [ProducesDefaultResponseType]
-        [ValidateAntiForgeryToken]
         public IActionResult PartiallyUpdateStudent(
             Guid id,
             [FromBody] JsonPatchDocument<StudentForUpdateDto> patchDoc)

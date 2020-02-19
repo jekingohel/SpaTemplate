@@ -9,6 +9,7 @@ namespace SpaTemplate.Contracts.Api
 {
     using System;
     using System.Collections.Generic;
+    using System.Net.Mime;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.JsonPatch;
     using Refit;
@@ -19,22 +20,22 @@ namespace SpaTemplate.Contracts.Api
     public interface IPeopleApi
     {
         [Post("/api/v1/people")]
-        Task<StudentDto> CreateStudent([Body] StudentForCreationDto studentForCreationDto);
+        Task<StudentDto> CreateStudent([Body] StudentForCreationDto studentForCreationDto, [Header("Content-Type")] string contentType = MediaTypeNames.Application.Json);
 
         [Delete("/api/v1/people/{id}")]
         Task DeleteStudent(Guid id);
 
         [Get("/api/v1/people/{id}")]
-        Task<StudentDto> GetStudent(Guid id, StudentParameters parameters);
+        Task<StudentDto> GetStudent(Guid id, StudentParameters parameters, [Header("Accept")] string contentType = MediaTypeNames.Application.Json);
 
         [Get("/api/v1/people/{id}")]
-        Task<HateoasCollectionDto<StudentDto>> GetStudent(Guid id, StudentParameters parameters, [Header("Accept")] string mediaType);
+        Task<HateoasCollectionDto<StudentDto>> GetStudentHateoas(Guid id, StudentParameters parameters, [Header("Accept")] string mediaType = MediaType.OutputFormatterJson);
 
         [Get("/api/v1/people")]
-        Task<IEnumerable<StudentDto>> GetPeople(StudentParameters parameters);
+        Task<IEnumerable<StudentDto>> GetPeople(StudentParameters parameters, [Header("Accept")] string contentType = MediaTypeNames.Application.Json);
 
         [Get("/api/v1/people")]
-        Task<HateoasCollectionDto<StudentDto>> GetPeople(StudentParameters parameters, [Header("Accept")] string mediaType);
+        Task<HateoasCollectionDto<StudentDto>> GetPeopleHateoas(StudentParameters parameters, [Header("Accept")] string mediaType = MediaType.OutputFormatterJson);
 
         [Get("/api/v1/people/{id}")]
         Task<StudentDto> PartiallyUpdateStudent(Guid id, [Body] JsonPatchDocument<StudentForUpdateDto> patchDoc);
