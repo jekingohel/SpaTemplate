@@ -16,8 +16,9 @@ namespace SpaTemplate.Infrastructure.Api
     using Microsoft.AspNetCore.JsonPatch;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
-    using Microsoft.Net.Http.Headers;
     using Newtonsoft.Json;
+    using SpaTemplate.Contracts.Models;
+    using SpaTemplate.Contracts.Parameters;
     using SpaTemplate.Core.FacultyContext;
     using SpaTemplate.Core.SharedKernel;
     using Xeinaemm.AspNetCore;
@@ -274,6 +275,7 @@ namespace SpaTemplate.Infrastructure.Api
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ModelStateDictionary), StatusCodes.Status422UnprocessableEntity)]
         [ProducesDefaultResponseType]
+        [ValidateAntiForgeryToken]
         public IActionResult UpdateCourseForStudent(
             Guid studentId,
             Guid id,

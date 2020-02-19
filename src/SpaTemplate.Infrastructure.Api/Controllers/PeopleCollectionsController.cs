@@ -14,7 +14,7 @@ namespace SpaTemplate.Infrastructure.Api
     using AutoMapper;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Net.Http.Headers;
+    using SpaTemplate.Contracts.Models;
     using SpaTemplate.Core.FacultyContext;
     using SpaTemplate.Core.SharedKernel;
     using Xeinaemm.AspNetCore;

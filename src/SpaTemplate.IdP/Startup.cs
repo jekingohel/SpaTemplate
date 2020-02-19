@@ -10,14 +10,12 @@ namespace SpaTemplate.IdP
     using System;
     using System.Reflection;
     using Autofac;
-    using Autofac.Extensions.DependencyInjection;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using SpaTemplate.Infrastructure;
+    using SpaTemplate.Application.Setup.ContainerTasks;
     using Xeinaemm.AspNetCore;
     using Xeinaemm.AspNetCore.Identity.IdentityServer;
 
@@ -26,10 +24,7 @@ namespace SpaTemplate.IdP
         private readonly IConfiguration configuration;
 
         public Startup(
-            IConfiguration configuration)
-        {
-            this.configuration = configuration;
-        }
+            IConfiguration configuration) => this.configuration = configuration;
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {

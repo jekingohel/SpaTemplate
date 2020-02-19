@@ -6,11 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SpaTemplate.Application.Setup\SpaTemplate.Application.Setup.csproj" />
     <ProjectReference Include="..\SpaTemplate.Infrastructure\SpaTemplate.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1" />
   </ItemGroup>
 
 </Project>

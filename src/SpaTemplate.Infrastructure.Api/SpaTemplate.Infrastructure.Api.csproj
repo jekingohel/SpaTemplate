@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SpaTemplate.Application.Setup\SpaTemplate.Application.Setup.csproj" />
     <ProjectReference Include="..\SpaTemplate.Core\SpaTemplate.Core.csproj" />
     <ProjectReference Include="..\SpaTemplate.Infrastructure\SpaTemplate.Infrastructure.csproj" />
   </ItemGroup>

@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <Compile Remove="ReadModels\**" />
+    <EmbeddedResource Remove="ReadModels\**" />
+    <None Remove="ReadModels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Remove="ReadModels\**" />
+  </ItemGroup>
+
+</Project>

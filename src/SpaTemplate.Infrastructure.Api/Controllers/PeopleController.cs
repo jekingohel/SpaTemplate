@@ -15,6 +15,8 @@ namespace SpaTemplate.Infrastructure.Api
     using Microsoft.AspNetCore.JsonPatch;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
+    using SpaTemplate.Contracts.Models;
+    using SpaTemplate.Contracts.Parameters;
     using SpaTemplate.Core.FacultyContext;
     using SpaTemplate.Core.SharedKernel;
     using Xeinaemm.AspNetCore;

@@ -1,8 +1,11 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="refit" Version="5.0.23" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SpaTemplate.Contracts\SpaTemplate.Contracts.csproj" />
-    <ProjectReference Include="..\SpaTemplate.Core\SpaTemplate.Core.csproj" />
   </ItemGroup>
 
 </Project>

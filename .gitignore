@@ -310,3 +310,5 @@ Thumbs.db
 BuildSolution.sln
 .vscode
 
+testhost.dll
+testhost.exe

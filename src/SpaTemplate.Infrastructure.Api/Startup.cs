@@ -20,6 +20,7 @@ namespace SpaTemplate.Infrastructure.Api
     using Microsoft.AspNetCore.Mvc.Routing;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using SpaTemplate.Application.Setup.ContainerTasks;
     using Xeinaemm.AspNetCore;
     using Xeinaemm.AspNetCore.Api;
     using Xeinaemm.AspNetCore.Data;
@@ -30,22 +31,25 @@ namespace SpaTemplate.Infrastructure.Api
 
     public class Startup
     {
+        private readonly IWebHostEnvironment env;
+
         public Startup(
-            IConfiguration configuration)
+            IConfiguration configuration, IWebHostEnvironment env)
         {
             this.Configuration = configuration;
+            this.env = env;
         }
 
         public IConfiguration Configuration { get; }
 
-        public IServiceProvider ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            if (env.EnvironmentName == "Production")
+            if (this.env.EnvironmentName == "Production")
                 services.AddCustomDbContext<ApplicationDbContext>(this.Configuration.GetConnectionString());
             else
                 services.AddCustomInMemoryDbContext<ApplicationDbContext>("api");
 
-            services.AddCustomApiMvc();
+            services.AddCustomApiControllers();
             services.AddCustomApiBehavior();
             services.AddCustomVersionedApiExplorer();
             services.AddCustomApiAuthentication(new ApiParameters(this.Configuration.GetSecurityString(), this.Configuration.GetAuthorityString()));
@@ -58,13 +62,14 @@ namespace SpaTemplate.Infrastructure.Api
                 setupAction.CustomDocInclusionPredicate(nameof(Api));
                 setupAction.CustomXmlComments<EmptyClassSpaTemplateInfrastructureApi>();
             });
-            //services.AddOpenApiDocument();
+
+            // services.AddOpenApiDocument();
             services.AddCustomHttpCacheHeaders();
             services.AddMemoryCache();
             services.AddCustomIpRateLimitOptions(new List<RateLimitRule>());
             services.AddCustomAutoMapper();
 
-            return services.InitializeWeb(builder =>
+            return services.InitializeApi(builder =>
             {
                 builder.Register(_ => new QuartzService(this.Configuration.GetConnectionString())).As<IQuartzService>().SingleInstance();
                 builder.RegisterType<MemoryCacheRateLimitCounterStore>().As<IRateLimitCounterStore>();
@@ -84,14 +89,16 @@ namespace SpaTemplate.Infrastructure.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
             app.UseHttpsRedirection();
             SwaggerBuilderExtensions.UseSwagger(app);
             app.UseCustomSwaggerUI(apiVersionDescriptionProvider, nameof(Api));
+            app.UseRouting();
             app.UseAuthentication();
             app.UseStaticFiles();
             app.UseHttpCacheHeaders();
             app.UseCookiePolicy();
-            app.UseMvcWithDefaultRoute();
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
     }
 }

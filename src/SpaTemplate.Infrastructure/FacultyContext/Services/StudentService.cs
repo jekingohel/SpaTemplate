@@ -10,6 +10,7 @@ namespace SpaTemplate.Infrastructure.FacultyContext
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using SpaTemplate.Contracts.Models;
     using SpaTemplate.Core.FacultyContext;
     using Xeinaemm.Common;
     using Xeinaemm.Domain;
