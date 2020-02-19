@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RuleSet Name="Xeinaemm ruleset" Description="" ToolsVersion="16.0">
-  <Include Path="allrules.ruleset" Action="Warning" />
   <Rules AnalyzerId="Disabled" RuleNamespace="Disabled">
     
     <Rule Id="CA1040" Action="None" />
@@ -18,16 +17,5 @@
     <Rule Id="SA1607" Action="None" />
     <Rule Id="SA1614" Action="None" />
     <Rule Id="SA1616" Action="None" />
-
-    <Rule Id="RCS1138" Action="None" />
-    <Rule Id="RCS1217" Action="None" />
-    
-    <Rule Id="RECS0154" Action="None" />
-    
-    <Rule Id="CC0003" Action="None" />
-    <Rule Id="CC0057" Action="None" />
-
-    <Rule Id="ERP022" Action="None" />
-
   </Rules>
 </RuleSet>
