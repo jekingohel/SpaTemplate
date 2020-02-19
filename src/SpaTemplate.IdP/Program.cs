@@ -30,11 +30,9 @@ namespace SpaTemplate.IdP
             {
                 try
                 {
-                    using (var scope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
-                    {
-                        var provider = scope.ServiceProvider;
-                        await provider.EnsureIdentitySeedDataAsync<IdentityUser, CustomIdentityDbContext>(new IdentitySeedData(provider.GetRequiredService<IConfiguration>())).ConfigureAwait(false);
-                    }
+                    using var scope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+                    var provider = scope.ServiceProvider;
+                    await provider.EnsureIdentitySeedDataAsync<IdentityUser, CustomIdentityDbContext>(new IdentitySeedData(provider.GetRequiredService<IConfiguration>())).ConfigureAwait(false);
                 }
                 catch (Exception e)
                 {

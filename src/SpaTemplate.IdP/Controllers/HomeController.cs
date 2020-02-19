@@ -20,15 +20,15 @@ namespace SpaTemplate.IdP
     public class HomeController : Controller
     {
         private readonly IIdentityServerInteractionService interaction;
-        private readonly IHostingEnvironment environment;
+        private readonly IWebHostEnvironment environment;
 
-        public HomeController(IIdentityServerInteractionService interaction, IHostingEnvironment environment)
+        public HomeController(IIdentityServerInteractionService interaction, IWebHostEnvironment environment)
         {
             this.interaction = interaction;
             this.environment = environment;
         }
 
-        public IActionResult Index() => this.environment.IsDevelopment() ? this.View() : (IActionResult)this.NotFound();
+        public IActionResult Index() => this.environment.EnvironmentName == "Development" ? this.View() : (IActionResult)this.NotFound();
 
         public async Task<IActionResult> Error(string errorId)
         {
@@ -39,7 +39,10 @@ namespace SpaTemplate.IdP
             {
                 vm.Error = message;
 
-                if (!this.environment.IsDevelopment()) message.ErrorDescription = null;
+                if (this.environment.EnvironmentName == "Development")
+                {
+                    message.ErrorDescription = null;
+                }
             }
 
             return this.View(nameof(this.Error), vm);

@@ -19,16 +19,13 @@ namespace SpaTemplate.Web.Core
 
     public class Startup
     {
-        public Startup(IConfiguration configuration, IHostingEnvironment environment)
+        public Startup(IConfiguration configuration)
         {
             this.Configuration = configuration;
-            this.Environment = environment;
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         }
 
         public IConfiguration Configuration { get; }
-
-        public IHostingEnvironment Environment { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -36,21 +33,40 @@ namespace SpaTemplate.Web.Core
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCustomHostingEnvironment(this.Environment);
-            app.UseAuthentication();
+            if (env.EnvironmentName == "Development")
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                app.UseHsts();
+            }
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            app.UseMvcWithDefaultRoute();
+            if (env.EnvironmentName != "Development")
+            {
+                app.UseSpaStaticFiles();
+            }
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+                endpoints.MapRazorPages();
+            });
 
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
 
-                if (this.Environment.IsDevelopment()) spa.UseAngularCliServer("start");
+                if (env.EnvironmentName == "Development")
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
             });
         }
     }

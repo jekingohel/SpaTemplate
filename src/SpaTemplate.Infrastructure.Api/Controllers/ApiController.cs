@@ -11,7 +11,6 @@ namespace SpaTemplate.Infrastructure.Api
     using System.Net.Mime;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Net.Http.Headers;
     using SpaTemplate.Core.SharedKernel;
     using Xeinaemm.AspNetCore;
     using Xeinaemm.AspNetCore.Api;
@@ -43,11 +42,11 @@ namespace SpaTemplate.Infrastructure.Api
         /// </returns>
         [HttpGet(Name = RouteName.GetRoot)]
         [Produces(MediaType.OutputFormatterJson)]
-        [RequestHeaderMatchesMediaType(HeaderNames.Accept, MediaTypeNames.Application.Json, MediaType.OutputFormatterJson)]
+        [RequestHeaderMatchesMediaType("Accept", MediaTypeNames.Application.Json, MediaType.OutputFormatterJson)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesDefaultResponseType]
-        public IActionResult GetRoot([FromHeader(Name = HeaderNames.Accept)] string mediaType) =>
+        public IActionResult GetRoot([FromHeader(Name = "Accept")] string mediaType) =>
             mediaType != MediaType.OutputFormatterJson ? this.NoContent() : (IActionResult)this.Ok(this.RootDtoLinks());
 
         private string CreateHref(string routeName) => this.urlHelper.Link(routeName, new { });

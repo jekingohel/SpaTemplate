@@ -14,8 +14,9 @@ namespace SpaTemplate.Infrastructure.Api
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.JsonPatch;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Net.Http.Headers;
     using Newtonsoft.Json;
+    using SpaTemplate.Contracts.Models;
+    using SpaTemplate.Contracts.Parameters;
     using SpaTemplate.Core.FacultyContext;
     using SpaTemplate.Core.SharedKernel;
     using Xeinaemm.AspNetCore;
@@ -58,10 +59,9 @@ namespace SpaTemplate.Infrastructure.Api
         /// <returns></returns>
         [HttpPost(Name = RouteName.CreateStudent)]
         [Consumes(MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
-        [RequestHeaderMatchesMediaType(HeaderNames.ContentType, MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
+        [RequestHeaderMatchesMediaType("Content-Type", MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType]
-        [ValidateAntiForgeryToken]
         public IActionResult CreateStudent([FromBody] StudentForCreationDto studentForCreationDto)
         {
             if (studentForCreationDto == null) return this.BadRequest();
@@ -83,7 +83,6 @@ namespace SpaTemplate.Infrastructure.Api
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesDefaultResponseType]
-        [ValidateAntiForgeryToken]
         public IActionResult DeleteStudent(Guid id)
         {
             var student = this.studentService.GetStudent(id);
@@ -101,12 +100,12 @@ namespace SpaTemplate.Infrastructure.Api
         /// <returns></returns>
         [HttpGet(Name = RouteName.GetPeople)]
         [Produces(MediaType.OutputFormatterJson)]
-        [RequestHeaderMatchesMediaType(HeaderNames.Accept, MediaTypeNames.Application.Json, MediaType.OutputFormatterJson)]
+        [RequestHeaderMatchesMediaType("Accept", MediaTypeNames.Application.Json, MediaType.OutputFormatterJson)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         public IActionResult GetPeople(
             StudentParameters parameters,
-            [FromHeader(Name = HeaderNames.Accept)] string mediaType)
+            [FromHeader(Name = "Accept")] string mediaType)
         {
             if (!this.studentService.StudentMappingExists(parameters))
                 return this.BadRequest();
@@ -141,13 +140,13 @@ namespace SpaTemplate.Infrastructure.Api
         /// </returns>
         [HttpGet("{id}", Name = RouteName.GetStudent)]
         [Produces(MediaType.OutputFormatterJson)]
-        [RequestHeaderMatchesMediaType(HeaderNames.Accept, MediaTypeNames.Application.Json, MediaType.OutputFormatterJson)]
+        [RequestHeaderMatchesMediaType("Accept", MediaTypeNames.Application.Json, MediaType.OutputFormatterJson)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesDefaultResponseType]
         public IActionResult GetStudent(
             Guid id,
             StudentParameters parameters,
-            [FromHeader(Name = HeaderNames.Accept)] string mediaType)
+            [FromHeader(Name = "Accept")] string mediaType)
         {
             if (!this.studentService.StudentPropertiesExists(parameters)) return this.BadRequest();
 
@@ -171,7 +170,6 @@ namespace SpaTemplate.Infrastructure.Api
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), StatusCodes.Status422UnprocessableEntity)]
         [ProducesDefaultResponseType]
-        [ValidateAntiForgeryToken]
         public IActionResult PartiallyUpdateStudent(
             Guid id,
             [FromBody] JsonPatchDocument<StudentForUpdateDto> patchDoc)

@@ -14,7 +14,7 @@ namespace SpaTemplate.Infrastructure.Api
     using AutoMapper;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Net.Http.Headers;
+    using SpaTemplate.Contracts.Models;
     using SpaTemplate.Core.FacultyContext;
     using SpaTemplate.Core.SharedKernel;
     using Xeinaemm.AspNetCore;
@@ -51,10 +51,9 @@ namespace SpaTemplate.Infrastructure.Api
         /// <returns></returns>
         [HttpPost]
         [Consumes(MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
-        [RequestHeaderMatchesMediaType(HeaderNames.ContentType, MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
+        [RequestHeaderMatchesMediaType("Content-Type", MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesDefaultResponseType]
-        [ValidateAntiForgeryToken]
         public IActionResult CreateStudentCollection(
             [FromBody] IEnumerable<StudentForCreationDto> studentForCreationDtos)
         {
@@ -79,7 +78,7 @@ namespace SpaTemplate.Infrastructure.Api
         /// <param name="ids"></param>
         /// <returns></returns>
         [HttpGet("({ids})", Name = RouteName.GetStudentCollection)]
-        [RequestHeaderMatchesMediaType(HeaderNames.Accept, MediaTypeNames.Application.Json)]
+        [RequestHeaderMatchesMediaType("Accept", MediaTypeNames.Application.Json)]
         [ProducesDefaultResponseType]
         public IActionResult GetStudentCollection(
             [ModelBinder(BinderType = typeof(ArrayModelBinder))]

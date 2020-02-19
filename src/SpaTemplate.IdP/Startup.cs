@@ -10,33 +10,27 @@ namespace SpaTemplate.IdP
     using System;
     using System.Reflection;
     using Autofac;
-    using Autofac.Extensions.DependencyInjection;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using SpaTemplate.Infrastructure;
+    using SpaTemplate.Application.Setup.ContainerTasks;
     using Xeinaemm.AspNetCore;
     using Xeinaemm.AspNetCore.Identity.IdentityServer;
 
     public class Startup
     {
         private readonly IConfiguration configuration;
-        private readonly IHostingEnvironment environment;
 
         public Startup(
-            IConfiguration configuration,
-            IHostingEnvironment environment)
-        {
-            this.environment = environment;
-            this.configuration = configuration;
-        }
+            IConfiguration configuration) => this.configuration = configuration;
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddCustomCookiePolicy();
-            services.AddMvc().SetCompatibilityVersion();
+            services.AddRazorPages();
+            services.AddControllersWithViews();
             services.AddCustomIISOptions();
 
             services.AddCustomIdentityServer<IdentityUser, CustomIdentityDbContext>(this.configuration.GetConnectionString(), Assembly.GetExecutingAssembly().GetName().Name)
@@ -45,15 +39,22 @@ namespace SpaTemplate.IdP
             return services.InitializeWeb(setupAction => setupAction.RegisterType<IdentityServerService>().As<IIdentityServerService>());
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCustomHostingEnvironment(this.environment);
-            //app.UseHttpsRedirection();
+            if (env.EnvironmentName == "Development")
+            {
+                app.UseDeveloperExceptionPage();
+            }
+
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
             app.UseIdentityServer();
-            app.UseMvcWithDefaultRoute();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+                endpoints.MapRazorPages();
+            });
         }
     }
 }

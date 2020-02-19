@@ -8,6 +8,7 @@
 namespace SpaTemplate.Infrastructure.FacultyContext
 {
     using System;
+    using SpaTemplate.Contracts.Models;
     using SpaTemplate.Core.FacultyContext;
     using Xeinaemm.Common;
     using Xeinaemm.Domain;

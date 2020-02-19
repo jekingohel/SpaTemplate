@@ -1,77 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-
-  <Import Project="Deployment.Settings.props" />
-
+  
   <PropertyGroup>
-    <Company>Xeinaemm Consulting Piotr Czech</Company>
-    <Authors>$(Company)</Authors>
-    <Copyright>Copyright © $(Company) $([System.DateTime]::Now.Year)</Copyright>
-    <Trademark>$(Company)™</Trademark>
-    <Product>$(Company) Projects</Product>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
-
-  <PropertyGroup>
-    <LangVersion>latest</LangVersion>
-    <NoWarn>1591;1701;1702;8032;NU1701;AD0001</NoWarn>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <CodeAnalysisRuleSet>..\..\Xeinaemm.ruleset</CodeAnalysisRuleSet>
-    <Deterministic>true</Deterministic>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <AdditionalFiles Include="..\..\stylecop.json" Visible="false" />
-    <None Include="..\..\Xeinaemm.ruleset" Visible="false" />
-    <None Include="..\..\.editorconfig" Visible="false" />
-    <None Include="content\*" Pack="true" PackagePath="content" />
-    <None Include="build\*" Pack="true" PackagePath="build" />
-    <None Include="lib\*" Pack="true" PackagePath="lib" />
+  
+  <ItemGroup Condition="$(MSBuildProjectName.EndsWith('Tests'))">
+    <PackageReference Include="NETStandard.Library" Version="2.0.3" />
+    <PackageReference Include="coverlet.msbuild" Version="2.7.0" />
+    <PackageReference Include="FluentAssertions" Version="5.9.0"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.1" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.console" Version="2.4.1" PrivateAssets="all" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" PrivateAssets="all" />
   </ItemGroup>
-
-  <Choose>
-    <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config')">
-      <PropertyGroup>
-        <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-      </PropertyGroup>
-    </When>
-  </Choose>
-
-  <Choose>
-    <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config') and '$(IsSharedLibrary)' != 'true'">
-      <ItemGroup>
-        <PackageReference Include="Xeinaemm.All" VersionOverride="$(SharedLibraryVersion)" PrivateAssets="All" />
-      </ItemGroup>
-    </When>
-  </Choose>
   
-  <Choose>
-    <When Condition="!Exists('$(MSBuildProjectDirectory)\packages.config') and '$(EnableAnalyzers)' == 'true'">
-      <ItemGroup>
-        <PackageReference Include="Xeinaemm.Analayzer" VersionOverride="$(AnalyzerVersion)" PrivateAssets="All" />
-      </ItemGroup>
-    </When>
-  </Choose>
-  
-  <Choose>
-    <When Condition="'$(SpaMode)' == 'true'">
-      <PropertyGroup>
-        <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
-        <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
-        <IsPackable>false</IsPackable>
-        <SpaRoot>ClientApp\</SpaRoot>
-        <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
-        <BuildServerSideRenderer>false</BuildServerSideRenderer>
-      </PropertyGroup>
-  
-      <ItemGroup>
-        <Compile Remove="ClientApp\dist\**" />
-        <Content Remove="$(SpaRoot)**" />
-        <Content Remove="ClientApp\dist\**" />
-        <EmbeddedResource Remove="ClientApp\dist\**" />
-        <None Remove="$(SpaRoot)**" />
-        <None Remove="ClientApp\dist\**" />
-        <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
-      </ItemGroup>
-    </When>
-  </Choose>
+  <ItemGroup>
+    <PackageReference Include="Xeinaemm.All" Version="0.1.6" PrivateAssets="All" Condition="'$(MSBuildProjectName)' != '_build'"/>
+    <PackageReference Include="Xeinaemm.Analyzer" Version="0.1.6" PrivateAssets="All" Condition="'$(MSBuildProjectName)' != '_build'"/>
+  </ItemGroup>
 </Project>
