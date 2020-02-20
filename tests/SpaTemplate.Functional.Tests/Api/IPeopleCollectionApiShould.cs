@@ -14,10 +14,10 @@ namespace SpaTemplate.Functional.Tests.Api
     using System.Threading.Tasks;
     using Autofac;
     using FluentAssertions;
+    using Refit;
     using SpaTemplate.Application.Setup.ContainerTasks;
     using SpaTemplate.Contracts.Api;
     using SpaTemplate.Contracts.Models;
-    using SpaTemplate.Functional.Tests.Helpers;
     using SpaTemplate.Infrastructure.Api;
     using SpaTemplate.Tests.Helpers;
     using Xeinaemm.Tests;
@@ -35,19 +35,28 @@ namespace SpaTemplate.Functional.Tests.Api
 
         [Theory]
         [AutoMoqData]
-        public async Task CreateCollectionAfterValidPost(IEnumerable<StudentForCreationDto> dtos)
+        public async Task CreateCollectionAfterValidPostAsync(IEnumerable<StudentForCreationDto> dtos)
         {
             var post = await this.api.CreateStudentCollection(dtos);
-            Assert.Equal(3, post.Count());
+            post.Count().Should().Be(3);
         }
 
         [Fact]
-        public void ReturnsBadRequestNoIds() =>
-            RefitExceptions.Verify(async () => await this.api.GetStudentCollection(null), HttpStatusCode.BadRequest);
+        public async Task ReturnsBadRequestNoIdsAsync()
+        {
+            try
+            {
+                var post = await this.api.GetStudentCollection(null);
+            }
+            catch (ApiException validationException)
+            {
+                validationException.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            }
+        }
 
         [Theory]
         [AutoMoqData]
-        public async Task ReturnsCollectionAfterValidGet(IEnumerable<StudentForCreationDto> dtos)
+        public async Task ReturnsCollectionAfterValidGetAsync(IEnumerable<StudentForCreationDto> dtos)
         {
             var post = await this.api.CreateStudentCollection(dtos);
             var get = await this.api.GetStudentCollection(post.Select(x => x.Id).Take(3));
@@ -55,14 +64,22 @@ namespace SpaTemplate.Functional.Tests.Api
         }
 
         [Fact]
-        public void ReturnsNotFoundIdsNotExist()
+        public async Task ReturnsNotFoundIdsNotExistAsync()
         {
             var ids = new List<Guid>
             {
                 Guid.NewGuid(),
                 Guid.NewGuid(),
             };
-            RefitExceptions.Verify(async () => await this.api.GetStudentCollection(ids), HttpStatusCode.NotFound);
+
+            try
+            {
+                var get = await this.api.GetStudentCollection(ids);
+            }
+            catch (ApiException validationException)
+            {
+                validationException.StatusCode.Should().Be(HttpStatusCode.NotFound);
+            }
         }
     }
 }
