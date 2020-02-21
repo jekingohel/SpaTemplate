@@ -49,7 +49,7 @@ namespace SpaTemplate.Infrastructure.Api
             //services.AddControllers(opt => opt.Filters.Add(new AllowAnonymousFilter()));
             services.AddCustomApiBehavior();
             services.AddCustomVersionedApiExplorer();
-            services.AddCustomApiAuthentication(new ApiParameters(this.Configuration.GetSecurityString(), this.Configuration.GetAuthorityString()));
+            services.AddCustomApiAuthentication(new ApiParameters(this.Configuration.GetSecurityString(), this.Configuration.GetIdPAuthorityString()));
             services.AddCustomApiVersioning();
             services.AddSwaggerGen(setupAction =>
             {
