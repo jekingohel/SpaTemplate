@@ -31,10 +31,10 @@ namespace SpaTemplate.Functional.Tests.Api
         [Theory]
         [InlineData(Rel.Self, "GET", 0)]
         [InlineData(SpaTemplateRel.People, "GET", 1)]
-        [InlineData(SpaTemplateRel.CreateStudent, "GET", 2)]
+        [InlineData(SpaTemplateRel.CreateStudent, "POST", 2)]
         public async Task ReturnsHateoasLinksRootAsync(string rel, string method, int number)
         {
-            var result = (await this.api.GetRoot(MediaType.OutputFormatterJson)).ToArray();
+            var result = (await this.api.GetRoot()).ToArray();
             Assert.Equal(3, result.Count());
 
             Assert.Equal(rel, result[number].Rel);

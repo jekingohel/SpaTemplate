@@ -17,7 +17,9 @@ namespace SpaTemplate.Application.Setup.ContainerTasks
     using SpaTemplate.Contracts.Api;
     using SpaTemplate.Core;
     using SpaTemplate.Infrastructure;
+    using Xeinaemm.AspNetCore.Data;
     using Xeinaemm.Configuration.Autofac;
+    using Xeinaemm.Hateoas;
 
     public static class InitializeContainer
     {
@@ -67,6 +69,7 @@ namespace SpaTemplate.Application.Setup.ContainerTasks
 
         private static void CommonSetup(this ContainerBuilder builder)
         {
+            builder.RegisterType<HateoasRepository<ApplicationDbContext>>().As<IHateoasRepository<ApplicationDbContext>>();
         }
     }
 }

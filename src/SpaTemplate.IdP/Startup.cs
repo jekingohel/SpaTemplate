@@ -49,6 +49,7 @@ namespace SpaTemplate.IdP
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseIdentityServer();
             app.UseEndpoints(endpoints =>
             {

@@ -8,7 +8,6 @@
 namespace SpaTemplate.Contracts.Api
 {
     using System.Collections.Generic;
-    using System.Net.Mime;
     using System.Threading.Tasks;
     using Refit;
     using Xeinaemm.Hateoas;
@@ -16,6 +15,6 @@ namespace SpaTemplate.Contracts.Api
     public interface IApi
     {
         [Get("/api/v1")]
-        Task<IEnumerable<LinkDto>> GetRoot([Header("Accept")] string mediaType);
+        Task<IEnumerable<LinkDto>> GetRoot([Header("Accept")] string mediaType = MediaType.OutputFormatterJson);
     }
 }

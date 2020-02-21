@@ -23,7 +23,7 @@ namespace SpaTemplate.Functional.Tests.Api
     using SpaTemplate.Infrastructure.Api;
     using SpaTemplate.Tests.Helpers;
     using Xeinaemm.Hateoas;
-    using Xeinaemm.Tests;
+    using Xeinaemm.Tests.Common.Attributes;
     using Xunit;
 
     public class IPeopleApiShould : IClassFixture<CustomWebApplicationFactory<Startup>>
@@ -65,8 +65,8 @@ namespace SpaTemplate.Functional.Tests.Api
         [Fact]
         public async Task ReturnsCollection()
         {
-            var get = await this.api.GetPeople(new StudentParameters());
-            Assert.Equal(10, get.Count());
+            var get = await this.api.GetPeopleHateoas(new StudentParameters());
+            Assert.Equal(10, get.Values.Count());
         }
 
         [Theory]

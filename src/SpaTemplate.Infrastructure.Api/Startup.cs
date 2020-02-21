@@ -95,6 +95,7 @@ namespace SpaTemplate.Infrastructure.Api
             app.UseCustomSwaggerUI(apiVersionDescriptionProvider, nameof(Api));
             app.UseRouting();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseStaticFiles();
             app.UseHttpCacheHeaders();
             app.UseCookiePolicy();

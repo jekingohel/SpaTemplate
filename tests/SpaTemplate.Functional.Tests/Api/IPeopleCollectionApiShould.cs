@@ -20,7 +20,7 @@ namespace SpaTemplate.Functional.Tests.Api
     using SpaTemplate.Contracts.Models;
     using SpaTemplate.Infrastructure.Api;
     using SpaTemplate.Tests.Helpers;
-    using Xeinaemm.Tests;
+    using Xeinaemm.Tests.Common.Attributes;
     using Xunit;
 
     public class IPeopleCollectionApiShould : IClassFixture<CustomWebApplicationFactory<Startup>>
@@ -46,7 +46,7 @@ namespace SpaTemplate.Functional.Tests.Api
         {
             try
             {
-                var post = await this.api.GetStudentCollection(null);
+                var post = await this.api.GetStudentCollection(new List<Guid> { Guid.Empty, Guid.Empty }.ToArray());
             }
             catch (ApiException validationException)
             {

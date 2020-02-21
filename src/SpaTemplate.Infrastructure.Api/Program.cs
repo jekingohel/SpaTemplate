@@ -12,9 +12,7 @@ namespace SpaTemplate.Infrastructure.Api
 
     public static class Program
     {
-#pragma warning disable IDISP004 // Don't ignore return value of type IDisposable.
         public static void Main(string[] args) => CreateWebHostBuilder(args).Build().Run();
-#pragma warning restore IDISP004 // Don't ignore return value of type IDisposable.
 
         private static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)

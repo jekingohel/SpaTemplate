@@ -9,6 +9,7 @@ namespace SpaTemplate.Tests.Helpers
 {
     using System;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc.Authorization;
     using Microsoft.AspNetCore.Mvc.Testing;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
@@ -33,7 +34,7 @@ namespace SpaTemplate.Tests.Helpers
                     options.UseInMemoryDatabase("tests-factory");
                     options.UseInternalServiceProvider(serviceProvider);
                 });
-
+                services.AddControllers(opt => opt.Filters.Add(new AllowAnonymousFilter()));
                 services.AddScoped<IDomainEventDispatcher, NoOpDomainEventDispatcher>();
 
                 var sp = services.BuildServiceProvider();

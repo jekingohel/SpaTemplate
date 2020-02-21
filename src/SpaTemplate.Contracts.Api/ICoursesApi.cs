@@ -22,7 +22,7 @@ namespace SpaTemplate.Contracts.Api
         [Post("/api/v1/people/{studentId}/courses")]
         Task<CourseDto> CreateCourseForStudent(Guid studentId, [Body] CourseForCreationDto courseForCreationDto);
 
-        [Delete("/api/v1/people/{studentId}/courses")]
+        [Delete("/api/v1/people/{studentId}/courses/{id}")]
         Task DeleteCourseForStudent(Guid studentId, Guid id);
 
         [Get("/api/v1/people/{studentId}/courses/{id}")]

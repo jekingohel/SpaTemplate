@@ -12,7 +12,7 @@ namespace SpaTemplate.Tests.UnitTests
     using SpaTemplate.Core.SharedKernel;
     using Xeinaemm.Domain;
     using Xeinaemm.Hateoas;
-    using Xeinaemm.Tests;
+    using Xeinaemm.Tests.Common.Attributes;
     using Xunit;
 
     public class PropertyMappingServiceShould
@@ -24,7 +24,6 @@ namespace SpaTemplate.Tests.UnitTests
         [Fact]
         public void BeAssignableFromInterface() => Assert.IsAssignableFrom<IPropertyMappingService>(new PropertyMappingService());
 
-#pragma warning disable CA1812 // Avoid uninstantiated internal classes
         private class DummyEntity : BaseEntity
         {
         }
@@ -35,6 +34,5 @@ namespace SpaTemplate.Tests.UnitTests
 
             public Guid Id { get; set; }
         }
-#pragma warning restore CA1812 // Avoid uninstantiated internal classes
     }
 }

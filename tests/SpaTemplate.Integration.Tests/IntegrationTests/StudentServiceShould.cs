@@ -15,7 +15,7 @@ namespace SpaTemplate.Tests.IntegrationTests
     using SpaTemplate.Infrastructure.FacultyContext;
     using SpaTemplate.Tests.Helpers;
     using Xeinaemm.Hateoas;
-    using Xeinaemm.Tests;
+    using Xeinaemm.Tests.Common.Attributes;
     using Xunit;
 
     public class StudentServiceShould
