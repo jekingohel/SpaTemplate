@@ -9,7 +9,6 @@ namespace SpaTemplate.IdP
 {
     using System;
     using System.Reflection;
-    using Autofac;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -22,9 +21,13 @@ namespace SpaTemplate.IdP
     public class Startup
     {
         private readonly IConfiguration configuration;
+        private readonly IWebHostEnvironment env;
 
-        public Startup(
-            IConfiguration configuration) => this.configuration = configuration;
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
+        {
+            this.configuration = configuration;
+            this.env = env;
+        }
 
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
@@ -33,10 +36,18 @@ namespace SpaTemplate.IdP
             services.AddControllersWithViews();
             services.AddCustomIISOptions();
 
-            services.AddCustomIdentityServer<IdentityUser, CustomIdentityDbContext>(this.configuration.GetConnectionString(), Assembly.GetExecutingAssembly().GetName().Name)
-                .AddDeveloperSigningCredential();
+            if (this.env.EnvironmentName == "Production")
+            {
+                services.AddCustomIdentityServer<IdentityUser, CustomIdentityDbContext>(this.configuration.GetConnectionString(), Assembly.GetExecutingAssembly().GetName().Name)
+                    .AddDeveloperSigningCredential();
+            }
+            else
+            {
+                services.AddCustomInMemoryIdentityServer<IdentityUser, CustomIdentityDbContext>(Assembly.GetExecutingAssembly().GetName().Name)
+                    .AddDeveloperSigningCredential();
+            }
 
-            return services.InitializeWeb(setupAction => setupAction.RegisterType<IdentityServerService>().As<IIdentityServerService>());
+            return services.InitializeIdp();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -46,6 +57,8 @@ namespace SpaTemplate.IdP
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseHttpsRedirection();
+            app.UseRouting();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();

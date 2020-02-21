@@ -61,7 +61,6 @@ namespace SpaTemplate.Infrastructure.Api
         [Consumes(MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
         [RequestHeaderMatchesMediaType("Content-Type", MediaTypeNames.Application.Json, MediaType.InputFormatterJson)]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesDefaultResponseType]
         public IActionResult CreateStudent([FromBody] StudentForCreationDto studentForCreationDto)
         {
             if (studentForCreationDto == null) return this.BadRequest();
@@ -71,7 +70,7 @@ namespace SpaTemplate.Infrastructure.Api
             return this.CreatedAtRoute(
                 RouteName.GetStudent,
                 new { id = student.Id },
-                student.ShapeDataWithoutParameters<StudentDto>(this.CreateLinksStudent));
+                student.ShapeDataWithoutParameters(this.CreateLinksStudent));
         }
 
         /// <summary>
@@ -82,7 +81,6 @@ namespace SpaTemplate.Infrastructure.Api
         [HttpDelete("{id}", Name = RouteName.DeleteStudent)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
         public IActionResult DeleteStudent(Guid id)
         {
             var student = this.studentService.GetStudent(id);
@@ -102,7 +100,6 @@ namespace SpaTemplate.Infrastructure.Api
         [Produces(MediaType.OutputFormatterJson)]
         [RequestHeaderMatchesMediaType("Accept", MediaTypeNames.Application.Json, MediaType.OutputFormatterJson)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesDefaultResponseType]
         public IActionResult GetPeople(
             StudentParameters parameters,
             [FromHeader(Name = "Accept")] string mediaType)
@@ -142,7 +139,6 @@ namespace SpaTemplate.Infrastructure.Api
         [Produces(MediaType.OutputFormatterJson)]
         [RequestHeaderMatchesMediaType("Accept", MediaTypeNames.Application.Json, MediaType.OutputFormatterJson)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesDefaultResponseType]
         public IActionResult GetStudent(
             Guid id,
             StudentParameters parameters,
@@ -154,7 +150,7 @@ namespace SpaTemplate.Infrastructure.Api
             return student == null
                 ? this.NotFound()
                 : (IActionResult)(mediaType == MediaType.OutputFormatterJson
-                ? this.Ok(student.ShapeDataWithoutParameters<StudentDto>(this.CreateLinksStudent))
+                ? this.Ok(student.ShapeDataWithoutParameters(this.CreateLinksStudent))
                 : this.Ok(this.mapper.Map<StudentDto>(student)));
         }
 
@@ -169,7 +165,6 @@ namespace SpaTemplate.Infrastructure.Api
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateDictionary), StatusCodes.Status422UnprocessableEntity)]
-        [ProducesDefaultResponseType]
         public IActionResult PartiallyUpdateStudent(
             Guid id,
             [FromBody] JsonPatchDocument<StudentForUpdateDto> patchDoc)

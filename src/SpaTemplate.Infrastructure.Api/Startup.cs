@@ -13,11 +13,8 @@ namespace SpaTemplate.Infrastructure.Api
     using Autofac;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ApiExplorer;
-    using Microsoft.AspNetCore.Mvc.Infrastructure;
-    using Microsoft.AspNetCore.Mvc.Routing;
+    using Microsoft.AspNetCore.Mvc.Authorization;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using SpaTemplate.Application.Setup.ContainerTasks;
@@ -26,7 +23,6 @@ namespace SpaTemplate.Infrastructure.Api
     using Xeinaemm.AspNetCore.Data;
     using Xeinaemm.AspNetCore.Identity.IdentityServer;
     using Xeinaemm.AspNetCore.Swagger;
-    using Xeinaemm.Hateoas;
     using Xeinaemm.Quartz;
 
     public class Startup
@@ -50,6 +46,7 @@ namespace SpaTemplate.Infrastructure.Api
                 services.AddCustomInMemoryDbContext<ApplicationDbContext>("api");
 
             services.AddCustomApiControllers();
+            //services.AddControllers(opt => opt.Filters.Add(new AllowAnonymousFilter()));
             services.AddCustomApiBehavior();
             services.AddCustomVersionedApiExplorer();
             services.AddCustomApiAuthentication(new ApiParameters(this.Configuration.GetSecurityString(), this.Configuration.GetAuthorityString()));
@@ -63,23 +60,13 @@ namespace SpaTemplate.Infrastructure.Api
                 setupAction.CustomXmlComments<EmptyClassSpaTemplateInfrastructureApi>();
             });
 
-            // services.AddOpenApiDocument();
+            services.AddOpenApiDocument();
             services.AddCustomHttpCacheHeaders();
             services.AddMemoryCache();
             services.AddCustomIpRateLimitOptions(new List<RateLimitRule>());
             services.AddCustomAutoMapper();
 
-            return services.InitializeApi(builder =>
-            {
-                builder.Register(_ => new QuartzService(this.Configuration.GetConnectionString())).As<IQuartzService>().SingleInstance();
-                builder.RegisterType<MemoryCacheRateLimitCounterStore>().As<IRateLimitCounterStore>();
-                builder.RegisterType<TypeHelperService>().As<ITypeHelperService>();
-                builder.RegisterType<MemoryCacheIpPolicyStore>().As<IIpPolicyStore>();
-                builder.RegisterType<RateLimitConfiguration>().As<IRateLimitConfiguration>();
-                builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
-                builder.RegisterType<ActionContextAccessor>().As<IActionContextAccessor>();
-                builder.Register(x => x.Resolve<IUrlHelperFactory>().GetUrlHelper(x.Resolve<IActionContextAccessor>().ActionContext)).As<IUrlHelper>();
-            });
+            return services.InitializeApi(builder => builder.Register(_ => new QuartzService(this.Configuration.GetConnectionString())).As<IQuartzService>().SingleInstance());
         }
 
         public void Configure(IApplicationBuilder app, IApiVersionDescriptionProvider apiVersionDescriptionProvider, IWebHostEnvironment env)

@@ -9,7 +9,6 @@ namespace SpaTemplate.IdP
 {
     using System;
     using System.Diagnostics;
-    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
@@ -22,22 +21,16 @@ namespace SpaTemplate.IdP
     {
         public static async Task Main(string[] args)
         {
-            var seed = args.Any(x => x == "/seed");
-            if (seed) args = args.Except(new[] { "/seed" }).ToArray();
-
             var host = CreateWebHostBuilder(args).Build();
-            if (seed)
+            try
             {
-                try
-                {
-                    using var scope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
-                    var provider = scope.ServiceProvider;
-                    await provider.EnsureIdentitySeedDataAsync<IdentityUser, CustomIdentityDbContext>(new IdentitySeedData(provider.GetRequiredService<IConfiguration>())).ConfigureAwait(false);
-                }
-                catch (Exception e)
-                {
-                    Debug.WriteLine(e);
-                }
+                using var scope = host.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+                var provider = scope.ServiceProvider;
+                await provider.EnsureIdentitySeedDataAsync<IdentityUser, CustomIdentityDbContext>(new IdentitySeedData(provider.GetRequiredService<IConfiguration>()), true);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
             }
 
             host.Run();

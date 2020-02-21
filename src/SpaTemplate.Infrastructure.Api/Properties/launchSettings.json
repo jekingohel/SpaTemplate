@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:44301/SpaTemplate.Infrastructure.Api",
+      "applicationUrl": "http://localhost:44300/SpaTemplate.Infrastructure.Api",
       "sslPort": 44301
     }
   },

@@ -9,8 +9,8 @@
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     <PackageReference Include="coverlet.msbuild" Version="2.7.0" />
     <PackageReference Include="FluentAssertions" Version="5.9.0"/>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -19,6 +19,6 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="Xeinaemm.All" Version="0.1.9" PrivateAssets="All" Condition="'$(MSBuildProjectName)' != '_build'"/>
+    <PackageReference Include="Xeinaemm.All" Version="0.1.12" PrivateAssets="All" Condition="'$(MSBuildProjectName)' != '_build'"/>
   </ItemGroup>
 </Project>

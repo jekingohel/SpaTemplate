@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://localhost:44302/SpaTemplate.Web.Core",
-      "sslPort": 44302
+      "applicationUrl": "https://localhost:44304/SpaTemplate.Web.Core",
+      "sslPort": 44305
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",

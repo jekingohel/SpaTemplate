@@ -30,6 +30,7 @@ namespace SpaTemplate.Web.Core
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCustomClientAuthentication(new ClientParameters(this.Configuration.GetSecurityString(), this.Configuration.GetAuthorityString()), this.Configuration.GetIdPAuthorityString());
+            services.AddRazorPages();
             services.AddSpaStaticFiles(configuration => configuration.RootPath = "ClientApp/dist");
         }
 
@@ -45,6 +46,7 @@ namespace SpaTemplate.Web.Core
                 app.UseHsts();
             }
 
+            app.UseRouting();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
@@ -55,7 +57,6 @@ namespace SpaTemplate.Web.Core
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
                 endpoints.MapRazorPages();
             });
 

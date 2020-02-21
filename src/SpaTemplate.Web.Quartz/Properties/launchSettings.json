@@ -3,8 +3,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "https://localhost:44303/SpaTemplate.Web.Quartz",
-      "sslPort": 44303
+      "applicationUrl": "https://localhost:44306/SpaTemplate.Web.Quartz",
+      "sslPort": 44307
     }
   },
   "$schema": "http://json.schemastore.org/launchsettings.json",

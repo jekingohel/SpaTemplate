@@ -68,7 +68,6 @@ namespace SpaTemplate.Infrastructure.Api
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ModelStateDictionary), StatusCodes.Status422UnprocessableEntity)]
-        [ProducesDefaultResponseType]
         public IActionResult CreateCourseForStudent(
             Guid studentId,
             [FromBody] CourseForCreationDto courseForCreationDto)
@@ -88,7 +87,7 @@ namespace SpaTemplate.Infrastructure.Api
             return this.CreatedAtRoute(
                 RouteName.GetCourseForStudent,
                 new { studentId, course.Id },
-                course.ShapeDataWithoutParameters<CourseDto>(this.CreateLinksForCourse));
+                course.ShapeDataWithoutParameters(this.CreateLinksForCourse));
         }
 
         /// <summary>
@@ -102,7 +101,6 @@ namespace SpaTemplate.Infrastructure.Api
         [HttpDelete("{id}", Name = RouteName.DeleteCourseForStudent)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
         public IActionResult DeleteCourseForStudent(Guid studentId, Guid id)
         {
             if (!this.courseService.StudentExists(studentId)) return this.NotFound();
@@ -129,7 +127,6 @@ namespace SpaTemplate.Infrastructure.Api
         [Produces(MediaType.OutputFormatterJson)]
         [RequestHeaderMatchesMediaType("Accept", MediaTypeNames.Application.Json, MediaType.OutputFormatterJson)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
         public IActionResult GetCourseForStudent(
             Guid studentId,
             Guid id,
@@ -142,7 +139,7 @@ namespace SpaTemplate.Infrastructure.Api
                 ? this.NotFound()
                 : (IActionResult)(mediaType != MediaType.OutputFormatterJson
                 ? this.Ok(course)
-                : this.Ok(course.ShapeDataWithoutParameters<CourseDto>(this.CreateLinksForCourse)));
+                : this.Ok(course.ShapeDataWithoutParameters(this.CreateLinksForCourse)));
         }
 
         /// <summary>
@@ -159,7 +156,6 @@ namespace SpaTemplate.Infrastructure.Api
         [RequestHeaderMatchesMediaType("Accept", MediaTypeNames.Application.Json, MediaType.OutputFormatterJson)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
         public IActionResult GetCoursesForStudent(
             Guid studentId,
             CourseParameters parameters,
@@ -201,7 +197,6 @@ namespace SpaTemplate.Infrastructure.Api
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ModelStateDictionary), StatusCodes.Status422UnprocessableEntity)]
-        [ProducesDefaultResponseType]
         public IActionResult PartiallyUpdateCourseForStudent(
             Guid studentId,
             Guid id,
@@ -271,7 +266,6 @@ namespace SpaTemplate.Infrastructure.Api
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ModelStateDictionary), StatusCodes.Status422UnprocessableEntity)]
-        [ProducesDefaultResponseType]
         public IActionResult UpdateCourseForStudent(
             Guid studentId,
             Guid id,

@@ -8,10 +8,16 @@
 namespace SpaTemplate.Application.Setup.ContainerTasks
 {
     using System;
+    using System.Collections.Generic;
     using System.Net.Http;
     using System.Reflection;
+    using AspNetCoreRateLimit;
     using Autofac;
     using AutoMapper;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Infrastructure;
+    using Microsoft.AspNetCore.Mvc.Routing;
     using Microsoft.Extensions.DependencyInjection;
     using Refit;
     using SpaTemplate.Contracts.Api;
@@ -25,7 +31,7 @@ namespace SpaTemplate.Application.Setup.ContainerTasks
     {
         public static ContainerConfiguration Container { get; } = new ContainerConfiguration
         {
-            RegisterAssemblies = new[]
+            RegisterAssemblies = new List<Assembly>
             {
                 Assembly.GetExecutingAssembly(),
                 Assembly.GetAssembly(typeof(EmptyClassSpaTemplateCore)),
@@ -50,8 +56,8 @@ namespace SpaTemplate.Application.Setup.ContainerTasks
                 extendedSetupAction?.Invoke(setupAction);
             });
 
-        public static IServiceProvider InitializeReadApi(this IServiceCollection services, Action<ContainerBuilder> extendedSetupAction = null) =>
-            services.InitializeReadApi(Container, setupAction =>
+        public static IServiceProvider InitializeIdp(this IServiceCollection services, Action<ContainerBuilder> extendedSetupAction = null) =>
+            services.InitializeIdp(Container, setupAction =>
             {
                 setupAction.CommonSetup();
                 extendedSetupAction?.Invoke(setupAction);
@@ -70,6 +76,12 @@ namespace SpaTemplate.Application.Setup.ContainerTasks
         private static void CommonSetup(this ContainerBuilder builder)
         {
             builder.RegisterType<HateoasRepository<ApplicationDbContext>>().As<IHateoasRepository<ApplicationDbContext>>();
+            builder.RegisterType<MemoryCacheRateLimitCounterStore>().As<IRateLimitCounterStore>();
+            builder.RegisterType<MemoryCacheIpPolicyStore>().As<IIpPolicyStore>();
+            builder.RegisterType<RateLimitConfiguration>().As<IRateLimitConfiguration>();
+            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>();
+            builder.RegisterType<ActionContextAccessor>().As<IActionContextAccessor>();
+            builder.Register(x => x.Resolve<IUrlHelperFactory>().GetUrlHelper(x.Resolve<IActionContextAccessor>().ActionContext)).As<IUrlHelper>();
         }
     }
 }

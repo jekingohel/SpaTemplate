@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NSwag.AspNetCore" Version="13.2.3" />
+  </ItemGroup>
+  
+  <ItemGroup>
     <ProjectReference Include="..\SpaTemplate.Application.Setup\SpaTemplate.Application.Setup.csproj" />
     <ProjectReference Include="..\SpaTemplate.Core\SpaTemplate.Core.csproj" />
     <ProjectReference Include="..\SpaTemplate.Infrastructure\SpaTemplate.Infrastructure.csproj" />
